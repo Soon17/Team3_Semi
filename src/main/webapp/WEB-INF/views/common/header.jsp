@@ -4,9 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
+
 </head>
 <body>
-	<h1>메인 바디</h1>
+	<h1>헤더</h1>
 </body>
 </html>

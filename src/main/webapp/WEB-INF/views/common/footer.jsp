@@ -7,6 +7,6 @@
 	
 </head>
 <body>
-	<h1>메인 바디</h1>
+	<h1>푸터</h1>	
 </body>
 </html>

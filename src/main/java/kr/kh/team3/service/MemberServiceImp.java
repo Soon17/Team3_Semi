@@ -9,5 +9,10 @@ import kr.kh.team3.dao.MemberDAO;
 public class MemberServiceImp implements MemberService{
 
 	@Autowired
-	MemberDAO memberDao;
+	private MemberDAO memberDao;
+	
+	@Override
+	public String getPw(String me_id) {
+		return memberDao.getPw(me_id);
+	};
 }

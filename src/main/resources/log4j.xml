@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="kr.kh.team3">
+	<logger name="kr.kh.team3_semi">
 		<level value="info" />
 	</logger>
 	

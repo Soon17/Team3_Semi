@@ -16,10 +16,14 @@
 	      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 	    <property name="url"
-	              value="jdbc:mysql://localhost:3306/community?useSSL=false&amp;serverTimezone=Asia/Seoul">	<!-- DB명으로 변경 -->
+	              value="jdbc:mysql://localhost:3306/class101?useSSL=false&amp;serverTimezone=Asia/Seoul">	<!-- DB명으로 변경 -->
 	    </property>
 	    <property name="username" value="root"></property>	<!-- DB 사용자 이름 -->
-	    <property name="password" value="rute"></property>	<!-- DB 사용자 비번 -->
+	    
+	    <!-- 
+	    <property name="password" value="rute"></property>	DB 사용자 비번(승엽)
+	     -->
+	    <property name="password" value="root"></property>	<!-- DB 사용자 비번(일반) -->
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

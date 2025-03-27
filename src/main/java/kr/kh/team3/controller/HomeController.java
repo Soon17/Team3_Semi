@@ -22,5 +22,10 @@ public class HomeController {
         System.out.println(memberService.getPw("asdf"));
 		return "home";
 	}
+	
+	@GetMapping("/login/from")
+	public String loginForm() {
+		return "/member/login";
+	}
 
 }

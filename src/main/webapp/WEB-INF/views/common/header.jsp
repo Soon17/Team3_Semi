@@ -4,10 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	
 	<style type="text/css">
 		.search {
 		  position: relative;
@@ -37,7 +34,12 @@
 		  right: 12px;
 		  margin: 0;
 		}
-		
+		.dropdown-menu {
+		    position: fixed;  /* 화면에 고정 */
+			left: 0; 
+			right:0;       
+			width: 100vw; 
+		}
 		
 	</style>
 </head>

@@ -19,7 +19,7 @@
 		    line-height: 1.125rem;
 		    font-weight: 400;
 		}
-		input {
+		.searchHolder {
 		  width: 100%;
 		  border: 1px solid #bbb;
 		  border-radius: 8px;
@@ -47,12 +47,12 @@
 	<nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-between">
 		
 	<!-- Brand -->
-	<a class="navbar-brand" href="#">로고이미지~</a>
+	<a class="navbar-brand" href="<c:url value="/"/>">로고이미지~</a>
 	
 	<!-- Links -->
 	<ul class="navbar-nav">
 		<li class="nav-item">
-	    	<a class="nav-link" href="#">클래스</a>
+	    	<a class="nav-link" href="<c:url value="/"/>">클래스</a>
  		</li>
 	
 	  <!-- Dropdown -->
@@ -70,7 +70,7 @@
 	</ul>
 		<div class="search">
 			<form action="/search" method="GET"> <!-- 검색은  -->
-			    <input type="text" name="query" placeholder="관심주제, 클래스, 크리에이터 찾기">
+			    <input type="text" name="query" class="searchHolder"placeholder="관심주제, 클래스, 크리에이터 찾기">
 				<button type="submit" style="border: none; background: none;">
 					<img id="search"src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
 				</button>
@@ -78,7 +78,7 @@
 		</div>
 		
 		<div>
-			<a href="#">
+			<a href="<c:url value="/signup"/>">
 				<span data-test id="body" class="css-login ">회원가입</span>
 			</a>
 			<a href="#">

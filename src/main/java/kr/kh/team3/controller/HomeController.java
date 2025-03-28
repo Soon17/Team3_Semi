@@ -25,5 +25,11 @@ public class HomeController {
 		model.addAttribute("list",categoryList);
 		return "home";
 	}
-	
+	@GetMapping("/signup")
+	public String signup(Model model) {
+		List<CategoryVO> categoryList = categoryService.selectCateList();
+		model.addAttribute("list",categoryList);
+		System.out.println("싸발");
+		return "/member/signup";
+	}
 }

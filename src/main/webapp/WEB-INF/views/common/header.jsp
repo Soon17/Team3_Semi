@@ -81,9 +81,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <a href="#">
           <span data-test id="body" class="css-login">회원가입</span>
         </a>
-        <a href="#">
-          <span data-test id="body" class="css-login">로그인</span>
-        </a>
+     	<a class="nav-link" href="<c:url value="/login"/>">로그인</a>
       </div>
     </nav>
   </body>

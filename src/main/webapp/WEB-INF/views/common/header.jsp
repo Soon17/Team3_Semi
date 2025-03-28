@@ -61,19 +61,22 @@
 				카테고리(드랍다운을 css로 클래스101 사이트처럼)
 			</a>
 			<div class="dropdown-menu">
-				<c:forEach items="list" >
-				
+				<c:forEach items="${list }"  var="category">
+					<a class="dropdown-item" href="#">${category.ca_name }</a>
 				</c:forEach>
-				<a class="dropdown-item" href="#"></a>
-				<a class="dropdown-item" href="#">영어</a>
-				<a class="dropdown-item" href="#">프로그래밍</a>
+				
 			</div>
 	    </li>
 	</ul>
 		<div class="search">
-			<input type="text" placeholder="관심주제, 클래스, 크리에이터 찾기">
-			<img id="search"src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+			<form action="/search" method="GET"> <!-- 검색은  -->
+			    <input type="text" name="query" placeholder="관심주제, 클래스, 크리에이터 찾기">
+				<button type="submit" style="border: none; background: none;">
+					<img id="search"src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+				</button>
+			</form>
 		</div>
+		
 		<div>
 			<a href="#">
 				<span data-test id="body" class="css-login ">회원가입</span>

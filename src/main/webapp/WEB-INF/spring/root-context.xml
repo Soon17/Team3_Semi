@@ -23,7 +23,7 @@
 	    <!-- 
 	    <property name="password" value="rute"></property>	DB 사용자 비번(승엽)
 	     -->
-	    <property name="password" value="root"></property>	<!-- DB 사용자 비번(일반) -->
+	    <property name="password" value="rute"></property>	<!-- DB 사용자 비번(일반) -->
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

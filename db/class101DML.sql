@@ -1,0 +1,1 @@
+insert into category (ca_name) values ("운동"),("영어"),("프로그래밍");

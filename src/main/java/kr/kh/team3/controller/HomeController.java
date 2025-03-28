@@ -1,5 +1,7 @@
 package kr.kh.team3.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,20 +12,26 @@ import kr.kh.team3.service.MemberService;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
+import org.springframework.web.bind.annotation.GetMapping;
+
+import kr.kh.team3.model.vo.CategoryVO;
+import kr.kh.team3.service.CategoryService;
+
+/**
+ * Handles requests for the application home page.
+ */
 @Controller
 public class HomeController {
 	
 	@Autowired
-	private MemberService memberService;
+	private CategoryService categoryService;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping("/")
 	public String home(Model model) {
-
-        String pw = memberService.getPw("acejsh77");
-        System.out.println(pw);
-        log.info(pw);
-        model.addAttribute("pw", pw);
+		List<CategoryVO> categoryList = categoryService.selectCateList();
+		System.out.println(categoryList);
+		model.addAttribute("list",categoryList);
 		return "home";
 	}
-
+	
 }

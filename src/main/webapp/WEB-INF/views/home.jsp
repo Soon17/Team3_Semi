@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page session="false" %>
 <html>
 <head>
@@ -19,21 +21,21 @@
 	  </ul>
 	  <div class="carousel-inner">
 	    <div class="carousel-item active">
-	      <img src="<c:url value="/resources/img/sample.png"/>" alt="Los Angeles" width="1100" height="500">
+	      <img src="<c:url value="/resources/img/anyoujin.jpg"/>" alt="Los Angeles" width="1100" height="500">
 	      <div class="carousel-caption">
 	        <h3>Los Angeles</h3>
 	        <p>We had such a great time in LA!</p>
 	      </div>   
 	    </div>
 	    <div class="carousel-item">
-	      <img src="<c:url value="/resources/img/sample.png"/>" alt="Chicago" width="1100" height="500">
+	      <img src="<c:url value="/resources/img/anyoujin2.jpg"/>" alt="Chicago" width="1100" height="500">
 	      <div class="carousel-caption">
 	        <h3>Chicago</h3>
 	        <p>Thank you, Chicago!</p>
 	      </div>   
 	    </div>
 	    <div class="carousel-item">
-	      <img src="<c:url value="/resources/img/sample.png"/>" alt="New York" width="1100" height="500">
+	      <img src="<c:url value="/resources/img/anyoujin3.jpg"/>" alt="New York" width="1100" height="500">
 	      <div class="carousel-caption">
 	        <h3>New York</h3>
 	        <p>We love the Big Apple!</p>
@@ -47,5 +49,8 @@
 	    <span class="carousel-control-next-icon"></span>
 	  </a>
 	</div>
+	
+	<div>실시간 인기 클래스</div>
+	<div>새로 오픈한 클래스</div>
 </body>
 </html>

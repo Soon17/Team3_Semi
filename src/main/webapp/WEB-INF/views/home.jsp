@@ -47,9 +47,5 @@
 	    <span class="carousel-control-next-icon"></span>
 	  </a>
 	</div>
-	 
-	${pw}
-	<h3>실시산 인기 클래스</h3>
-	<h3>새로 오픈한 클래스</h3>
 </body>
 </html>

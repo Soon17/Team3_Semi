@@ -21,21 +21,21 @@
 	  </ul>
 	  <div class="carousel-inner">
 	    <div class="carousel-item active">
-	      <img src="la.jpg" alt="Los Angeles" width="1100" height="500">
+	      <img src="<c:url value="/resources/img/sample.png"/>" alt="Los Angeles" width="1100" height="500">
 	      <div class="carousel-caption">
 	        <h3>Los Angeles</h3>
 	        <p>We had such a great time in LA!</p>
 	      </div>   
 	    </div>
 	    <div class="carousel-item">
-	      <img src="chicago.jpg" alt="Chicago" width="1100" height="500">
+	      <img src="<c:url value="/resources/img/sample.png"/>" alt="Chicago" width="1100" height="500">
 	      <div class="carousel-caption">
 	        <h3>Chicago</h3>
 	        <p>Thank you, Chicago!</p>
 	      </div>   
 	    </div>
 	    <div class="carousel-item">
-	      <img src="ny.jpg" alt="New York" width="1100" height="500">
+	      <img src="<c:url value="/resources/img/sample.png"/>" alt="New York" width="1100" height="500">
 	      <div class="carousel-caption">
 	        <h3>New York</h3>
 	        <p>We love the Big Apple!</p>
@@ -49,6 +49,8 @@
 	    <span class="carousel-control-next-icon"></span>
 	  </a>
 	</div>
+	 
+	${pw}
 	<h3>실시산 인기 클래스</h3>
 	<h3>새로 오픈한 클래스</h3>
 </body>

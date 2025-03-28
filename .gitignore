@@ -56,3 +56,5 @@ node_modules
 /.kotlin/
 
 test/
+
+config.properties

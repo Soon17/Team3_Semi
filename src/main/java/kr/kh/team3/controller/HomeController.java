@@ -29,4 +29,9 @@ public class HomeController {
 		return "home";
 	}
 	
+	@GetMapping("/teachers")
+	public String showTeachers() {
+		return "/member/teachers";
+	}
+	
 }

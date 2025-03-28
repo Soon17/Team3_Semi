@@ -15,10 +15,9 @@
 </head>
 <body>
 	
-	 <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=a209846bb41627e1da96872fa6fd97b8&redirect_uri=	
-		http://localhost:8080/spring/login&response_type=code">
-        <img src="<c:url value='/resources/static/kakao_login_medium_narrow.png' />" alt="카카오 로그인" style="height:30px">
-    </a>
+	<a class="p-2" href="<c:url value="/kakao/login"/>">
+   		<img src="<c:url value='/resources/static/kakao_login_medium_narrow.png' />" alt="카카오 로그인" style="height:30px">
+	</a>
     
     
     

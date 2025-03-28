@@ -16,15 +16,18 @@
 	      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 	    <property name="url"
-	              value="jdbc:mysql://localhost:3306/community?useSSL=false&amp;serverTimezone=Asia/Seoul">	<!-- DB명으로 변경 -->
+	              value="jdbc:mysql://localhost:3306/class101?useSSL=false&amp;serverTimezone=Asia/Seoul">	<!-- DB명으로 변경 -->
 	    </property>
 	    <property name="username" value="root"></property>	<!-- DB 사용자 이름 -->
 	    <property name="password" value="rute"></property>	<!-- DB 사용자 비번 -->
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-	    <property name="dataSource" ref="dataSource" />
-	    <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"/>
+		<property 
+			name="configLocation" 
+			value="/WEB-INF/spring/mybatis-config.xml"/>
 	</bean>
 	<mybatis-spring:scan base-package="kr.kh.team3.dao"/>
 		 

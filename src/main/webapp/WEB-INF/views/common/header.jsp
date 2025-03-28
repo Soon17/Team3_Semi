@@ -27,7 +27,7 @@
 		  font-size: 14px;
 		}
 		
-		img {
+		#search {
 		  position : absolute;
 		  width: 17px;
 		  top: 10px;
@@ -61,7 +61,10 @@
 				카테고리(드랍다운을 css로 클래스101 사이트처럼)
 			</a>
 			<div class="dropdown-menu">
-				<a class="dropdown-item" href="#">운동</a>
+				<c:forEach items="list" >
+				
+				</c:forEach>
+				<a class="dropdown-item" href="#"></a>
 				<a class="dropdown-item" href="#">영어</a>
 				<a class="dropdown-item" href="#">프로그래밍</a>
 			</div>
@@ -69,7 +72,7 @@
 	</ul>
 		<div class="search">
 			<input type="text" placeholder="관심주제, 클래스, 크리에이터 찾기">
-			<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+			<img id="search"src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
 		</div>
 		<div>
 			<a href="#">
@@ -80,7 +83,6 @@
 			</a>
 		</div>
 	</nav>
-	<br>
-	<br>
+	
 </body>
 </html>

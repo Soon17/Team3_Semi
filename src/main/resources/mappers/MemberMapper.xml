@@ -6,4 +6,19 @@
 	<select id="getPw" resultType="String">
 		select me_pw from member where me_id = #{me_id}
 	</select>
+	
+	<select id="selectMember" parameterType="String" resultType="kr.kh.team3.model.vo.MemberVO">
+        SELECT * FROM member WHERE me_id = #{me_id}
+    </select>
+	
+	<insert id="insertMember" parameterType="kr.kh.team3.model.vo.MemberVO">
+		INSERT INTO member (
+			me_name, me_id, me_pw, me_nick, me_email, me_number, me_authority, me_online,
+			me_del, me_profile
+		) VALUES (
+			#{member.me_name}, #{member.me_id}, #{member.me_pw}, #{member.me_nick},
+			#{member.me_email}, #{member.me_number},
+			#{member.me_authority}, #{member.me_online}, #{member.me_del}, #{member.me_profile}
+		)
+    </insert>
 </mapper>

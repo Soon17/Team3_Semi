@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.service.CategoryService;
+import lombok.extern.log4j.Log4j;
 
 /**
  * Handles requests for the application home page.
  */
+@Log4j
 @Controller
 public class HomeController {
 	

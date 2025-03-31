@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8" %> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,14 +10,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
     <style type="text/css">
     	
-      body {
-        background-color: #f3f4f9;
-        margin: 0;
-        padding: 0;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-      }
       #form-container {
-        padding: 60px 0; /* 위아래 여백 */
+        padding: 60px 0; 
         display: flex;
         justify-content: center;
         align-items: center;
@@ -24,7 +19,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       #form-inner-container {
         background-color: white;
-        width: 1200px; /* 옆으로 넓혀줌 */
+        width: 1200px; 
         border-radius: 10px;
         box-shadow: 0 0 20px gainsboro;
         display: flex;
@@ -35,20 +30,21 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       #sign-up-container,
       #sign-in-container {
-        padding: 30px 50px; /* 패딩 줄임 */
+        padding: 30px 50px; 
         width: 300px;
       }
 
-      form input:not(:last-of-type) {
-        display: block;
-        margin-bottom: 20px;
-        border: 1px solid #e5e9f5;
-        background-color: #f6f7fa;
-        padding: 20px;
-        margin-top: 10px;
-        border-radius: 10px;
-        width: 100%;
-      }
+		#sign-up-container form input:not(:last-of-type),
+		#sign-in-container form input:not(:last-of-type) {
+		  display: block;
+		  margin-bottom: 20px;
+		  border: 1px solid #e5e9f5;
+		  background-color: #f6f7fa;
+		  padding: 20px;
+		  margin-top: 10px;
+		  border-radius: 10px;
+		  width: 150%;
+		}
 
       #form-controls {
         margin-bottom: 20px;
@@ -59,14 +55,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         font-size: 150%;
         font-weight: 500;
       }
-
+ 
       label {
         color: #7369ab;
       }
 
-      
-
-      #form-controls button {
+    
+       #form-controls button {
         border: none;
         font-size: 120%;
       }
@@ -101,14 +96,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         position: relative;
       }
 
-      #terms:checked:after {
+       #terms:checked:after {
         content: "\2713";
         color: #7369ab;
         font-size: 24px;
         position: absolute;
         top: 0;
         left: 3px;
-      }
+      } 
 
       label[for="terms"] {
         display: inline-block;
@@ -148,36 +143,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }
       }
 
-      @media (max-width: 684px) {
-        #form-controls {
-          text-align: center;
-          margin: 0;
-          padding: 0;
-        }
-
-        button {
-          width: 100%;
-        }
-
-        form input:not(:last-of-type) {
-          width: 85%;
-        }
-
-        #toggleSignIn,
-        #toggleSignUp {
-          padding: 16px 75px;
-        }
-
-        #terms {
-          width: 20px;
-          height: 20px;
-        }
-
-        label[for="terms"] {
-          display: inline-block;
-          font-size: smaller;
-        }
-      }
     </style>
   </head>
 
@@ -241,18 +206,28 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               id="password"
               placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
             />
-
+           
+         
             <div id="form-controls">
-              <button type="submit">Sign In</button>
-              <button type="button" id="toggleSignUp">Sign Up</button>
+              <div>
+                <button type="submit">Sign In</button>
+              </div>
+              <div>
+                <button type="button" id="toggleSignUp">Sign Up</button>
+              </div>
+              <div>
+                <a class="p-2" href="<c:url value="/kakao/login"/>">
+              </div>                 
+                <img src="<c:url value='/resources/static/kakao_login_medium_narrow.png' />" alt="카카오 로그인" style="height:35px" ma>
+              </a>
             </div>
-
+         
             <input type="checkbox" name="terms" id="terms" />
             <label for="terms"
               >I agree to the
               <a href="#" class="termsLink">Terms of service</a> and
               <a href="#" class="termsLink">Privacy Policy</a>.</label
-            >
+            > 
           </form>
         </div>
 

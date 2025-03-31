@@ -70,9 +70,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 		<div class="search">
 			<form action="/search" method="GET"> <!-- 검색은  -->
 			    <input type="text" name="query" class="searchHolder"placeholder="관심주제, 클래스, 크리에이터 찾기">
-				<button type="submit" style="border: none; background: none;">
-					<img id="search"src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
-				</button>
+				<img id="search"src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+				
 			</form>
 		</div>
 		

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.service.CategoryService;
@@ -29,7 +31,13 @@ public class HomeController {
 	public String signup(Model model) {
 		List<CategoryVO> categoryList = categoryService.selectCateList();
 		model.addAttribute("list",categoryList);
-		System.out.println("싸발");
+		return "/member/signup";
+	}
+	@PostMapping("/signup")
+	public String signupPost(@RequestParam("username") String username,
+            @RequestParam("password") String password , Model model) {
+		System.out.println(username +" : "+ password);
+		
 		return "/member/signup";
 	}
 }

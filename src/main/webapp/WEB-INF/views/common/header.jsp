@@ -79,9 +79,6 @@
 		
 		<div>
 			<a href="<c:url value="/signup"/>">
-				<span data-test id="body" class="css-login ">회원가입</span>
-			</a>
-			<a href="#">
 				<span data-test id="body" class="css-login">로그인</span>
 			</a>
 		</div>

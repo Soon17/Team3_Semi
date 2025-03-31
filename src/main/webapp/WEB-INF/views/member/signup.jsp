@@ -225,7 +225,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- Sign in form -->
         <div id="sign-in-container" class="hide">
           <h3>Welcome Back</h3>
-          <form>
+          <form action="<c:url value="/signup"/>" method="post">
             <label for="username">Username</label>
             <input
               type="text"

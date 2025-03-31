@@ -1,5 +1,6 @@
 package kr.kh.team3.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,10 +17,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.servlet.http.HttpSession;
 import kr.kh.team3.model.vo.MemberVO;
+import kr.kh.team3.service.MemberService;
 
 @Controller
 public class KakaoLoginController {
-
+	
+	@Autowired
+    private MemberService memberService;
+	
     @Value("${kakao.client-id}")
     private String clientId;
 
@@ -90,8 +95,16 @@ public class KakaoLoginController {
         member.setMe_email(meemail);
         member.setMe_profile(meprofile);    
         member.setMe_name(mename);      
-        member.setMe_number(mephone);        
+        member.setMe_number(mephone);   
+        
+        member.setMe_pw("kakao"); //not null이라 넣음
         session.setAttribute("member", member);
+        
+        MemberVO Member = memberService.getMemberId(meid);
+        if (Member == null) {
+            memberService.insertMember(member);
+        }
+
         
         
         System.out.println("===== [카카오 로그인 결과] =====");

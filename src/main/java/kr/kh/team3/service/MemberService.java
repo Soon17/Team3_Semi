@@ -9,4 +9,6 @@ public interface MemberService {
 	MemberVO getMemberId(String me_id);
     
 	void insertMember(MemberVO member);
+
+	public boolean insertSingup(MemberVO member);
 }

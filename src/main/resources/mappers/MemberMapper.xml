@@ -21,4 +21,8 @@
 			#{member.me_authority}, #{member.me_online}, #{member.me_del}, #{member.me_profile}
 		)
     </insert>
+    <insert id="insertSignup">
+    	insert into member(me_name,me_id,me_pw,me_nick,me_email,me_number)
+		values("${member.me_name}","${member.me_id}","${member.me_pw}","${member.me_nick}","${member.me_email}","${member.me_number}");
+    </insert>
 </mapper>

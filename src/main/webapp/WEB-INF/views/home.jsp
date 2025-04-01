@@ -11,7 +11,7 @@
 		}
 	</style>
 </head>
-<body>
+<body style="height:2000px">
 	<div id="demo" class="carousel slide" data-ride="carousel">
 	  <ul class="carousel-indicators">
 	    <li data-target="#demo" data-slide-to="0" class="active"></li>
@@ -20,21 +20,21 @@
 	  </ul>
 	  <div class="carousel-inner">
 	    <div class="carousel-item active">
-	      <img src="<c:url value="/resources/img/anyoujin.jpg"/>" alt="Los Angeles" width="1100" height="500">
+	      <img src="<c:url value="/resources/img/anyoujin.jpg"/>" style="border-radius : 10%" alt="an1" width="1100" height="500">
 	      <div class="carousel-caption">
 	        <h3>안유진 존예</h3>
 	        <p>Jonn.yeah</p>
 	      </div>   
 	    </div>
 	    <div class="carousel-item">
-	      <img src="<c:url value="/resources/img/anyoujin2.jpg"/>" alt="Chicago" width="1100" height="500">
+	      <img src="<c:url value="/resources/img/anyoujin2.jpg"/>" style="border-radius : 10%" alt="an2" width="1100" height="500">
 	      <div class="carousel-caption">
 	        <h3>안유진 여신</h3>
 	        <p>QueenYouJin</p>
 	      </div>   
 	    </div>
 	    <div class="carousel-item">
-	      <img src="<c:url value="/resources/img/anyoujin3.jpg"/>" alt="New York" width="1100" height="500">
+	      <img src="<c:url value="/resources/img/anyoujin3.jpg"/>" style="border-radius : 10%" alt="an3" width="1100" height="500">
 	      <div class="carousel-caption">
 	        <h3>안유진 인정</h3>
 	        <p>MS.An, submit</p>
@@ -47,6 +47,60 @@
 	  <a class="carousel-control-next" href="#demo" data-slide="next">
 	    <span class="carousel-control-next-icon"></span>
 	  </a>
+	</div>
+	
+	<div class="container-fluid">
+	  <br>
+	  <h3>클래스 둘러보기</h3>
+	</div>
+	
+	<nav class="navbar navbar-expand-sm bg-white navbar-white sticky-top">
+	  <a class="navbar-brand text-dark" href="#">전체</a>
+	  <ul class="navbar-nav">
+	    <li class="nav-item">
+	      <a class="nav-link text-muted" href="#">영어</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link text-muted" href="#">프로그래밍</a>
+	    </li>
+	  </ul>
+	</nav>
+	
+	<div class="container-fluid">
+	  <div class="card p-2 ml-10" style="width:200px">
+	    <div class="card-body">
+	      <h4 class="card-title">클래스1</h4>
+	      <p class="card-text">클래스 설명</p>
+	      <a href="#" class="btn btn-primary">바로가기</a>
+	    </div>
+	    <div class="card-body">
+	      <h4 class="card-title">클래스2</h4>
+	      <p class="card-text">클래스 설명</p>
+	      <a href="#" class="btn btn-primary">바로가기</a>
+	    </div>
+	    <div class="card-body">
+	      <h4 class="card-title">클래스3</h4>
+	      <p class="card-text">클래스 설명</p>
+	      <a href="#" class="btn btn-primary">바로가기</a>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="container mt-3">
+	  <h2>Responsive Embed</h2>
+	  <p>Create a responsive video and scale it nicely to the parent element.</p>
+	  
+	  <h2>Aspect ratio 4:3</h2>
+	  <div class="embed-responsive embed-responsive-4by3">
+	    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+	  </div> 
+	  <br>
+	  
+	  <h2>Aspect ratio 16:9</h2>
+	  <div class="embed-responsive embed-responsive-16by9">
+	    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+	  </div>
+	  <br>
 	</div>
 	
 	<h3>실시간 인기 클래스</h3>

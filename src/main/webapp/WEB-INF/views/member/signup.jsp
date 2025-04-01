@@ -142,7 +142,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           justify-content: center;
         }
       }
-
+      
     </style>
   </head>
 
@@ -175,7 +175,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
             <div id="form-controls">
               <button type="submit">Sign Up</button>
-              <button type="button" id="toggleSignIn">Sign In</button>
+              <button type="button" id="toggleSignIn">Login</button>
             </div>
 
             <input type="checkbox" name="terms" id="terms" />
@@ -210,16 +210,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
          
             <div id="form-controls">
               <div>
-                <button type="submit">Sign In</button>
+                <button type="submit">Login</button>
               </div>
               <div>
                 <button type="button" id="toggleSignUp">Sign Up</button>
               </div>
               <div>
                 <a class="p-2" href="<c:url value="/kakao/login"/>">
+                	<img src="<c:url value='/resources/static/kakao_login_medium_narrow.png' />" alt="카카오 로그인" style="height:35px">
+              	</a>
               </div>                 
-                <img src="<c:url value='/resources/static/kakao_login_medium_narrow.png' />" alt="카카오 로그인" style="height:35px" ma>
-              </a>
             </div>
          
             <input type="checkbox" name="terms" id="terms" />
@@ -246,7 +246,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     </div>
 
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <script type="text/JavaScript" src="./my-script.js"></script>
     <script type="text/javascript">
       const signInBtn = document.querySelector("#toggleSignIn");
       const signUpBtn = document.querySelector("#toggleSignUp");

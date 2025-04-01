@@ -26,5 +26,12 @@ public class MemberServiceImp implements MemberService{
 	public void insertMember(MemberVO member) {
 		 memberDao.insertMember(member);
 		
+	}
+
+
+	@Override
+	public void OnlineMember(MemberVO member) {
+		memberDao.onlineMember(member);
+		
 	};
 }

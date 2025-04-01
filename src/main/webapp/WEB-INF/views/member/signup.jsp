@@ -140,7 +140,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           justify-content: center;
         }
       }
-
+		.error,.red{ 
+			color : red; 
+			font-size: 12px;
+		 	margin-top: 5px;
+		}
+		.green{ 
+			color : green; 
+			font-size: 12px;
+			margin-top: 5px;
+		}
     </style>
 
   </head>
@@ -151,12 +160,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- Sign up form -->
         <div id="sign-up-container">
           <h3>Get Started</h3>
-          <form action="<c:url value="/signup"/>" method="post">
-            <label for="name">Name</label>
-            <input type="text" name="me_name" id="me_name" placeholder="Name" />
-
+          <form id="f1" action="<c:url value="/signup"/>" method="post">
+          	
+       		<label for="name">Name</label>
+          	<input type="text" name="me_name" id="name" placeholder="Name" />
+            <br>
             <label for="name">ID</label>
-            <input type="text" name="me_id" id="me_id" placeholder="아이디를 입력하세요" />
+            <input type="text" name="me_id" id="id" placeholder="아이디를 입력하세요" />
+			<label id="checkId" class="error"></label>
+			
+			<br>
 			
 			<label for="password">Password</label>
             <input
@@ -165,16 +178,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               id="me_pw"
               placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
             />
-			
+			<br>
 			<label for="name">닉네임</label>
-            <input type="text" name="me_nick" id="me_nick" placeholder="닉네임을 입력하세요"/>
-            
+            <input type="text" name="me_nick" id="nick" placeholder="닉네임을 입력하세요"/>
+            <br>
             <label for="email">Email</label>
-            <input type="email" name="me_email" id="me_email" placeholder="Email" />
-            	
+            <input type="text" name="me_email" id="email" placeholder="Email" />
+            <br>	
             <label for="name">전화번호</label>
-            <input type="text" name="me_number" id="me_number" placeholder="-를 제외한 전화번호를 입력하세요"/>
-			
+            <input type="text" name="me_number" id="number" placeholder="-를 제외한 전화번호를 입력하세요"/>
+			<br>
             <div id="form-controls">
               <button type="submit">Sign Up</button>
               <button type="button" id="toggleSignIn">Sign In</button>
@@ -188,11 +201,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- Sign in form -->
         <div id="sign-in-container" class="hide">
           <h3>Welcome Back</h3>
-          <form action="<c:url value="/login"/>" method="post">
+          <form  id="f2" action="<c:url value="/login"/>" method="post">
             <label for="username">ID</label>
             <input
               type="text"
-              name="username"
+              name="me_id"
               id="username"
               placeholder="user@example.com"
             />
@@ -200,7 +213,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <label for="password">Password</label>
             <input
               type="password"
-              name="password"
+              name="me_pw"
               id="password"
               placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
             />
@@ -229,8 +242,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       </div>
     </div>
 
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <script type="text/JavaScript" src="./my-script.js"></script>
+   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    
     <script type="text/javascript">
       const signInBtn = document.querySelector("#toggleSignIn");
       const signUpBtn = document.querySelector("#toggleSignUp");
@@ -254,5 +267,113 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         changeForm(signUpForm, signInForm);
       });
     </script>
+    <!-- 정규 표현식 -->
+    <script type="text/javascript">
+		//아이디
+		$("#id").on("input",function(e){
+			checkId();
+		});
+		function checkId(){
+			//입력한 아이디를 가져옴
+			$("#checkId").text("");
+			let id = $("#id").val();
+
+			if(!/^[a-zA-Z0-9]{3,13}$/.test(id)){
+				return false;
+			}
+			
+			let res = false;
+			//비동기 통신으로 아이디를 전송하고, 서버에서 보낸 결과를 이용하여 처리
+			$.ajax({
+				async : false, 
+				url : '<c:url value="/check/id"/>', 
+				type : 'post', 
+				data : { id : id }, 
+				success : function (data){
+					if(data){
+						res = true;	
+					}
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+
+				}
+			});
+			let str;
+			if(res){
+				str = "사용 가능한 아이디입니다.";
+				$("#checkId").addClass("green");
+				$("#checkId").removeClass("red");
+			}else{
+				str = "이미 사용중인 아이디입니다.";
+				$("#checkId").addClass("red");
+				$("#checkId").removeClass("green");
+			}
+			$("#checkId").text(str);
+			return res;
+		}
+		
+		$("#f1").validate({
+			rules : {
+				me_id : {
+					required : true,
+					regex : /^[a-zA-Z0-9]{3,13}$/
+				},
+				me_name : {
+					required : true,
+					regex : /^(?!\s*$).+/ 
+				},
+				me_pw : {
+					required : true,
+					regex : /^[a-zA-Z0-9!@#$]{3,15}$/
+				},
+				me_nick : {
+					required : true,
+					regex : /^[a-zA-Z0-9가-힣]{2,10}$/
+				},
+				me_email : {
+					required : true,
+					email : true
+				},
+				me_number : {
+					required : true,
+					regex : /^010-\d{4}-\d{4}$/
+				}
+			},
+			messages : {
+				me_id : {
+					required : "필수 항목입니다.",
+					regex : "아이디는 영문, 숫자만 가능하며, 3~13자입니다."
+				},
+				me_name : {
+					required : "필수 항목입니다.",
+					regex : "이름이 비어있습니다"
+				},
+				me_pw : {
+					required : "필수 항목입니다.",
+					regex : "비번은 영문, 숫자,특수문자(!@#$)만 가능하며, 3~15자입니다."
+				},
+				me_nick : {
+					required : "필수 항목입니다.",
+					regex : "닉네임은 특수문자를 제외한 두글자 이상입니다"
+				},
+				me_email : {
+					required : "필수 항목입니다.",
+					email : "이메일 형식이 아닙니다."
+				},
+				me_number : {
+					required : "필수 항목입니다.",
+					regex : "전화번호를 올바르게 적어주세요"
+				}
+			},
+			//유효성 검사 체크 후 전송하기 직전에 확인하고 싶을 때 사용. return true 전송
+			submitHandler : function(){
+				return checkId();
+			}
+		})
+		$.validator.addMethod("regex", function(value, element, regex){
+			var re = new RegExp(regex);
+			return this.optional(element) || re.test(value);
+		}, "정규표현식을 확인하세요.");
+	</script>
   </body>
 </html>

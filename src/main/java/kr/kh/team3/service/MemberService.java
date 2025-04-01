@@ -11,4 +11,6 @@ public interface MemberService {
 	void insertMember(MemberVO member);
 
 	public boolean insertSingup(MemberVO member);
+
+	public boolean checkId(String id);
 }

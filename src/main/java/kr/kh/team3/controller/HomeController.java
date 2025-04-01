@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.MemberVO;
@@ -43,16 +44,30 @@ public class HomeController {
 	@PostMapping("/signup")
 	public String signup(Model model,MemberVO member) {
 		if(memberService.insertSingup(member)) {
-			System.out.println("로그인 성공");
-			return "/member/signup";
+			model.addAttribute("url", "/");
+			model.addAttribute("msg", "회원 가입에 성공했습니다.");
+		}else {
+			model.addAttribute("url", "/signup?id=" + member.getMe_id());
+			model.addAttribute("msg", "회원 가입에 실패했습니다.");
 		}
-		System.out.println("로그인 실패");
-		return "/member/signup";
+		return "message";
 	}
 	@PostMapping("/login")
-	public String loginPost(@RequestParam("username") String username,
-            @RequestParam("password") String password , Model model) {
-		System.out.println(username +" : "+password);
+	public String loginPost(MemberVO member , Model model) {
+		System.out.println(member.getMe_id()+" : "+ member.getMe_pw());
 		return "redirect:/";
 	}
+	
+	@ResponseBody
+	@PostMapping("/check/id")
+	public boolean checkId(@RequestParam("id") String id){
+		if(memberService.checkId(id)) {
+			System.out.println("가능한 아이디");
+			return memberService.checkId(id);
+		}
+		System.out.println("아이디 중복");
+		return memberService.checkId(id);
+	}
+	
+	
 }

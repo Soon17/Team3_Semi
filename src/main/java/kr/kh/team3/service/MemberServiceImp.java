@@ -34,6 +34,7 @@ public class MemberServiceImp implements MemberService{
 	@Override
 	public boolean insertSingup(MemberVO member) {
 		if(member == null) return false;
+		System.out.println(member.getMe_pw());
 		String encPw = passwordEncoder.encode(member.getMe_pw());
 		member.setMe_pw(encPw);
 		try {
@@ -43,5 +44,11 @@ public class MemberServiceImp implements MemberService{
 			//e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public boolean checkId(String id) {
+		MemberVO user = memberDao.selectMember(id);
+		return user == null;
 	};
 }

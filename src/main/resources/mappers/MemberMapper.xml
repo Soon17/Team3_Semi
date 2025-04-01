@@ -21,7 +21,14 @@
 			#{member.me_online}, #{member.me_del}, #{member.me_profile}
 		)
     </insert>
-    <insert id="onlineMember" parameterType="kr.kh.team3.model.vo.MemberVO">
     
-    </insert>
+    <update id="onlineMember" parameterType="kr.kh.team3.model.vo.MemberVO">
+    	update member set ME_ONLINE = 'Y'
+    	where me_id = #{member.me_id}
+    </update>
+    
+    <update id="offlineMember" parameterType="kr.kh.team3.model.vo.MemberVO">
+    	update member set ME_ONLINE = 'N'
+    	where me_id = #{member.me_id}
+    </update>
 </mapper>

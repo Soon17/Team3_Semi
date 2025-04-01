@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.servlet.http.HttpSession;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.MemberService;
@@ -104,11 +108,29 @@ public class KakaoLoginController {
 	        
 	        member.setMe_pw("kakao"); //not null이라 넣음
         
-            memberService.insertMember(member);
-            member = memberService.getMemberId(meid);         
+            memberService.insertMember(member);         
         } 
-        memberService.OnlineMember(member);
+        memberService.onlineMember(member);
         session.setAttribute("member", member);
+        
+	    // 로그인될 때 타이머를 설정
+	    Timer timer = new Timer();
+	    timer.schedule(new TimerTask() {
+	    	
+        public void run() {
+        	// 세션이 만료되기 직전 확인
+            if (session != null && session.getAttribute("member") != null) {
+                MemberVO member = (MemberVO) session.getAttribute("member");
+                if (member != null) {
+                    memberService.offlineMember(member); // 온라인 N 처리
+                    System.out.println("N 처리 완료");
+                }
+            } else {
+                // 세션이 이미 만료된 경우
+                System.out.println("세션이 만료되었습니다.");
+            }
+        }
+	    }, (session.getMaxInactiveInterval() - 1) * 1000); // 세션 만료 10초 전 처리
         return "redirect:/"; // 홈으로 이동
     }
 }

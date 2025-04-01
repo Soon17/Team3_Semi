@@ -10,5 +10,8 @@ public interface MemberService {
     
 	void insertMember(MemberVO member);
 
-	void OnlineMember(MemberVO member);
+	void onlineMember(MemberVO member);
+	
+	void offlineMember(MemberVO member);
+
 }

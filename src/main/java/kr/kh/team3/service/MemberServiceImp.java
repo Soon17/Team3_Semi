@@ -30,8 +30,14 @@ public class MemberServiceImp implements MemberService{
 
 
 	@Override
-	public void OnlineMember(MemberVO member) {
+	public void onlineMember(MemberVO member) {
 		memberDao.onlineMember(member);
+		
+	}
+
+	@Override
+	public void offlineMember(MemberVO member) {
+		memberDao.offlineMember(member);
 		
 	};
 }

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team3.model.vo.CategoryVO;
+import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.CategoryService;
+import kr.kh.team3.service.MemberService;
 import lombok.extern.log4j.Log4j;
 
 /**
@@ -24,6 +26,9 @@ public class HomeController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@GetMapping("/")
 	public String home(Model model) {
@@ -46,7 +51,13 @@ public class HomeController {
 	}
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-	    session.removeAttribute("member");
-	    return "redirect:/";
+		MemberVO member = (MemberVO) session.getAttribute("member");
+
+	    if (member != null) {
+	    	memberService.offlineMember(member); // 온라인N으로 변경
+	    }
+
+	    session.removeAttribute("member"); // 세션 제거
+	    return "redirect:/"; // 홈으로 이동
 	}
 }

@@ -12,4 +12,6 @@ public interface MemberDAO {
 	void insertMember(@Param("member")MemberVO member);
 
 	void onlineMember(@Param("member")MemberVO member);
+	
+	void offlineMember(@Param("member")MemberVO member);
 }

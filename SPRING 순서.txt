@@ -1,0 +1,15 @@
+기능을 추가할 컨트롤러 생성
+서비스 인터페이스 생성
+서비스 구현클래스 생성(@Service 추가)
+DAO 생성
+매퍼 복붙해서 생성, 내용 싹 지우고 namespace 변경
+컨트롤러에 @Autowired 서비스
+서비스 구현클래스에 @Autowired DAO
+#혹시나 이상이 없는데 오류가 안 사라진다면 Alt+f5로 재가동
+VO 생성
+mybatis-config에 typeAliases 추가
+
+기능이 시작될 jsp파일 부분부터 코드 작성
+
+
+동기 비동기는 일부만 업데이트하면 될 때 사용

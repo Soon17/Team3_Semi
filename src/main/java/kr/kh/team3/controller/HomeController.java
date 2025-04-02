@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.MemberVO;
@@ -43,11 +44,15 @@ public class HomeController {
 		return "/member/signup";
 	}
 	@PostMapping("/signup")
-	public String signupPost(@RequestParam("username") String username,
-            @RequestParam("password") String password , Model model) {
-		System.out.println(username +" : "+ password);
-		
-		return "/member/signup";
+	public String signup(Model model,MemberVO member) {
+		if(memberService.insertSingup(member)) {
+			model.addAttribute("url", "/");
+			model.addAttribute("msg", "회원 가입에 성공했습니다.");
+		}else {
+			model.addAttribute("url", "/signup?id=" + member.getMe_id());
+			model.addAttribute("msg", "회원 가입에 실패했습니다.");
+		}
+		return "message";
 	}
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -60,4 +65,31 @@ public class HomeController {
 	    session.removeAttribute("member"); // 세션 제거
 	    return "redirect:/"; // 홈으로 이동
 	}
+	
+	
+	@PostMapping("/login")
+	public String loginPost(Model model, MemberVO member) {
+		MemberVO user = memberService.login(member);
+		
+		model.addAttribute("user", user);
+		if(user == null) {
+			return "redirect:/signup";
+		}
+		return "redirect:/";
+	}
+
+	
+	
+	@ResponseBody
+	@PostMapping("/check/id")
+	public boolean checkId(@RequestParam("id") String id){
+		if(memberService.checkId(id)) {
+			System.out.println("가능한 아이디");
+			return memberService.checkId(id);
+		}
+		System.out.println("아이디 중복");
+		return memberService.checkId(id);
+	}
+	
+	
 }

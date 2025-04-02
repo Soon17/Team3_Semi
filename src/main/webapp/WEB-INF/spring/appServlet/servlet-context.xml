@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	<context:property-placeholder location="/WEB-INF/spring/config.properties" />
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -36,5 +36,11 @@
 	    </beans:property>
 	</beans:bean>
 	
+	<beans:bean id="clientId" class="java.lang.String">
+		<beans:constructor-arg value="${kakao.client-id}"/>
+	</beans:bean>
 	
+	<beans:bean id="redirectUri" class="java.lang.String">
+		<beans:constructor-arg value="d:\\uploads"/>
+	</beans:bean>
 </beans:beans>

@@ -14,13 +14,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			width: 300px;
 		}
 		
-		.css-login {
+		 .css-login {
 			
 			text-align: left;
 			color: rgb(12, 12, 12);
 			-webkit-text-fill-color: rgb(12, 12, 12);
-			font-size: 0.875rem;
-			line-height: 1.125rem;
+			 font-size: 0.875rem;
+			line-height: 1.125rem; 
 			font-weight: bold;
 			
 		}
@@ -85,13 +85,35 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 						src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
 				</form>
 			</div>
+			<c:if test="${sessionScope.member.me_authority eq 'ADMIN'}">
+				<div>
+					<ul class="navbar-nav">
+						<!-- Dropdown -->
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="navbardrop"
+							data-toggle="dropdown">관리자 전용</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
+								<a class="dropdown-item" href="<c:url value='#'/>">강의 요청 리스트</a>
+								<a class="dropdown-item" href="<c:url value='#'/>">회원 리스트</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</c:if>
+			<c:if test="${sessionScope.member.me_authority eq 'USER'}">
+				<div>
+					<a>유저야</a>
+				</div>
+			</c:if>
+			<c:if test="${sessionScope.member.me_authority eq 'TEACHER'}">
+				<div>
+					<a>강사야</a>
+				</div>
+			</c:if>
 		</div>
-		<c:if test="${sessionScope.member.me_authority eq 'ADMIN'}">
-			<div>
-				<a>어드민이야</a>
-			</div>
-		</c:if>
-		<div>
+		
+		<div class="d-flex">
 			<c:choose>
 				<c:when test="${not empty sessionScope.member}">
 					

@@ -21,10 +21,16 @@
 			#{member.me_online}, #{member.me_del}, #{member.me_profile}
 		)
     </insert>
-    <insert id="onlineMember" parameterType="kr.kh.team3.model.vo.MemberVO">
+  
     
-    </insert>
+    
     <select id="selectLogin" resultType="MemberVO">
     	select * from member where me_id = #{me_id} and me_pw = #{me_pw}
     </select>
+	
+   
+    <insert id="insertSignup">
+    	insert into member(me_name,me_id,me_pw,me_nick,me_email,me_number)
+		values("${member.me_name}","${member.me_id}","${member.me_pw}","${member.me_nick}","${member.me_email}","${member.me_number}");
+    </insert>
 </mapper>

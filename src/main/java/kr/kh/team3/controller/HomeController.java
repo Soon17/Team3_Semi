@@ -44,11 +44,15 @@ public class HomeController {
 		return "/member/signup";
 	}
 	@PostMapping("/signup")
-	public String signupPost(@RequestParam("username") String username,
-            @RequestParam("password") String password , Model model) {
-		System.out.println(username +" : "+ password);
-		
-		return "/member/signup";
+	public String signup(Model model,MemberVO member) {
+		if(memberService.insertSingup(member)) {
+			model.addAttribute("url", "/");
+			model.addAttribute("msg", "회원 가입에 성공했습니다.");
+		}else {
+			model.addAttribute("url", "/signup?id=" + member.getMe_id());
+			model.addAttribute("msg", "회원 가입에 실패했습니다.");
+		}
+		return "message";
 	}
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -56,10 +60,7 @@ public class HomeController {
 	    return "redirect:/";
 	}
 	
-	@GetMapping("/login")
-	public String login() {
-		return "/member/login";
-	}
+
 	
 	@PostMapping("/login")
 	public String loginPost(Model model, MemberVO member) {
@@ -72,4 +73,18 @@ public class HomeController {
 		return "redirect:/";
 	}
 
+	
+	
+	@ResponseBody
+	@PostMapping("/check/id")
+	public boolean checkId(@RequestParam("id") String id){
+		if(memberService.checkId(id)) {
+			System.out.println("가능한 아이디");
+			return memberService.checkId(id);
+		}
+		System.out.println("아이디 중복");
+		return memberService.checkId(id);
+	}
+	
+	
 }

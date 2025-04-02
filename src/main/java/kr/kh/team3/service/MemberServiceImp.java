@@ -58,6 +58,19 @@ public class MemberServiceImp implements MemberService{
 		System.out.println("다 일치");
 		//아이디 비번이 다 일치할 때
 		return user;
+	@Override
+	public boolean insertSingup(MemberVO member) {
+		if(member == null) return false;
+		System.out.println(member.getMe_pw());
+		String encPw = passwordEncoder.encode(member.getMe_pw());
+		member.setMe_pw(encPw);
+		try {
+			//가입된 아이디로 가입한 경우.
+			return memberDao.insertSignup(member);
+		}catch(Exception e) {
+			//e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override

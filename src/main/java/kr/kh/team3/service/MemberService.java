@@ -13,6 +13,7 @@ public interface MemberService {
 	void OnlineMember(MemberVO member);
 
 	public MemberVO login(MemberVO member);
+	public boolean insertSingup(MemberVO member);
 
 	public boolean checkId(String id);
 }

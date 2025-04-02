@@ -13,14 +13,28 @@
 	
 	<insert id="insertMember" parameterType="kr.kh.team3.model.vo.MemberVO">
 		INSERT INTO member (
-			me_name, me_id, me_pw, me_nick, me_email, me_number, me_authority, me_online,
-			me_del, me_profile
+			me_name, me_id, me_pw, me_nick, me_email, me_number, me_online,
+			me_profile
 		) VALUES (
 			#{member.me_name}, #{member.me_id}, #{member.me_pw}, #{member.me_nick},
-			#{member.me_email}, #{member.me_number},
-			#{member.me_authority}, #{member.me_online}, #{member.me_del}, #{member.me_profile}
+			#{member.me_email}, #{member.me_number}, #{member.me_online}, #{member.me_profile}
 		)
     </insert>
+    
+    <update id="onlineMember" parameterType="kr.kh.team3.model.vo.MemberVO">
+    	update member set ME_ONLINE = 'Y'
+    	where me_id = #{member.me_id}
+    </update>
+    
+    <update id="offlineMember" parameterType="kr.kh.team3.model.vo.MemberVO">
+    	update member set ME_ONLINE = 'N'
+    	where me_id = #{member.me_id}
+    </update>
+  
+    <select id="selectLogin" resultType="kr.kh.team3.model.vo.MemberVO">
+    	select * from member where me_id = #{me_id} and me_pw = #{me_pw}
+    </select>
+	
     <insert id="insertSignup">
     	insert into member(me_name,me_id,me_pw,me_nick,me_email,me_number)
 		values("${member.me_name}","${member.me_id}","${member.me_pw}","${member.me_nick}","${member.me_email}","${member.me_number}");

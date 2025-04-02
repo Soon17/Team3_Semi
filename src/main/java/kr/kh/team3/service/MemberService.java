@@ -10,6 +10,12 @@ public interface MemberService {
     
 	void insertMember(MemberVO member);
 
+	void onlineMember(MemberVO member);
+	
+	void offlineMember(MemberVO member);
+
+	public MemberVO login(MemberVO member);
+	
 	public boolean insertSingup(MemberVO member);
 
 	public boolean checkId(String id);

@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.servlet.http.HttpSession;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.MemberService;
@@ -89,34 +93,44 @@ public class KakaoLoginController {
         String mephone = userJson.get("kakao_account").get("phone_number").asText(); // 전화번호
 
         // 3. 세션 저장
-        MemberVO member = new MemberVO();
-        member.setMe_id(meid);
-        member.setMe_nick(menick);
-        member.setMe_email(meemail);
-        member.setMe_profile(meprofile);    
-        member.setMe_name(mename);      
-        member.setMe_number(mephone);   
+        MemberVO member = memberService.getMemberId(meid);
+       
+        if (member == null) {
+        	
+	        member = new MemberVO();
+	        member.setMe_id(meid);
+	        member.setMe_nick(menick);
+	        member.setMe_email(meemail);
+	        member.setMe_profile(meprofile);    
+	        member.setMe_name(mename);      
+	        member.setMe_number(mephone); 
+	        member.setMe_authority(mephone);
+	        
+	        member.setMe_pw("kakao"); //not null이라 넣음
         
-        member.setMe_pw("kakao"); //not null이라 넣음
+            memberService.insertMember(member);         
+        } 
+        memberService.onlineMember(member);
         session.setAttribute("member", member);
         
-        MemberVO Member = memberService.getMemberId(meid);
-        if (Member == null) {
-            memberService.insertMember(member);
+	    // 로그인될 때 타이머를 설정
+	    Timer timer =  new Timer();
+	    timer.schedule(new TimerTask() {
+	    	
+        public void run() {
+        	// 세션이 만료되기 직전 확인
+            if (session != null && session.getAttribute("member") != null) {
+                MemberVO member = (MemberVO) session.getAttribute("member");
+                if (member != null) {
+                    memberService.offlineMember(member); // 온라인 N 처리
+                    System.out.println("N 처리 완료");
+                }
+            } else {
+                // 세션이 이미 만료된 경우
+                System.out.println("세션이 만료되었습니다.");
+            }
         }
-
-        
-        
-        System.out.println("===== [카카오 로그인 결과] =====");
-        System.out.println("ID : " + member.getMe_id());
-        System.out.println("실명 : " + member.getMe_name());
-        System.out.println("닉네임 : " + member.getMe_name());
-        System.out.println("이메일 : " + member.getMe_email());
-        System.out.println("전화번호 : " + member.getMe_number());
-        System.out.println("프로필사진 : " + member.getMe_profile());
-        System.out.println("=============================");
-        
-
+	    }, (session.getMaxInactiveInterval() - 4) * 1000); // 세션 만료 10초 전 처리
         return "redirect:/"; // 홈으로 이동
     }
 }

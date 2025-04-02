@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8" %> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,7 +9,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
     <style type="text/css">
-    	#form-container {
+    	
+      #form-container {
         padding: 60px 0; 
         display: flex;
         justify-content: center;
@@ -32,17 +34,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         width: 300px;
       }
 
-      #sign-up-container form input:not(:last-of-type),
-      #sign-in-container form input:not(:last-of-type) {
-        display: block;
-        margin-bottom: 20px;
-        border: 1px solid #e5e9f5;
-        background-color: #f6f7fa;
-        padding: 20px;
-        margin-top: 10px;
-        border-radius: 10px;
-        width: 150%;
-      }
+		#sign-up-container form input:not(:last-of-type),
+		#sign-in-container form input:not(:last-of-type) {
+		  display: block;
+		  margin-bottom: 20px;
+		  border: 1px solid #e5e9f5;
+		  background-color: #f6f7fa;
+		  padding: 20px;
+		  margin-top: 10px;
+		  border-radius: 10px;
+		  width: 150%;
+		}
 
       #form-controls {
         margin-bottom: 20px;
@@ -93,15 +95,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         border-radius: 4px;
         position: relative;
       }
-
-       /*#terms:checked:after {
-        content: "\2713";
-        color: #7369ab;
-        font-size: 24px;
-        position: absolute;
-        top: 0;
-        left: 3px;
-      } */
 
       label[for="terms"] {
         display: inline-block;
@@ -190,7 +183,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<br>
             <div id="form-controls">
               <button type="submit">Sign Up</button>
-              <button type="button" id="toggleSignIn">Sign In</button>
+              <button type="button" id="toggleSignIn">Login</button>
             </div>
 
             <input type="checkbox" name="terms" id="terms" />
@@ -217,14 +210,28 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               id="password"
               placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
             />
-
+           
+         
             <div id="form-controls">
-              <button type="submit">Sign In</button>
-              <button type="button" id="toggleSignUp">Sign Up</button>
+              <div>
+                <button type="submit">Login</button>
+              </div>
+              <div>
+                <button type="button" id="toggleSignUp">Sign Up</button>
+              </div>
+              <div>
+                <a class="p-2" href="<c:url value="/kakao/login"/>">
+                	<img src="<c:url value='/resources/static/kakao_login_medium_narrow.png' />" alt="카카오 로그인" style="height:35px">
+              	</a>
+              </div>                 
             </div>
-
+         
             <input type="checkbox" name="terms" id="terms" />
-            
+            <label for="terms"
+              >I agree to the
+              <a href="#" class="termsLink">Terms of service</a> and
+              <a href="#" class="termsLink">Privacy Policy</a>.</label
+            > 
           </form>
         </div>
 
@@ -242,8 +249,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       </div>
     </div>
 
-   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script type="text/javascript">
       const signInBtn = document.querySelector("#toggleSignIn");
       const signUpBtn = document.querySelector("#toggleSignUp");

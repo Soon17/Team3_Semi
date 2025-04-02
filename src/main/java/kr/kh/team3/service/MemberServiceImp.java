@@ -15,6 +15,7 @@ public class MemberServiceImp implements MemberService{
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	
 	@Override
 	public String getPw(String me_id) {
 		return memberDao.getPw(me_id);
@@ -31,6 +32,38 @@ public class MemberServiceImp implements MemberService{
 		
 	}
 
+
+	@Override
+	public void onlineMember(MemberVO member) {
+		memberDao.onlineMember(member);
+		
+	}
+
+	@Override
+	public void offlineMember(MemberVO member) {
+		memberDao.offlineMember(member);
+	}
+	
+	public MemberVO login(MemberVO member) {
+		if(member == null) {
+			return null;
+		}
+		MemberVO user = memberDao.selectMember(member.getMe_id());
+		//아이디가 일치하지 않을 때 
+		if(user == null) {
+			System.out.println("아이디 일치x");
+			return null;
+		}
+		//비번이 일치하지 않을 때
+		if(!passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
+			System.out.println("비번 일치x");
+			return null;
+		}
+		System.out.println("다 일치");
+		//아이디 비번이 다 일치할 때
+		return user;
+	}
+	
 	@Override
 	public boolean insertSingup(MemberVO member) {
 		if(member == null) return false;

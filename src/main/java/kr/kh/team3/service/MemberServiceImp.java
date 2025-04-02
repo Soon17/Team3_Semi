@@ -34,12 +34,16 @@ public class MemberServiceImp implements MemberService{
 
 
 	@Override
-	public void OnlineMember(MemberVO member) {
+	public void onlineMember(MemberVO member) {
 		memberDao.onlineMember(member);
 		
 	}
 
 	@Override
+	public void offlineMember(MemberVO member) {
+		memberDao.offlineMember(member);
+	}
+	
 	public MemberVO login(MemberVO member) {
 		if(member == null) {
 			return null;
@@ -59,6 +63,7 @@ public class MemberServiceImp implements MemberService{
 		//아이디 비번이 다 일치할 때
 		return user;
 	}
+	
 	@Override
 	public boolean insertSingup(MemberVO member) {
 		if(member == null) return false;

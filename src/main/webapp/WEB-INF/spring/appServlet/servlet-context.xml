@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	<context:property-placeholder location="/WEB-INF/spring/config.properties" />
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -23,17 +23,6 @@
 	
 	<context:component-scan base-package="kr.kh.team3.*" />
 	
-	<!-- 인터셉터 등록 -->
-	<beans:bean id="loginInterceptor" class="kr.kh.team3.interceptor.LoginInterceptor"/>
-	
-	<!-- 인터셉터 맵핑 -->
-	<interceptors>
-		<interceptor>
-			<mapping path="/login/"/>
-			<beans:ref bean="loginInterceptor"/>
-		</interceptor>
-	</interceptors>
-	
 	<beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 	    <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	    <beans:property name="order" value="1" /><!-- 순서를 우선으로 지정 -->
@@ -47,6 +36,11 @@
 	    </beans:property>
 	</beans:bean>
 	
+	<beans:bean id="clientId" class="java.lang.String">
+		<beans:constructor-arg value="${kakao.client-id}"/>
+	</beans:bean>
 	
+	<beans:bean id="redirectUri" class="java.lang.String">
+		<beans:constructor-arg value="d:\\uploads"/>
+	</beans:bean>
 </beans:beans>
-

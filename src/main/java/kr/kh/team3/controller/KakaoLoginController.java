@@ -105,7 +105,7 @@ public class KakaoLoginController {
 	        member.setMe_pw("kakao"); //not null이라 넣음
         
             memberService.insertMember(member);
-          
+            member = memberService.getMemberId(meid);         
         } 
         memberService.OnlineMember(member);
         session.setAttribute("member", member);

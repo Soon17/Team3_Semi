@@ -71,9 +71,5 @@ public class HomeController {
 		}
 		return "redirect:/";
 	}
-	@ResponseBody
-	@PostMapping("/check/id")
-	public boolean checkId(@RequestParam("id") String id){
-		return memberService.checkId(id);
-	}
+
 }

@@ -15,13 +15,18 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 		}
 		
 		.css-login {
+			
 			text-align: left;
 			color: rgb(12, 12, 12);
 			-webkit-text-fill-color: rgb(12, 12, 12);
 			font-size: 0.875rem;
 			line-height: 1.125rem;
-			font-weight: 400;
+			font-weight: bold;
+			
 		}
+		.css-login:hover {
+  			text-decoration: none;
+		}	
 		
 		.searchHolder {
 			width: 100%;
@@ -51,43 +56,49 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<nav
 		class="navbar navbar-expand-sm bg-light navbar-light justify-content-between">
 
-		<!-- Brand -->
-		<a class="navbar-brand" href="<c:url value="/"/>">로고이미지~</a>
-
-		<!-- Links -->
-		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link"
-				href="<c:url value="/"/>">클래스</a></li>
-
-			<!-- Dropdown -->
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" href="#" id="navbardrop"
-				data-toggle="dropdown"> 카테고리(드랍다운을 css로 클래스101 사이트처럼) </a>
-				<div class="dropdown-menu">
-					<c:forEach items="${list }" var="category">
-						<a class="dropdown-item" href="<c:url value='/category/${category.ca_num}'/>">
-						${category.ca_name}</a>
-					</c:forEach>
-				</div>
-			</li>
-		</ul>
-		<div class="search">
-			<form action="/search" method="GET">
-				<!-- 검색은  -->
-				<input type="text" name="query" class="searchHolder"
-					placeholder="관심주제, 클래스, 크리에이터 찾기"> <img id="search"
-					src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
-
-			</form>
+		<div class="justify-content-between d-flex">
+			<!-- Brand -->
+			<a class="navbar-brand" href="<c:url value="/"/>">로고이미지~</a>
+	
+			<!-- Links -->
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link"
+					href="<c:url value="/"/>">클래스</a></li>
+	
+				<!-- Dropdown -->
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbardrop"
+					data-toggle="dropdown"> 카테고리(드랍다운을 css로 클래스101 사이트처럼) </a>
+					<div class="dropdown-menu">
+						<c:forEach items="${list }" var="category">
+							<a class="dropdown-item" href="<c:url value='/category/${category.ca_num}'/>">
+							${category.ca_name}</a>
+						</c:forEach>
+					</div>
+				</li>
+			</ul>
+			<div class="search">
+				<form action="/search" method="GET">
+					<!-- 검색은  -->
+					<input type="text" name="query" class="searchHolder"
+						placeholder="관심주제, 클래스, 크리에이터 찾기"> <img id="search"
+						src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+				</form>
+			</div>
 		</div>
+		<c:if test="${sessionScope.member.me_authority eq 'ADMIN'}">
+			<div>
+				<a>어드민이야</a>
+			</div>
+		</c:if>
 		<div>
 			<c:choose>
 				<c:when test="${not empty sessionScope.member}">
-					<a href="/mypage" class="css-login">
- 						 <strong>${sessionScope.member.me_nick}</strong>님
-					</a>
+					
+					 <label class="css-login">${sessionScope.member.me_nick}</label>님
+					
 					<a href="<c:url value='/logout'/>" 
-						class="css-login" style="margin-left: 10px;"> 로그아웃
+						class="css-login" style="margin-left: 20px;"> 로그아웃
 					</a>
 				</c:when>
 				<c:otherwise>

@@ -46,10 +46,10 @@ public class HomeController {
 	@PostMapping("/signup")
 	public String signup(Model model,MemberVO member) {
 		if(memberService.insertSingup(member)) {
-			model.addAttribute("url", "/");
+			model.addAttribute("url", "/signup");
 			model.addAttribute("msg", "회원 가입에 성공했습니다.");
 		}else {
-			model.addAttribute("url", "/signup?id=" + member.getMe_id());
+			model.addAttribute("url", "/signup");
 			model.addAttribute("msg", "회원 가입에 실패했습니다.");
 		}
 		return "message";
@@ -68,13 +68,14 @@ public class HomeController {
 	
 	
 	@PostMapping("/login")
-	public String loginPost(Model model, MemberVO member) {
+	public String loginPost(Model model, MemberVO member, HttpSession session) {
 		MemberVO user = memberService.login(member);
 		
 		model.addAttribute("user", user);
 		if(user == null) {
 			return "redirect:/signup";
 		}
+		session.setAttribute("member", user);
 		return "redirect:/";
 	}
 

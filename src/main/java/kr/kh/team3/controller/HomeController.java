@@ -61,7 +61,6 @@ public class HomeController {
 	}
 	
 
-	
 	@PostMapping("/login")
 	public String loginPost(Model model, MemberVO member) {
 		MemberVO user = memberService.login(member);
@@ -73,8 +72,6 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-	
-	
 	@ResponseBody
 	@PostMapping("/check/id")
 	public boolean checkId(@RequestParam("id") String id){
@@ -85,6 +82,4 @@ public class HomeController {
 		System.out.println("아이디 중복");
 		return memberService.checkId(id);
 	}
-	
-	
 }

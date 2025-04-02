@@ -39,12 +39,14 @@ public class HomeController {
 		model.addAttribute("list",categoryList);
 		return "home";
 	}
+	
 	@GetMapping("/signup")
 	public String signup(Model model) {
 		List<CategoryVO> categoryList = categoryService.selectCateList();
 		model.addAttribute("list",categoryList);
 		return "/member/signup";
 	}
+	
 	@PostMapping("/signup")
 	public String signup(Model model,MemberVO member) {
 		if(memberService.insertSingup(member)) {
@@ -56,18 +58,16 @@ public class HomeController {
 		}
 		return "message";
 	}
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		MemberVO member = (MemberVO) session.getAttribute("member");
-
 	    if (member != null) {
 	    	memberService.offlineMember(member); // 온라인N으로 변경
 	    }
-
 	    session.removeAttribute("member"); // 세션 제거
 	    return "redirect:/"; // 홈으로 이동
 	}
-	
 	
 	@PostMapping("/login")
 	public String loginPost(Model model, MemberVO member, HttpSession session) {

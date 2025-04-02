@@ -6,8 +6,14 @@
 	<style>
 		/* Make the image fully responsive */
 		.carousel-inner img {
-		  width: 100%;
-		  height: 100%;
+			width: 100%;
+			height: 100%;
+		}
+		
+		.carousel-inner img {
+			border-radius : 10%;
+			width : 100%; height : 100%;
+			object-fit : cover
 		}
 	</style>
 </head>
@@ -19,22 +25,22 @@
 	    <li data-target="#demo" data-slide-to="2"></li>
 	  </ul>
 	  <div class="carousel-inner">
-	    <div class="carousel-item active">
-	      <img src="<c:url value="/resources/img/anyoujin.jpg"/>" style="border-radius : 10%" alt="an1" width="1100" height="500">
+	    <div class="carousel-item active" style="height: 500px; width: 1100px">
+	      <img src="<c:url value="/resources/img/anyoujin.jpg"/>" alt="an1">
 	      <div class="carousel-caption">
 	        <h3>안유진 존예</h3>
 	        <p>Jonn.yeah</p>
 	      </div>   
 	    </div>
-	    <div class="carousel-item">
-	      <img src="<c:url value="/resources/img/anyoujin2.jpg"/>" style="border-radius : 10%" alt="an2" width="1100" height="500">
+	    <div class="carousel-item" style="height: 500px;  width: 1100px">
+	      <img src="<c:url value="/resources/img/anyoujin2.jpg"/>" alt="an2">
 	      <div class="carousel-caption">
 	        <h3>안유진 여신</h3>
 	        <p>QueenYouJin</p>
 	      </div>   
 	    </div>
-	    <div class="carousel-item">
-	      <img src="<c:url value="/resources/img/anyoujin3.jpg"/>" style="border-radius : 10%" alt="an3" width="1100" height="500">
+	    <div class="carousel-item" style="height: 500px;  width: 1100px">
+	      <img src="<c:url value="/resources/img/anyoujin3.jpg"/>" alt="an3">
 	      <div class="carousel-caption">
 	        <h3>안유진 인정</h3>
 	        <p>MS.An, submit</p>
@@ -66,18 +72,22 @@
 	  </ul>
 	</nav>
 	
-	<div class="container-fluid">
-	  <div class="card p-2 ml-10" style="width:200px">
+	<div class="container-fluid d-flex" style="gap: 10px;">
+	  <div class="card p-2" style="width:300px !important; flex-shrink: 0;">
 	    <div class="card-body">
 	      <h4 class="card-title">클래스1</h4>
 	      <p class="card-text">클래스 설명</p>
 	      <a href="#" class="btn btn-primary">바로가기</a>
 	    </div>
+	  </div>
+	  <div class="card p-2" style="width:300px !important; flex-shrink: 0;">
 	    <div class="card-body">
 	      <h4 class="card-title">클래스2</h4>
 	      <p class="card-text">클래스 설명</p>
 	      <a href="#" class="btn btn-primary">바로가기</a>
 	    </div>
+	  </div>
+	  <div class="card p-2" style="width:300px !important; flex-shrink: 0;">
 	    <div class="card-body">
 	      <h4 class="card-title">클래스3</h4>
 	      <p class="card-text">클래스 설명</p>

@@ -114,7 +114,7 @@ public class KakaoLoginController {
         session.setAttribute("member", member);
         
 	    // 로그인될 때 타이머를 설정
-	    Timer timer = new Timer();
+	    Timer timer =  new Timer();
 	    timer.schedule(new TimerTask() {
 	    	
         public void run() {
@@ -130,7 +130,7 @@ public class KakaoLoginController {
                 System.out.println("세션이 만료되었습니다.");
             }
         }
-	    }, (session.getMaxInactiveInterval() - 1) * 1000); // 세션 만료 10초 전 처리
+	    }, (session.getMaxInactiveInterval() - 4) * 1000); // 세션 만료 10초 전 처리
         return "redirect:/"; // 홈으로 이동
     }
 }

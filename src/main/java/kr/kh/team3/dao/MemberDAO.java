@@ -12,4 +12,9 @@ public interface MemberDAO {
 	void insertMember(@Param("member")MemberVO member);
 
 	public boolean insertSignup(@Param("member")MemberVO member);
+
+	public void onlineMember(MemberVO member);
+
+	public void offlineMember(MemberVO member);
+
 }

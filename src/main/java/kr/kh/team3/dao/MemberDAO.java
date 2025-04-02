@@ -9,7 +9,7 @@ public interface MemberDAO {
 	
 	MemberVO selectMember(@Param("me_id")String me_id);
 	    
-	boolean insertMember(@Param("member")MemberVO member);
+	void insertMember(@Param("member")MemberVO member);
 
 	public boolean insertSignup(@Param("member")MemberVO member);
 }

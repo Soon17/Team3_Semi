@@ -111,4 +111,12 @@ public class HomeController {
 		System.out.println("아이디 중복");
 		return memberService.checkId(id);
 	}
+	
+	
+	
+	@GetMapping("/teachers")
+	public String showTeachers() {
+		return "/member/teachers";
+	}
+	
 }

@@ -115,7 +115,6 @@ public class HomeController {
 	}
 	
 	
-	
 	@GetMapping("/teachers")
 	public String showTeachers() {
 		return "/member/teachers";

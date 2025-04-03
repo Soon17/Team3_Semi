@@ -93,7 +93,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 							class="nav-link dropdown-toggle" href="#" id="navbardrop"
 							data-toggle="dropdown">관리자 전용</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
+								<a class="dropdown-item" href="<c:url value='/admin/request/teacher'/>">강사 요청 리스트</a>
 								<a class="dropdown-item" href="<c:url value='#'/>">강의 요청 리스트</a>
 								<a class="dropdown-item" href="<c:url value='#'/>">회원 리스트</a>
 							</div>

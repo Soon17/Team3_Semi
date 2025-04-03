@@ -1,11 +1,14 @@
 package kr.kh.team3.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team3.dao.MemberDAO;
 import kr.kh.team3.model.vo.MemberVO;
+import kr.kh.team3.pagination.MemberCriteria;
 
 @Service
 public class MemberServiceImp implements MemberService{
@@ -83,5 +86,25 @@ public class MemberServiceImp implements MemberService{
 	public boolean checkId(String id) {
 		MemberVO user = memberDao.selectMember(id);
 		return user == null;
-	};
+	}
+
+	@Override
+	public List<MemberVO> getMemberList(MemberCriteria cri) {
+		
+		return memberDao.selectMemberList(cri);
+	}
+
+	@Override
+	public boolean createMemberList(int me_num) {
+		
+		return memberDao.createMember(me_num);
+	}
+
+	@Override
+	public boolean clearMemberList(int me_num) {
+		
+		return memberDao.clearMember(me_num);
+	}
+
+
 }

@@ -70,7 +70,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 					class="nav-link dropdown-toggle" href="#" id="navbardrop"
 					data-toggle="dropdown"> 카테고리(드랍다운을 css로 클래스101 사이트처럼) </a>
 					<div class="dropdown-menu">
-						<c:forEach items="${list }" var="category">
+						<c:forEach items="${list2 }" var="category">
 							<a class="dropdown-item" href="<c:url value='/category/${category.ca_num}'/>">
 							${category.ca_name}</a>
 						</c:forEach>
@@ -95,7 +95,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
 								<a class="dropdown-item" href="<c:url value='#'/>">강의 요청 리스트</a>
-								<a class="dropdown-item" href="<c:url value='#'/>">회원 리스트</a>
+								<a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
 							</div>
 						</li>
 					</ul>

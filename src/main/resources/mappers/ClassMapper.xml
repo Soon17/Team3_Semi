@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team3.dao.ClassDAO">
+	<select id="getClassList" resultType="ClassVO">
+		select *,
+		(select me_name from member where me_num = cl_tc_me_num)as me_name from class where cl_able="요청"; 
+	</select>
+	<update id="updateAccept">
+		update `class` set cl_able = "Y" where cl_num = #{cl_num};
+	</update>
+	<update id="rejectAccept">
+		update `class` set cl_able = "N" where cl_num = #{cl_num};
+	</update>
+</mapper>

@@ -35,14 +35,12 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String home(Model model) {
-		List<CategoryVO> categoryList = categoryService.selectCateList();
-		model.addAttribute("list",categoryList);
+		
 		return "home";
 	}
 	@GetMapping("/signup")
 	public String signup(Model model) {
-		List<CategoryVO> categoryList = categoryService.selectCateList();
-		model.addAttribute("list",categoryList);
+		
 		return "/member/signup";
 	}
 	@PostMapping("/signup")
@@ -100,8 +98,6 @@ public class HomeController {
         return "redirect:/"; // 홈으로 이동
      
 	}
-
-	
 	
 	@ResponseBody
 	@PostMapping("/check/id")
@@ -114,11 +110,15 @@ public class HomeController {
 		return memberService.checkId(id);
 	}
 	
-	
-	
 	@GetMapping("/teachers")
 	public String showTeachers() {
 		return "/member/teachers";
 	}
 	
+	@PostMapping("/categoryList")
+	public String categoryList(Model model) {
+		List<CategoryVO> categoryList = categoryService.selectCateList();
+		model.addAttribute("list",categoryList);
+		return "/categorylist";
+	}
 }

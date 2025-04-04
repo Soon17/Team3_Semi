@@ -63,7 +63,7 @@ pageEncoding="UTF-8" %>
                         <td>${cl.me_name}</td>
                         <td>${cl.cl_tc_me_num}</td>
                         <td>
-						    <a href="/class/detail/${cl.cl_tc_me_num}">${cl.cl_title}</a>
+						    <a href="<c:url value="/admin/detail/${cl.cl_tc_me_num}"/>">${cl.cl_title}</a>
 						</td>
                         <td>
                             <!-- 수락 버튼 (초록색) -->

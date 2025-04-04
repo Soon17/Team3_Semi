@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,5 +52,12 @@ public class AdminController {
 	public String rejectRequest(@RequestParam int cl_num) {
 		classService.rejectRequest(cl_num);
 		return "redirect:/admin/requestClass";
+	}
+	@GetMapping("/detail/{cl_tc_me_num}")
+	public String detailCalss(Model model,@PathVariable("cl_tc_me_num") int cl_tc_me_num) {
+		ClassVO cl = classService.getClass(cl_tc_me_num);
+		System.out.println(cl);
+		model.addAttribute("cl",cl);
+		return "/admin/detail";
 	}
 }

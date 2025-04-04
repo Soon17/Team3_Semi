@@ -28,6 +28,12 @@ public class ClassServiceImp implements ClassService{
 		classDao.rejectAccept(cl_num);
 	}
 
+	@Override
+	public ClassVO getClass(int cl_tc_me_num) {
+		
+		return classDao.getClass(cl_tc_me_num);
+	}
+
 	
 	
 }

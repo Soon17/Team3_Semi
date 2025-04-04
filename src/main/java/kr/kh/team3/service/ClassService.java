@@ -12,5 +12,7 @@ public interface ClassService {
 
 	void rejectRequest(int cl_num);
 
+	ClassVO getClass(int cl_tc_me_num);
+
 
 }

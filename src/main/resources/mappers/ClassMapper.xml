@@ -13,4 +13,7 @@
 	<update id="rejectAccept">
 		update `class` set cl_able = "N" where cl_num = #{cl_num};
 	</update>
+	<select id="getClass" resultType="ClassVO">
+		select * from class where  cl_tc_me_num = #{cl_tc_me_num};
+	</select>
 </mapper>

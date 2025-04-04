@@ -14,4 +14,6 @@ public interface ClassDAO {
 
 	void rejectAccept(@Param("cl_num")int cl_num);
 
+	ClassVO getClass(@Param("cl_tc_me_num")int cl_tc_me_num);
+
 }

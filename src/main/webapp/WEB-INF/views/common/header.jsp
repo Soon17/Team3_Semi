@@ -53,6 +53,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	</style>
 </head>
 <body>
+
 	<nav
 		class="navbar navbar-expand-sm bg-light navbar-light justify-content-between">
 
@@ -85,7 +86,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 						src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
 				</form>
 			</div>
-			<c:if test="${sessionScope.member.me_authority eq 'ADMIN'}">
+			<c:if test="${sessionScope.user.me_authority eq 'ADMIN'}">
 				<div>
 					<ul class="navbar-nav">
 						<!-- Dropdown -->
@@ -101,12 +102,12 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 					</ul>
 				</div>
 			</c:if>
-			<c:if test="${sessionScope.member.me_authority eq 'USER'}">
+			<c:if test="${sessionScope.user.me_authority eq 'USER'}">
 				<div>
 					<a>유저야</a>
 				</div>
 			</c:if>
-			<c:if test="${sessionScope.member.me_authority eq 'TEACHER'}">
+			<c:if test="${sessionScope.user.me_authority eq 'TEACHER'}">
 				<div>
 					<a>강사야</a>
 				</div>
@@ -115,9 +116,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 		
 		<div class="d-flex">
 			<c:choose>
-				<c:when test="${not empty sessionScope.member}">
+				<c:when test="${not empty sessionScope.user}">
 					
-					 <label class="css-login">${sessionScope.member.me_nick}</label>님
+					 <label class="css-login">${sessionScope.user.me_nick}</label>님
 					
 					<a href="<c:url value='/logout'/>" 
 						class="css-login" style="margin-left: 20px;"> 로그아웃

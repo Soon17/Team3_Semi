@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberCriteria extends Criteria{
 
-	private int me_num;
+
 	private String me_name;
     private String me_id;
-    private String me_nick ;
+
     private String me_authority;
     private String me_del ;
 

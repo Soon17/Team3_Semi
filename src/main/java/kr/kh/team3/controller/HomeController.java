@@ -73,11 +73,15 @@ public class HomeController {
 	public String loginPost(Model model, MemberVO member, HttpSession session) {
 		MemberVO user = memberService.login(member);
 		
-		model.addAttribute("user", user);
 		if(user == null) {
 			return "redirect:/signup";
 		}
-		
+		if(user.getMe_del().equals("Y")) {
+			model.addAttribute("url", "/");
+			model.addAttribute("msg", "차단된 유저입니다.");
+			return "message";
+		}
+		model.addAttribute("user", user);
         return "redirect:/"; // 홈으로 이동
      
 	}

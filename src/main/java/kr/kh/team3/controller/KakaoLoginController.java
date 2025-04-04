@@ -95,8 +95,9 @@ public class KakaoLoginController {
         // 3. 세션 저장
         MemberVO member = memberService.getMemberId(meid);
        //가입 안되어 있으면 회원가입
+        
         if (member == null) {
-        	
+        	System.out.println(member);
 	        member = new MemberVO();
 	        member.setMe_id(meid);
 	        member.setMe_nick(menick);
@@ -110,30 +111,11 @@ public class KakaoLoginController {
         
             memberService.insertMember(member);       
             member = memberService.getMemberId(meid);
-        } 
-        
-        /*memberService.onlineMember(member);
-        session.setAttribute("member", member);
-        
-	    // 로그인될 때 타이머를 설정
-	    Timer timer =  new Timer();
-	    timer.schedule(new TimerTask() {
-	    	
-        public void run() {
-        	// 세션이 만료되기 직전 확인
-            if (session != null && session.getAttribute("member") != null) {
-                MemberVO member = (MemberVO) session.getAttribute("member");
-                if (member != null) {
-                    memberService.offlineMember(member); // 온라인 N 처리
-                    System.out.println("N 처리 완료");
-                }
-            } else {
-                // 세션이 이미 만료된 경우
-                System.out.println("세션이 만료되었습니다.");
-            }
+        } else if(member.getMe_del().equals("Y")) {
+        	model.addAttribute("url", "/");
+			model.addAttribute("msg", "차단된 유저입니다.");
+        	return "message";
         }
-	    }, (session.getMaxInactiveInterval() - 4) * 1000); // 세션 만료 10초 전 처리
-	    */
         model.addAttribute("user", member);
         return "redirect:/"; // 홈으로 이동
     }

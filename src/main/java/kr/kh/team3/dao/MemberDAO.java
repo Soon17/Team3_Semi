@@ -18,7 +18,7 @@ public interface MemberDAO {
 	
 	void offlineMember(@Param("member")MemberVO member);
 
-	public MemberVO selectLogin(@Param("me_id")String me_id, @Param("me_pw")String me_pw);
+	public MemberVO selectLogin(@Param("me_id")String me_id);
 
 	public boolean insertSignup(@Param("member")MemberVO member);
 

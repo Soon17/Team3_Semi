@@ -51,18 +51,15 @@ public class MemberServiceImp implements MemberService{
 		if(member == null) {
 			return null;
 		}
-		MemberVO user = memberDao.selectMember(member.getMe_id());
+		MemberVO user = memberDao.selectLogin(member.getMe_id());
 		//아이디가 일치하지 않을 때 
 		if(user == null) {
-			System.out.println("아이디 일치x");
 			return null;
 		}
 		//비번이 일치하지 않을 때
 		if(!passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
-			System.out.println("비번 일치x");
 			return null;
 		}
-		System.out.println("다 일치");
 		//아이디 비번이 다 일치할 때
 		return user;
 	}

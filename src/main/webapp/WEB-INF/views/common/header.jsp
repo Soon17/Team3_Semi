@@ -93,7 +93,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 							class="nav-link dropdown-toggle" href="#" id="navbardrop"
 							data-toggle="dropdown">관리자 전용</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="<c:url value='/admin/request/teacher'/>">강사 요청 리스트</a>
+								<a class="dropdown-item" href="<c:url value='/admin/request/creator'/>">강사 요청 리스트</a>
 								<a class="dropdown-item" href="<c:url value='#'/>">강의 요청 리스트</a>
 								<a class="dropdown-item" href="<c:url value='#'/>">회원 리스트</a>
 							</div>
@@ -103,7 +103,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			</c:if>
 			<c:if test="${sessionScope.member.me_authority eq 'USER'}">
 				<div>
-					<a>유저야</a>
+					<a href="<c:url value='/member/apply'/>">유저야</a>
 				</div>
 			</c:if>
 			<c:if test="${sessionScope.member.me_authority eq 'TEACHER'}">

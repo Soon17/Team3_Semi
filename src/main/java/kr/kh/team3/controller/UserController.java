@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.UserService;
@@ -25,9 +25,24 @@ public class UserController {
 	@GetMapping("/myPage")
 	public String myPage(Model model, HttpSession session) {
 		MemberVO user = (MemberVO) session.getAttribute("member");
-		System.out.println(user);
 	    List<Map<String, Object>> list = userService.getSubscribeList(user.getMe_num());
 	    model.addAttribute("subscribeList", list);
-	    return "/member/myPage";
+	    return "/user/myPage";
+	}
+	
+	@GetMapping("/user/loadData")
+	public String loadData(@RequestParam("type") String type, Model model, HttpSession session) {
+	    // 세션에서 로그인 유저 꺼냄
+	    MemberVO user = (MemberVO) session.getAttribute("member");
+	    
+	    if ("subs".equals(type)) {
+	        List<Map<String, Object>> list = userService.getSubscribeList(user.getMe_num());
+	        model.addAttribute("subscribeList", list);
+	        return "user/subscribe"; // 구독 목록 JSP
+	    } else if ("teacher".equals(type)) {
+	        return "user/teacher"; // 강사 신청 JSP
+	    } else {
+	        return "redirect:/myPage"; 
+	    }
 	}
 }

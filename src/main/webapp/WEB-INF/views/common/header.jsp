@@ -100,7 +100,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			</c:if>
 			<c:if test="${sessionScope.member.me_authority eq 'USER'}">
 				<div style="display: flex; align-items: center; height: 43px;">
-					<a href="<c:url value='/myPage'/>" style="margin-left: 10px; color: black; font-weight: bold;">
+					<a href="<c:url value='/myPage'/>" style="margin-left: 10px; color: black; font-weight: bold; text-decoration: none;">
 					마이 페이지</a>
 				</div>
 			</c:if>

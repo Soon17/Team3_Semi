@@ -35,7 +35,8 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String home(Model model) {
-		
+		List<CategoryVO> categoryList = categoryService.selectCateList();
+		model.addAttribute("list",categoryList);
 		return "home";
 	}
 	@GetMapping("/signup")

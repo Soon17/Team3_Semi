@@ -4,7 +4,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 	<head>
 	   <style type="text/css">
-	      
+	      .dropdown-menu.category-list.show{
+	      	width: 1448px !important;
+	      	height: 460px !important;
+	      }
 	      html, body  {
 	           scrollbar-gutter: stable;
 	      }
@@ -41,12 +44,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	         margin: 0;
 	      }
 	      
-	      .dropdown-menu {
-	         position: fixed; /* 화면에 고정 */
-	         left: 0;
-	         right: 0;
-	         width: 100vw;
-	      }
+	      
 	   </style>
 	</head>
 	<body>
@@ -66,7 +64,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	            <li class="nav-item dropdown"><a
 	               class="nav-link dropdown-toggle" href="#" id="navbardrop"
 	               data-toggle="dropdown"> 카테고리(드랍다운을 css로 클래스101 사이트처럼) </a>
-	               <div class="dropdown-menu categoty-list">
+	               <div class="dropdown-menu category-list">
 	                  
 	               </div>
 	            </li>
@@ -132,7 +130,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 				type : 'post', 
 				
 				success : function (data){
-					$(".categoty-list").html(data);
+					$(".category-list").html(data);
 				}
 			});
 	   </script>

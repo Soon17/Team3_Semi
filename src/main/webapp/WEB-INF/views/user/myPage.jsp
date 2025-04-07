@@ -6,15 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 	<div style="display: flex; min-height: 100vh;">
-		<div style="width: 200px; background-color: #f8f9fa; padding: 20px; border-right: 1px solid #ddd;">
+		<div style="width: 200px; background-color: white-space; padding: 20px;">
 			<h4>메뉴</h4>
 			<ul style="list-style: none; padding-left: 0;">
-				<li><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('subs')">구독 목록</a></li>
-				<li><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('teacher')">강사 신청</a></li>
+				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('subs')">구독 목록</a></li>				
+				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('teacher')">강사 신청</a></li>
 			</ul>	
 		</div>
 

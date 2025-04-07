@@ -3,10 +3,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<style type="text/css">
-		
+	<style type="text/css">		
 		html, body  {
  			 scrollbar-gutter: stable;
+ 			
 		}
 		
 		.search {
@@ -47,12 +47,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			right: 0;
 			width: 100vw;
 		}
+		
+		
+		
 	</style>
 </head>
-<body>
-	<nav
-		class="navbar navbar-expand-sm bg-light navbar-light justify-content-between">
-
+<body >
+	<nav class="navbar navbar-expand-sm navbar-light justify-content-between" style="background-color: white-space;">
+		
 		<div class="justify-content-between d-flex">
 			<!-- Brand -->
 			<a class="navbar-brand" href="<c:url value="/"/>">로고이미지~</a>

@@ -39,11 +39,13 @@ public class HomeController {
 		model.addAttribute("list",categoryList);
 		return "home";
 	}
+	
 	@GetMapping("/signup")
 	public String signup(Model model) {
 		
 		return "/member/signup";
 	}
+	
 	@PostMapping("/signup")
 	public String signup(Model model,MemberVO member) {
 		if(memberService.insertSingup(member)) {
@@ -55,51 +57,35 @@ public class HomeController {
 		}
 		return "message";
 	}
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		MemberVO member = (MemberVO) session.getAttribute("member");
-
+		MemberVO member = (MemberVO) session.getAttribute("user");
 	    if (member != null) {
 	    	memberService.offlineMember(member); // 온라인N으로 변경
 	    }
-
-	    session.removeAttribute("member"); // 세션 제거
+	    session.removeAttribute("user"); // 세션 제거
 	    return "redirect:/"; // 홈으로 이동
 	}
-	
 	
 	@PostMapping("/login")
 	public String loginPost(Model model, MemberVO member, HttpSession session) {
 		MemberVO user = memberService.login(member);
 		
-		model.addAttribute("user", user);
 		if(user == null) {
 			return "redirect:/signup";
 		}
-		session.setAttribute("member", user);
-		memberService.onlineMember(user);
-		
-		Timer timer =  new Timer();
-	    timer.schedule(new TimerTask() {
-	    	
-        public void run() {
-        	// 세션이 만료되기 직전 확인
-            if (session != null && session.getAttribute("member") != null) {
-                MemberVO member = (MemberVO) session.getAttribute("member");
-                if (member != null) {
-                    memberService.offlineMember(member); // 온라인 N 처리
-                    System.out.println("N 처리 완료");
-                }
-            } else {
-                // 세션이 이미 만료된 경우
-                System.out.println("세션이 만료되었습니다.");
-            }
-        }
-	    }, (session.getMaxInactiveInterval() - 4) * 1000); // 세션 만료 10초 전 처리
+		if(user.getMe_del().equals("Y")) {
+			model.addAttribute("url", "/");
+			model.addAttribute("msg", "차단된 유저입니다.");
+			return "message";
+		}
+		model.addAttribute("user", user);
         return "redirect:/"; // 홈으로 이동
      
 	}
-	
+
+
 	@ResponseBody
 	@PostMapping("/check/id")
 	public boolean checkId(@RequestParam("id") String id){

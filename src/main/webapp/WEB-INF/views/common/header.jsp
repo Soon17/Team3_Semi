@@ -118,7 +118,7 @@
 										<div class="dropdown-menu">
 											 <a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
 											 <a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
-											 <a class="dropdown-item" href="<c:url value='#'/>">회원 리스트</a>
+											 <a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
 										</div>
 								 </li>
 							</ul>

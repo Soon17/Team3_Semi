@@ -63,12 +63,11 @@
 	<nav class="navbar navbar-expand-sm bg-white navbar-white sticky-top">
 	  <a class="navbar-brand text-dark" href="#">전체</a>
 	  <ul class="navbar-nav">
-	    <li class="nav-item">
-	      <a class="nav-link text-muted" href="#">영어</a>
-	    </li>
-	    <li class="nav-item">
-	      <a class="nav-link text-muted" href="#">프로그래밍</a>
-	    </li>
+	  	<c:forEach items="${list }" var ="ca">
+	  		<li class="nav-item">
+	      		<a class="nav-link text-muted" href="#">${ca.ca_name }</a>
+	    	</li>
+	  	</c:forEach>
 	  </ul>
 	</nav>
 	
@@ -77,7 +76,6 @@
 	    <div class="card-body">
 	      <h4 class="card-title">클래스1</h4>
 	      <p class="card-text">클래스 설명</p>
-	      <a href="#" class="btn btn-primary">바로가기</a>
 	    </div>
 	  </div>
 	  <div class="card p-2" style="width:300px !important; flex-shrink: 0;">

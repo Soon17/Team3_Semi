@@ -1,6 +1,9 @@
 package kr.kh.team3.service;
 
+import java.util.List;
+
 import kr.kh.team3.model.vo.MemberVO;
+import kr.kh.team3.pagination.MemberCriteria;
 
 public interface MemberService {
 
@@ -19,4 +22,12 @@ public interface MemberService {
 	public boolean insertSingup(MemberVO member);
 
 	public boolean checkId(String id);
+
+	public List<MemberVO> getMemberList(MemberCriteria cri);
+
+	public boolean createMemberList(int me_num);
+
+	public boolean clearMemberList(int me_num);
+
+
 }

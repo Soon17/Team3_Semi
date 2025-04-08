@@ -151,7 +151,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <div id="form-container">
       <div id="form-inner-container">
         <!-- Sign up form -->
-        <div id="sign-up-container">
+        <div id="sign-up-container" class="hide">
           <h3>Get Started</h3>
           <form id="f1" action="<c:url value="/signup"/>" method="post">
           	
@@ -192,7 +192,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </div>
 
         <!-- Sign in form -->
-        <div id="sign-in-container" class="hide">
+        <div id="sign-in-container" >
           <h3>Welcome Back</h3>
           <form  id="f2" action="<c:url value="/login"/>" method="post">
             <label for="username">ID</label>

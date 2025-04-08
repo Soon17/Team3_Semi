@@ -1,5 +1,7 @@
 package kr.kh.team3.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -8,18 +10,16 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.servlet.http.HttpSession;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.MemberService;
 
@@ -47,7 +47,7 @@ public class KakaoLoginController {
 
     // 인가코드 받고 토큰 요청
     @GetMapping("/kakao/auth")
-    public String kakaoLogin(@RequestParam("code") String code, HttpSession session)throws Exception {
+    public String kakaoLogin(Model model, @RequestParam("code") String code, HttpSession session)throws Exception {
        
         RestTemplate restTemplate = new RestTemplate();
 
@@ -94,9 +94,10 @@ public class KakaoLoginController {
 
         // 3. 세션 저장
         MemberVO member = memberService.getMemberId(meid);
-       
+       //가입 안되어 있으면 회원가입
+        
         if (member == null) {
-        	
+        	System.out.println(member);
 	        member = new MemberVO();
 	        member.setMe_id(meid);
 	        member.setMe_nick(menick);
@@ -108,29 +109,14 @@ public class KakaoLoginController {
 	        
 	        member.setMe_pw("kakao"); //not null이라 넣음
         
-            memberService.insertMember(member);         
-        } 
-        memberService.onlineMember(member);
-        session.setAttribute("member", member);
-        
-	    // 로그인될 때 타이머를 설정
-	    Timer timer =  new Timer();
-	    timer.schedule(new TimerTask() {
-	    	
-        public void run() {
-        	// 세션이 만료되기 직전 확인
-            if (session != null && session.getAttribute("member") != null) {
-                MemberVO member = (MemberVO) session.getAttribute("member");
-                if (member != null) {
-                    memberService.offlineMember(member); // 온라인 N 처리
-                    System.out.println("N 처리 완료");
-                }
-            } else {
-                // 세션이 이미 만료된 경우
-                System.out.println("세션이 만료되었습니다.");
-            }
+            memberService.insertMember(member);       
+            member = memberService.getMemberId(meid);
+        } else if(member.getMe_del().equals("Y")) {
+        	model.addAttribute("url", "/");
+			model.addAttribute("msg", "차단된 유저입니다.");
+        	return "message";
         }
-	    }, (session.getMaxInactiveInterval() - 4) * 1000); // 세션 만료 10초 전 처리
+        model.addAttribute("member", member);
         return "redirect:/"; // 홈으로 이동
     }
 }

@@ -4,12 +4,18 @@
 <html>
 	<head>
 		<style type="text/css">
+	
 			.dropdown-menu.category-list.show{
-						width: 1448px !important;
-						height: 460px !important;
+				position: absolute;
+				top: 80px; /* 헤더 높이만큼 조정하세요! */
+				padding: 100px;
+				z-index: 9999;
+				background-color:white;
+				border :none;
 			}		
 			html, body  {
 				scrollbar-gutter: stable;
+				
 			}
 			
 			.search {
@@ -55,11 +61,25 @@
 				right: 0;
 				width: 100vw;
 			}
+			
+			.category-overlay {
+			  position: fixed;
+			  top: 0;
+			  left: 0;
+			  width: 100vw;
+			  height: 100vh;
+			  background-color: rgba(128, 128, 128, 0.5); /* 회색 반투명 */
+			  z-index: 1100;
+			  display: none;
+			  pointer-events: all;
+			}
+			
 		</style>
 	</head>
 	<body>
-	<nav class="navbar navbar-expand-sm navbar-light" style="background-color: white;">
-		<div class="container-fluid d-flex justify-content-center align-items-center" style="padding: 10px 0;">
+	<div id="overlay" class="category-overlay"></div>
+	<nav class="navbar navbar-expand-sm navbar-light" style="background-color: white;  z-index: 9999;">
+		<div class="container-fluid d-flex justify-content-center align-items-center" style="padding: 10px 0; ">
 	
 			<!-- 로고 -->
 			<a class="navbar-brand px-3 mr-4" href="<c:url value="/"/>">로고이미지~</a>
@@ -69,13 +89,11 @@
 				<li class="nav-item mr-3">
 					<a class="nav-link" href="<c:url value="/"/>">클래스</a>
 				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">카테고리</a>
-					<div class="dropdown-menu">
+				<li class="nav-item dropdown" style="position:static;">
+					<a class="nav-link dropdown-toggle ca" href="#" id="navbardrop" data-toggle="dropdown">카테고리</a>
 						<div class="dropdown-menu category-list">
 									
 						</div>
-					</div>
 				</li>
 			</ul>
 	
@@ -142,15 +160,40 @@
 		</div>
 	</nav>
 	<script type="text/javascript">
-		$.ajax({
-		 async : true,
-		 url : '<c:url value="/categoryList"/>', 
-		 type : 'post', 
-		 
-		 success : function (data){
-			 $(".category-list").html(data);
-		 }
-	 });
-	</script>
+	// 카테고리 리스트 비동기 로딩
+	$.ajax({
+		async: true,
+		url: '<c:url value="/categoryList"/>',
+		type: 'post',
+		success: function (data) {
+			console.log(data);
+			$(".category-list").html(data);
+		}
+	});
+
+		// 카테고리 버튼 클릭 시 토글
+		$('.ca').on('click', function (e) {
+			e.preventDefault(); // 기본 이벤트 막기
+			e.stopPropagation(); // 이벤트 버블링 차단 (중요!)
+		
+			const $overlay = $('#overlay');
+			const $dropdown = $('.dropdown-menu.category-list');
+		
+			if ($dropdown.hasClass('show')) {
+				$dropdown.removeClass('show');
+				$overlay.fadeOut(100);
+			} else {
+				$dropdown.addClass('show');
+				$overlay.fadeIn(100);
+			}
+		});
+		
+		// 오버레이 클릭 시 닫기
+		$('#overlay').on('click', function () {
+			$(this).fadeOut(100);
+			$('.dropdown-menu.category-list').removeClass('show');
+		});
+		</script>
+
 	</body>
 </html>

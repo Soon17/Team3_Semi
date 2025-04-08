@@ -29,7 +29,7 @@
 		</div>
 		<br>
 		-브렌단 프랜시스 (Brendan Francis)-<br>
-		<a href="<c:url />" class="btn btn-warning mt-5 btn-apply" style="height:50px">
+		<a href="<c:url value="/member/apply"/>" class="btn btn-warning mt-5 btn-apply" style="height:50px">
 			<b>크리에이터 지원하기
 		</a>		
 	</div>

@@ -125,7 +125,7 @@
 					 </div>
 					</c:when>
 					<c:when test="${sessionScope.member.me_authority eq 'USER'}">
-						<a class="nav-link" href="<c:url value='/myPage'/>">마이 페이지</a>
+						<a class="nav-link" href="<c:url value='/user/myPage'/>">마이 페이지</a>
 					</c:when>
 					<c:when test="${sessionScope.member.me_authority eq 'TEACHER'}">
 						<a class="nav-link">강사야</a>

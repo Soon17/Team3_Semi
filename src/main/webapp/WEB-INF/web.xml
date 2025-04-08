@@ -35,6 +35,18 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<listener>
+        <listener-class>kr.kh.team3.controller.KakaoLoginController</listener-class>
+    </listener>
+    
+    <listener>
+        <listener-class>kr.kh.team3.controller.HomeController</listener-class>
+    </listener>
+    
+	<session-config>
+    	<session-timeout>30</session-timeout> <!-- 단위: 분 -->
+	</session-config>
 
 	<!-- UTF-8 인코딩 -->
 	<filter>
@@ -52,16 +64,4 @@
 	    <filter-name>encoding</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-	<listener>
-        <listener-class>kr.kh.team3.controller.KakaoLoginController</listener-class>
-    </listener>
-    
-    <listener>
-        <listener-class>kr.kh.team3.controller.HomeController</listener-class>
-    </listener>
-    
-	<session-config>
-    	<session-timeout>30</session-timeout> <!-- 단위: 분 -->
-	</session-config>
 </web-app>

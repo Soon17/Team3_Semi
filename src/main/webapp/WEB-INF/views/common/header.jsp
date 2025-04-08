@@ -3,10 +3,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<style type="text/css">
-		
+	<style type="text/css">		
 		html, body  {
  			 scrollbar-gutter: stable;
+ 			
 		}
 		
 		.search {
@@ -14,15 +14,12 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			width: 300px;
 		}
 		
-		 .css-login {
-			
-			text-align: left;
-			color: rgb(12, 12, 12);
-			-webkit-text-fill-color: rgb(12, 12, 12);
-			 font-size: 0.875rem;
-			line-height: 1.125rem; 
-			font-weight: bold;
-			
+		 .css-login {			
+			font-size: 0.875rem;
+  			line-height: 1.125rem;
+  			font-weight: bold;
+  			color: rgb(12, 12, 12);
+  			-webkit-text-fill-color: rgb(12, 12, 12);
 		}
 		.css-login:hover {
   			text-decoration: none;
@@ -50,12 +47,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			right: 0;
 			width: 100vw;
 		}
+		
+		
+		
 	</style>
 </head>
-<body>
-	<nav
-		class="navbar navbar-expand-sm bg-light navbar-light justify-content-between">
-
+<body >
+	<nav class="navbar navbar-expand-sm navbar-light justify-content-between" style="background-color: white-space;">
+		
 		<div class="justify-content-between d-flex">
 			<!-- Brand -->
 			<a class="navbar-brand" href="<c:url value="/"/>">로고이미지~</a>
@@ -102,8 +101,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 				</div>
 			</c:if>
 			<c:if test="${sessionScope.member.me_authority eq 'USER'}">
-				<div>
-					<a href="<c:url value='/member/apply'/>">유저야</a>
+				<div style="display: flex; align-items: center; height: 43px;">
+					<a href="<c:url value='/myPage'/>" style="margin-left: 10px; color: black; font-weight: bold; text-decoration: none;">
+					마이 페이지</a>
 				</div>
 			</c:if>
 			<c:if test="${sessionScope.member.me_authority eq 'TEACHER'}">
@@ -116,12 +116,12 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 		<div class="d-flex">
 			<c:choose>
 				<c:when test="${not empty sessionScope.member}">
-					
-					 <label class="css-login">${sessionScope.member.me_nick}</label>님
-					
-					<a href="<c:url value='/logout'/>" 
-						class="css-login" style="margin-left: 20px;"> 로그아웃
-					</a>
+					<div style="display: flex; align-items: center; height: 43px;">
+						 <span class="css-login">${sessionScope.member.me_nick}</span>님
+						<a href="<c:url value='/logout'/>" 
+							class="css-login" style="margin-left: 20px;"> 로그아웃
+						</a>
+					</div>
 				</c:when>
 				<c:otherwise>
 					<a href="<c:url value='/signup'/>"> <span class="css-login">로그인</span>

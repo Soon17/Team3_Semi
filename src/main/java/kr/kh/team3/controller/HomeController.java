@@ -60,11 +60,11 @@ public class HomeController {
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		MemberVO member = (MemberVO) session.getAttribute("user");
+		MemberVO member = (MemberVO) session.getAttribute("member");
 	    if (member != null) {
 	    	memberService.offlineMember(member); // 온라인N으로 변경
 	    }
-	    session.removeAttribute("user"); // 세션 제거
+	    session.removeAttribute("member"); // 세션 제거
 	    return "redirect:/"; // 홈으로 이동
 	}
 	
@@ -80,7 +80,9 @@ public class HomeController {
 			model.addAttribute("msg", "차단된 유저입니다.");
 			return "message";
 		}
-		model.addAttribute("user", user);
+		
+		session.setAttribute("member", user);
+		memberService.onlineMember(user);
         return "redirect:/"; // 홈으로 이동
      
 	}

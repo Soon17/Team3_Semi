@@ -116,7 +116,7 @@ public class KakaoLoginController {
 			model.addAttribute("msg", "차단된 유저입니다.");
         	return "message";
         }
-        model.addAttribute("user", member);
+        model.addAttribute("member", member);
         return "redirect:/"; // 홈으로 이동
     }
 }

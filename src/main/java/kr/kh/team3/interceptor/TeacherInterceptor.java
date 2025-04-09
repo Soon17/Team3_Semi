@@ -32,7 +32,7 @@ public class TeacherInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		
 		HttpSession session = request.getSession();
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO user = (MemberVO)session.getAttribute("member");
 		
 		if(user != null && user.getMe_authority().equals("TEACHER")) {
 			return true;

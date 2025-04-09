@@ -97,7 +97,6 @@ public class KakaoLoginController {
        //가입 안되어 있으면 회원가입
         
         if (member == null) {
-        	System.out.println(member);
 	        member = new MemberVO();
 	        member.setMe_id(meid);
 	        member.setMe_nick(menick);
@@ -116,7 +115,7 @@ public class KakaoLoginController {
 			model.addAttribute("msg", "차단된 유저입니다.");
         	return "message";
         }
-        model.addAttribute("user", member);
+        session.setAttribute("member", member);
         return "redirect:/"; // 홈으로 이동
     }
 }

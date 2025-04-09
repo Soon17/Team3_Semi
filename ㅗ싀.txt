@@ -1,0 +1,9 @@
+$("선택자").click(function(e){
+	var $선택요소 = $("선택요소의 선택");
+	var str = `
+		html코드
+	`;
+	$선택요소.after(str);
+});
+
+$("선택자").html("코드내용");

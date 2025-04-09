@@ -26,26 +26,25 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	    ModelAndView modelAndView)
 	    throws Exception {
 		//컨트롤러가 보내준 회원 정보를 가져옴
-		MemberVO user = (MemberVO)modelAndView.getModel().get("user");
-		System.out.println(user);
 		//가져온 회원 정보가 있으면 세션에 회원 정보를 저장
 		HttpSession session = request.getSession();
-		if(user != null) {
-			session.setAttribute("user", user);
-			
+		System.out.println((MemberVO)session.getAttribute("member"));
+		if(session.getAttribute("member") != null) {
+			MemberVO user = (MemberVO)session.getAttribute("member");
 			memberService.onlineMember(user);
 			timer(session);
-			
 		}
 	}
 	//
 	private void timer(HttpSession session) {
+		
 		Timer timer =  new Timer();
 	    timer.schedule(new TimerTask() {
 	    	
 	        public void run() {
 	        	// 세션이 만료되기 직전 확인
-	        	MemberVO member = (MemberVO) session.getAttribute("user");
+	        	
+	        	MemberVO member = (MemberVO) session.getAttribute("member");
 	            if (session != null && member != null) {
                     memberService.offlineMember(member); // 온라인 N 처리
                     System.out.println("N 처리 완료");
@@ -55,6 +54,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	                System.out.println("세션이 만료되었습니다.");
 	            }
 	        }
-	    }, (session.getMaxInactiveInterval() - 4) * 1000); // 세션 만료 10초 전 처리
+	    }, (session.getMaxInactiveInterval() - 4) * 1000);
 	}
 }

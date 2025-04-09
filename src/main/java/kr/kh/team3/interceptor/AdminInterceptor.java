@@ -32,7 +32,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		
 		HttpSession session = request.getSession();
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO user = (MemberVO)session.getAttribute("member");
 		System.out.println(user);
 		if(user != null && user.getMe_authority().equals("ADMIN")) {
 			return true;

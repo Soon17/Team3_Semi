@@ -12,6 +12,7 @@
 				z-index: 9999;
 				background-color:white;
 				border :none;
+				
 			}		
 			html, body  {
 				scrollbar-gutter: stable;
@@ -21,6 +22,8 @@
 			.search {
 				position: relative;
 				width: 300px;
+				min-width: 250px;
+				flex-shrink: 0; 
 			}
 			
 			.css-login {			
@@ -30,10 +33,10 @@
 				color: rgb(12, 12, 12);
 				-webkit-text-fill-color: rgb(12, 12, 12);
 				display: inline-block;
-					max-width: 100px;
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
+				max-width: 100px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 			}
 			.css-login:hover {
 				text-decoration: none;
@@ -55,7 +58,7 @@
 				margin: 0;
 			}
 			
-			.dropdown-menu {
+			.category-list {
 				position: fixed;
 				left: 0;
 				right: 0;
@@ -74,11 +77,15 @@
 			  pointer-events: all;
 			}
 			
+			.navbar-nav {
+  			  white-space: nowrap;
+			}
+			
 		</style>
 	</head>
 	<body>
 	<div id="overlay" class="category-overlay"></div>
-	<nav class="navbar navbar-expand-sm navbar-light" style="background-color: white;  z-index: 9999;">
+	<nav class="navbar navbar-expand navbar-light" style="background-color: white;  z-index: 9999;">
 		<div class="container-fluid d-flex justify-content-center align-items-center" style="padding: 10px 0; ">
 	
 			<!-- 로고 -->
@@ -125,10 +132,30 @@
 					 </div>
 					</c:when>
 					<c:when test="${sessionScope.member.me_authority eq 'USER'}">
-						<a class="nav-link" href="<c:url value='/user/myPage'/>">마이 페이지</a>
+						<a href="<c:url value='/user/myPage'/>" class="nav-link p-0" style="color: black;">
+						  <div style="display: flex; align-items: center; font-weight: bold; font-size: 13px; gap: 6px;">
+						    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24">
+						      <circle cx="12" cy="8" r="4" />
+						      <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+						    </svg>
+						    <span>마이페이지</span>
+						  </div>
+						</a>
 					</c:when>
 					<c:when test="${sessionScope.member.me_authority eq 'TEACHER'}">
-						<a class="nav-link">강사야</a>
+						<div>
+							<ul class="navbar-nav">
+								 <!-- Dropdown -->
+								 <li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#" id="navbardrop"
+										data-toggle="dropdown">강사 전용</a>
+										<div class="dropdown-menu">
+											 <a class="dropdown-item" href="<c:url value='#'/>">강사페이지</a>
+											 <a class="dropdown-item" href="<c:url value='#'/>">클래스 등록</a>
+										</div>
+								 </li>
+							</ul>
+					 	</div>
 					</c:when>
 					<c:otherwise>
 						<span style="visibility: hidden;">마이 페이지</span>
@@ -140,6 +167,12 @@
 		<div class="d-flex align-items-center justify-content-center" style="width: 200px; height: 50px;">
 			<c:choose>
 				<c:when test="${not empty sessionScope.member}">
+				  <!-- 알림 벨 자리 -->
+				    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24"
+				    	style="margin-right: 10px">
+				      <path d="M18 8a6 6 0 00-12 0v5H4l1 2h14l1-2h-2V8z" />
+				      <path d="M13.73 21a2 2 0 01-3.46 0" />
+				    </svg>
 					<div style="display: flex; align-items: center; gap: 6px;">
 						<span class="css-login" title="${sessionScope.member.me_nick}">
 							${sessionScope.member.me_nick}

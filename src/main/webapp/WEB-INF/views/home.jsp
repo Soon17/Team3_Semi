@@ -25,21 +25,21 @@
 	    <li data-target="#demo" data-slide-to="2"></li>
 	  </ul>
 	  <div class="carousel-inner">
-	    <div class="carousel-item active" style="height: 500px; width: 1100px">
+	    <div class="carousel-item active" style="height: 500px;">
 	      <img src="<c:url value="/resources/img/anyoujin.jpg"/>" alt="an1">
 	      <div class="carousel-caption">
 	        <h3>안유진 존예</h3>
 	        <p>Jonn.yeah</p>
 	      </div>   
 	    </div>
-	    <div class="carousel-item" style="height: 500px;  width: 1100px">
+	    <div class="carousel-item" style="height: 500px;">
 	      <img src="<c:url value="/resources/img/anyoujin2.jpg"/>" alt="an2">
 	      <div class="carousel-caption">
 	        <h3>안유진 여신</h3>
 	        <p>QueenYouJin</p>
 	      </div>   
 	    </div>
-	    <div class="carousel-item" style="height: 500px;  width: 1100px">
+	    <div class="carousel-item" style="height: 500px;">
 	      <img src="<c:url value="/resources/img/anyoujin3.jpg"/>" alt="an3">
 	      <div class="carousel-caption">
 	        <h3>안유진 인정</h3>
@@ -60,15 +60,14 @@
 	  <h3>클래스 둘러보기</h3>
 	</div>
 	
-	<nav class="navbar navbar-expand-sm bg-white navbar-white sticky-top">
+	<nav class="navbar navbar-expand bg-white navbar-white sticky-top">
 	  <a class="navbar-brand text-dark" href="#">전체</a>
 	  <ul class="navbar-nav">
-	    <li class="nav-item">
-	      <a class="nav-link text-muted" href="#">영어</a>
-	    </li>
-	    <li class="nav-item">
-	      <a class="nav-link text-muted" href="#">프로그래밍</a>
-	    </li>
+	  	<c:forEach items="${list }" var ="ca">
+	  		<li class="nav-item">
+	      		<a class="nav-link text-muted" href="#">${ca.ca_name }</a>
+	    	</li>
+	  	</c:forEach>
 	  </ul>
 	</nav>
 	
@@ -77,7 +76,6 @@
 	    <div class="card-body">
 	      <h4 class="card-title">클래스1</h4>
 	      <p class="card-text">클래스 설명</p>
-	      <a href="#" class="btn btn-primary">바로가기</a>
 	    </div>
 	  </div>
 	  <div class="card p-2" style="width:300px !important; flex-shrink: 0;">

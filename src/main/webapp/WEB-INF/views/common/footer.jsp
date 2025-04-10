@@ -7,6 +7,8 @@
 	
 </head>
 <body>
-	<h1>푸터</h1>	
+	<c:if test="${empty noFooter}">
+		<h1>푸터</h1>	
+	</c:if>
 </body>
 </html>

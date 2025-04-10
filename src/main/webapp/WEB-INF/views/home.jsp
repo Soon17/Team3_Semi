@@ -138,8 +138,23 @@
     		type: 'GET',
     		data: { ca_name : ca_name },
     		success: function (data) {
-    			$(".swiper-Class").empty();
+    			
     			$(".swiper-Class").html(data);
+    			
+    			
+    		      // 기존 swiper 제거 (있다면)
+    		      if (swiper) swiper.destroy(true, true);
+
+    		      // swiper 다시 초기화
+    		      swiper = new Swiper(".mySwiper", {
+    		        slidesPerView: 3,
+    		        spaceBetween: 10,
+    		        navigation: {
+    		          nextEl: ".swiper-button-next",
+    		          prevEl: ".swiper-button-prev"
+    		        },
+    		        grabCursor: true
+    		      });
     		}
     	});
     });

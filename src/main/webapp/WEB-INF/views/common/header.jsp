@@ -199,7 +199,6 @@
 		url: '<c:url value="/categoryList"/>',
 		type: 'post',
 		success: function (data) {
-			console.log(data);
 			$(".category-list").html(data);
 		}
 	});

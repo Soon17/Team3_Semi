@@ -10,12 +10,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	</head>
 	
 	<body>
+		<c:forEach items="${list }" var="class">
+		
+		</c:forEach>
 		<div class="swiper-slide">
           <div class="card" style="border-radius: 16px; overflow: hidden;">
             <img src="<c:url value='/resources/img/class1.jpg'/>" class="card-img-top" alt="...">
             <div class="card-body p-2">
-              <h6 class="mb-1 fw-bold">서류&면접 합격 보장</h6>
-              <p class="mb-0 text-muted" style="font-size: 14px;">전략설정부터 빈출 질문까지</p>
+              <h6 class="mb-1 fw-bold">시작</h6>
+              <p class="mb-0 text-muted" style="font-size: 14px;">전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지전략설정부터 빈출 질문까지</p>
             </div>
           </div>
         </div>
@@ -114,7 +117,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <div class="card" style="border-radius: 16px; overflow: hidden;">
             <img src="<c:url value='/resources/img/class2.jpg'/>" class="card-img-top" alt="...">
             <div class="card-body p-2">
-              <h6 class="mb-1 fw-bold">어도비 패키지 기획전</h6>
+              <h6 class="mb-1 fw-bold">끝</h6>
               <p class="mb-0 text-muted" style="font-size: 14px;">Adobe CC, 선착순 오픈!</p>
             </div>
           </div>

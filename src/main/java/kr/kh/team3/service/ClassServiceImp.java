@@ -34,6 +34,12 @@ public class ClassServiceImp implements ClassService{
 		return classDao.getClass(cl_tc_me_num);
 	}
 
+	@Override
+	public List<ClassVO> getCaClassList(int ca_num) {
+		
+		return classDao.getCaClassList(ca_num);
+	}
+
 	
 	
 }

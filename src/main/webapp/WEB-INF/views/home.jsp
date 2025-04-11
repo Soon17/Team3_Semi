@@ -31,6 +31,20 @@
     .swiper-button-prev {
       color: #333;
     }
+    .swiper-slide .card {
+	  height: 212.92px; /* 카드 높이 고정 */
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-between;
+	}
+	.card-body p {
+	  max-height: 40px;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  display: -webkit-box;
+	  -webkit-line-clamp: 1; /* 두 줄까지 표시 */
+	  -webkit-box-orient: vertical;
+	}
   </style>
 </head>
 
@@ -86,7 +100,7 @@
     <ul class="navbar-nav">
       <c:forEach items="${list}" var="ca">
         <li class="nav-item">
-          <a href="#" class="nav-link text-muted category-link " data-category="${ca.ca_name}">${ca.ca_name}</a>
+          <a href="#" class="nav-link text-muted category-link " data-category="${ca.ca_num}">${ca.ca_name}</a>
         </li>
       </c:forEach>
     </ul>
@@ -131,12 +145,12 @@
     
     $(".category-link").on("click",function(e){
     	e.preventDefault();
-    	const ca_name = $(this).data("category");
+    	const ca_num = $(this).data("category");
     	$.ajax({
     		async: true,
     		url: '<c:url value="/class/categoryClass"/>',
     		type: 'GET',
-    		data: { ca_name : ca_name },
+    		data: { ca_num : ca_num },
     		success: function (data) {
     			
     			$(".swiper-Class").html(data);
@@ -149,6 +163,9 @@
     		      swiper = new Swiper(".mySwiper", {
     		        slidesPerView: 3,
     		        spaceBetween: 10,
+    		        slidesPerGroup: 2,
+    		        loop: true,
+    		        loopFillGroupWithBlank: true,
     		        navigation: {
     		          nextEl: ".swiper-button-next",
     		          prevEl: ".swiper-button-prev"

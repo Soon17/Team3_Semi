@@ -16,4 +16,9 @@
 	<select id="getClass" resultType="ClassVO">
 		select * from class where  cl_tc_me_num = #{cl_tc_me_num};
 	</select>
+	<select id="getCaClassList" resultType="ClassVO">
+		select*,
+		(select me_name from member where me_num = cl_tc_me_num)as me_name from class
+		where = (select* from )
+	</select>
 </mapper>

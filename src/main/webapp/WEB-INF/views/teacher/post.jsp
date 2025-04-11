@@ -116,43 +116,54 @@
   </style>
 
   <script>
-    $(document).ready(function () {
-      $.extend($.summernote.options.icons, {
-        'bold': 'fa fa-bold',
-        'italic': 'fa fa-italic',
-        'underline': 'fa fa-underline',
-        'clear': 'fa fa-eraser',
-        'color': 'fa fa-paint-brush',
-        'fontname': 'fa fa-font',
-        'fontsize': 'fa fa-text-height',
-        'ul': 'fa fa-list-ul',
-        'ol': 'fa fa-list-ol',
-        'paragraph': 'fa fa-paragraph',
-        'table': 'fa fa-table',
-        'link': 'fa fa-link',
-        'picture': 'fa fa-picture-o',
-        'video': 'fa fa-video-camera'
-      });
-
-      $('#content').summernote({
-        placeholder: '내용을 입력하세요.',
-        tabsize: 2,
-        height: null,
-        lang: 'ko-KR',
-        fontNames: ['맑은 고딕', '굴림', '돋움', '바탕'],
-        fontNamesIgnoreCheck: ['맑은 고딕', '굴림', '돋움', '바탕'],
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['fontname', 'fontsize']],
-          ['fontstyle', ['bold', 'italic', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']]
-        ]
-      });
+  $(document).ready(function () {
+    // Summernote 설정
+    $.extend($.summernote.options.icons, {
+      'bold': 'fa fa-bold',
+      'italic': 'fa fa-italic',
+      'underline': 'fa fa-underline',
+      'clear': 'fa fa-eraser',
+      'color': 'fa fa-paint-brush',
+      'fontname': 'fa fa-font',
+      'fontsize': 'fa fa-text-height',
+      'ul': 'fa fa-list-ul',
+      'ol': 'fa fa-list-ol',
+      'paragraph': 'fa fa-paragraph',
+      'table': 'fa fa-table',
+      'link': 'fa fa-link',
+      'picture': 'fa fa-picture-o',
+      'video': 'fa fa-video-camera'
     });
-  </script>
+
+    $('#content').summernote({
+      placeholder: '내용을 입력하세요.',
+      tabsize: 2,
+      height: null,
+      lang: 'ko-KR',
+      fontNames: ['맑은 고딕', '굴림', '돋움', '바탕'],
+      fontNamesIgnoreCheck: ['맑은 고딕', '굴림', '돋움', '바탕'],
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['fontname', 'fontsize']],
+        ['fontstyle', ['bold', 'italic', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']]
+      ]
+    });
+
+    $('.save-btn').on('click', function () {
+      var content = $('#content').val();
+      if (!content || content.trim() === '') {
+        alert('내용을 입력하세요!');
+        return;
+      }
+      $('form').submit();
+    });
+  });
+</script>
+
 </head>
 <body>
 
@@ -164,9 +175,9 @@
 
   <!-- 에디터 -->
   <div class="editor-wrapper">
-    <form>
-      <textarea id="content"></textarea>
-    </form>
+    <form action="<c:url value='/teacher/savePost' />" method="post">
+	  <textarea id="content" name="content"></textarea>
+	</form>
   </div>
 
 </body>

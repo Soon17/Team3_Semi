@@ -17,8 +17,8 @@
 		select * from class where  cl_tc_me_num = #{cl_tc_me_num};
 	</select>
 	<select id="getCaClassList" resultType="ClassVO">
-		select*,
-		(select me_name from member where me_num = cl_tc_me_num)as me_name from class
-		where = (select* from )
+		select *,
+		(select me_name from member where me_num = cl_tc_me_num)as me_name from class where cl_num in (select sc_cl_num from subcategory where sc_ca_num = #{ca_num})
+		and cl_able = "Y";
 	</select>
 </mapper>

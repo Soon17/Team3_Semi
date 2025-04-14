@@ -6,6 +6,10 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
   <style>
+  	.choice-category{
+  		color:#080808 !important;
+  		font-weight: bold;
+  	}
     .carousel-inner img {
       border-radius: 10%;
       width: 100%;
@@ -144,6 +148,8 @@
     });
     
     $(".category-link").on("click",function(e){
+    	$(".category-link").removeClass("choice-category");
+		$(this).addClass("choice-category");
     	e.preventDefault();
     	const ca_num = $(this).data("category");
     	$.ajax({

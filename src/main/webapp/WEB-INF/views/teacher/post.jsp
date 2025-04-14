@@ -176,10 +176,14 @@
 <body>
 
   <!-- 전체 가로 헤더 -->
-  <div class="simple-header">
-    <div class="logo">로고이미지~</div>
-    <button class="save-btn">저장</button>
-  </div>
+<div class="simple-header">
+<div class="logo">
+<a href="<c:url value='/' />" style="text-decoration: none; color: inherit;">
+	로고이미지~
+</a>
+</div>
+	<button class="save-btn">저장</button>
+</div>
 
   <!-- 에디터 -->
   <div class="editor-wrapper">

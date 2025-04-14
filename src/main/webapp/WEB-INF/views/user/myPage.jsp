@@ -47,7 +47,7 @@
     <script>
         function openNewWindow() {
             // 새 창 열기 (URL, 창 이름, 창 속성)
-            window.open("<c:url value="/user/applyPage"/>", "apply", "width=800,height=600");
+            window.open("<c:url value="/user/applyPage"/>", "apply", "width=1000,height=800");
         }
     </script>
 

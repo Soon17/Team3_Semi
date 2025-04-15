@@ -16,4 +16,6 @@ public class ClassVO {
 	private String cl_able;
 	private String cl_tc_me_num;
 	private String me_name;
+	//서브카테고리 담는곳
+	private String sc_name;
 }

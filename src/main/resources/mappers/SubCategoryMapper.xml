@@ -4,6 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team3.dao.SubCategoryDAO">
 	<select id="selectSubListCaNum" resultType="SubCategoryVO">
-	    SELECT * FROM subcategory WHERE sc_ca_num = #{ca_num}
+	  SELECT 
+	    MIN(sc_num) as sc_num, 
+	    sc_name, 
+	    sc_ca_num,
+	    MIN(sc_cl_num) as sc_cl_num
+	  FROM 
+	    subcategory
+	  WHERE 
+	    sc_ca_num = #{ca_num}
+	  GROUP BY 
+	    sc_name, sc_ca_num
 	</select>
 </mapper>

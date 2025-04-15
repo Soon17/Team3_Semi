@@ -19,10 +19,11 @@
 	<select id="selectClassListCaNum" resultType="ClassVO">
 	  SELECT 
 	    c.cl_num, c.cl_title, c.cl_item, c.cl_intro, c.cl_money, 
-	    c.cl_date, c.cl_level, c.cl_able, c.cl_tc_me_num, m.me_name
+	    c.cl_date, c.cl_level, c.cl_able, c.cl_tc_me_num, 
+	    m.me_name, s.sc_name
 	  FROM class c
 	  JOIN subcategory s ON s.sc_cl_num = c.cl_num
 	  JOIN member m ON c.cl_tc_me_num = m.me_num
-	  WHERE s.sc_ca_num = #{ca_num}
+	  WHERE s.sc_ca_num = #{ca_num} and CL_ABLE="Y"
 	</select>
 </mapper>

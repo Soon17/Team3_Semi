@@ -16,4 +16,6 @@ public interface ClassDAO {
 
 	ClassVO getClass(@Param("cl_tc_me_num")int cl_tc_me_num);
 
+	List<ClassVO> selectClassListCaNum(@Param("ca_num")int ca_num);
+
 }

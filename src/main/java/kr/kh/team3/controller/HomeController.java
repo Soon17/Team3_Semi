@@ -34,6 +34,7 @@ public class HomeController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
 	@Autowired
 	private ClassService classService;
 	
@@ -43,8 +44,6 @@ public class HomeController {
 	@Autowired
 	private SubCategoryService subCategoryService;
 	
-	@Autowired
-	private ClassService classService;	
 	
 	@GetMapping("/")
 	public String home(Model model) {

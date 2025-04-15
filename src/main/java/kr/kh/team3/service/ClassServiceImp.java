@@ -40,6 +40,16 @@ public class ClassServiceImp implements ClassService{
 		return classDao.getCaClassList(ca_num);
 	}
 
+	@Override
+	public List<ClassVO> getLatestClassList() {
+		return classDao.getLatestClassList();
+	}
+
+	@Override
+	public List<ClassVO> getMostClassList() {
+		return classDao.getMostClassList();
+	}
+
 	
 	
 }

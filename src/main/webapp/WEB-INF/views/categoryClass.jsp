@@ -6,15 +6,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 	<head>
 	<style type="text/css">
-		.card {
-		  color: black;
-		  text-decoration: none;
-		}
 		
-		.card:hover {
-		  color: black;
-		  text-decoration: none;
-		}
 	</style>
 	
 	</head>

@@ -18,4 +18,8 @@ public interface ClassDAO {
 
 	List<ClassVO> getCaClassList(@Param("ca_num")int ca_num);
 
+	List<ClassVO> getLatestClassList();
+
+	List<ClassVO> getMostClassList();
+
 }

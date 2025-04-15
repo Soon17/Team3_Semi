@@ -1,8 +1,6 @@
 package kr.kh.team3.controller;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team3.model.vo.CategoryVO;
+import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.CategoryService;
+import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.MemberService;
 import lombok.extern.log4j.Log4j;
 
@@ -29,6 +29,8 @@ public class HomeController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private ClassService classService;
 	
 	@Autowired
 	private MemberService memberService;
@@ -36,7 +38,12 @@ public class HomeController {
 	@GetMapping("/")
 	public String home(Model model) {
 		List<CategoryVO> categoryList = categoryService.selectCateList();
+		List<ClassVO> latestClassList = classService.getLatestClassList();
+		List<ClassVO> mostClassList = classService.getMostClassList();
+		System.out.println(mostClassList);
 		model.addAttribute("list",categoryList);
+		model.addAttribute("latestClassList",latestClassList);
+		model.addAttribute("mostClassList",mostClassList);
 		return "home";
 	}
 	

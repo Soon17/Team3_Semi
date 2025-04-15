@@ -16,5 +16,9 @@ public interface ClassService {
 
 	List<ClassVO> getCaClassList(int ca_num);
 
+	List<ClassVO> getLatestClassList();
+
+	List<ClassVO> getMostClassList();
+
 
 }

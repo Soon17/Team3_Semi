@@ -34,6 +34,8 @@ public class HomeController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private ClassService classService;
 	
 	@Autowired
 	private MemberService memberService;
@@ -47,7 +49,12 @@ public class HomeController {
 	@GetMapping("/")
 	public String home(Model model) {
 		List<CategoryVO> categoryList = categoryService.selectCateList();
+		List<ClassVO> latestClassList = classService.getLatestClassList();
+		List<ClassVO> mostClassList = classService.getMostClassList();
+		System.out.println(mostClassList);
 		model.addAttribute("list",categoryList);
+		model.addAttribute("latestClassList",latestClassList);
+		model.addAttribute("mostClassList",mostClassList);
 		return "home";
 	}
 	

@@ -51,6 +51,7 @@
       border-radius: 10px;
       background-color: #fff;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    
     }
 
     .class-card .image {
@@ -62,6 +63,12 @@
     .class-card h5 {
       margin: 0 0 5px 0;
       font-size: 16px;
+      max-height: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1; /* 두 줄까지 표시 */
+      -webkit-box-orient: vertical;
     }
 
     .class-card p {

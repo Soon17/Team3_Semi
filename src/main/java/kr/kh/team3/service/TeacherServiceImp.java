@@ -13,13 +13,10 @@ public class TeacherServiceImp implements TeacherService{
 	TeacherDAO teacherDao;
 
 	@Override
-	public String selectIntro(String tcId) {
-        TeacherVO teacher = teacherDao.selectIntro(tcId); // TeacherVO 객체를 받음
-        if (teacher != null) {
-            return teacher.getTc_intro(); // 강사 소개글만 반환
-        }
-        return null; // 소개글이 없으면 null 반환
-    }
+	public TeacherVO selectIntro(int tc_me_num) {
+	   
+	    return teacherDao.selectIntro(tc_me_num);
+	}
 
 	@Override
 	public void insertIntro(String tcId, String intro) {
@@ -32,6 +29,8 @@ public class TeacherServiceImp implements TeacherService{
 		teacherDao.updateIntro(tcId, intro);
 		
 	}
+
+	
 
 
 }

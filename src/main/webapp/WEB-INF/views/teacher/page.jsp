@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,37 +14,38 @@
             padding: 0;
         }
         .header {
-            background-color: transparent; /* 배경색 제거 */
-            color: black; /* 텍스트 색을 검정색으로 */
-            padding: 20px;
+            background-color: white;
+            color: black;
+            padding: 50px;
             display: flex;
-            align-items: center; /* 아이템을 세로로 정렬 */
+            align-items: center;
             justify-content: center;
             position: relative;
-            border : 1px solid black;
+            border-radius: 5px;
+            margin-top: 10px;
         }
         .header h1 {
             margin: 0;
-            margin-left: 80px; /* 프로필 사진을 위한 공간 */
+            margin-left: 80px;
         }
         .profile-pic {
-            width: 60px;
-            height: 60px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background-image: none; /* 기본 이미지는 비워두기 */
-            background-color: transparent; /* 프로필 사진 배경색을 투명하게 설정 */
-            border: 1px solid black; /* 테두리만 추가, 색은 검정색 */
+            background-image: none;
+            background-color: WHITE;
+            border: 1px solid black;
             position: absolute;
-            left: 20px; /* 헤더 왼쪽에 위치 */
+            left: 20px;
             top: 50%;
-            transform: translateY(-50%); /* 세로 가운데 정렬 */
+            transform: translateY(-50%);
         }
         .creator-info {
-            background-color: transparent; /* 배경색 제거 */
+            background-color: white; 
             padding: 20px;
             margin: 20px;
             border-radius: 8px;
-            box-shadow: none; /* 그림자 효과 제거 */
+            box-shadow: none; 
         }
         .creator-info h2 {
             margin-top: 0;
@@ -53,19 +55,23 @@
         }
         .upload-btn {
             margin-top: 10px;
-            background-color: transparent; /* 배경색 제거 */
-            color: black; /* 텍스트 색을 검정색으로 */
+            background-color: transparent;
+            color: black; 
             padding: 10px 20px;
-            border: 1px solid black; /* 테두리 추가 */
+            border: 1px solid black; 
             border-radius: 5px;
             cursor: pointer;
         }
         .upload-btn:hover {
-            background-color: #ddd; /* 마우스 오버시 색상만 추가 */
+            background-color: #ddd; 
         }
         .create-class {
             margin-top: 30px;
             text-align: center;
+            background-color: white; 
+            margin: 20px;
+            padding: 20px;
+            border-radius: 5px;
         }
         .class-img {
             width: 200px;
@@ -76,35 +82,39 @@
     </style>
 </head>
 <body>
-
     <div class="header">
-        <!-- 프로필 사진 -->
-        <div class="profile-pic"></div>
-        <h1>강사 페이지</h1>
+        <div class="profile-pic">${member.me_profile}</div>
+        <h1>${member.me_nick}님의 페이지</h1>
     </div>
 
     <div class="creator-info">
     <h2>강사 소개</h2>
-
-    <!-- 소개글이 있을 경우 -->
-    <c:if test="${not empty intro}">
-	    <p>${intro}</p>
-		    <form action="editIntroForm" method="get">
-		        <button type="submit" class="upload-btn">소개 수정</button>
-		    </form>
-	</c:if>
-	
-	<c:if test="${empty intro}">
-    	<p>아직 소개가 등록되지 않았습니다.</p>
-		    <form action="writeIntroForm" method="get">
-		        <button type="submit" class="upload-btn">소개 작성</button>
-		    </form>
-	</c:if>
+    <p>${teacher.tc_intro}</p>
+    <c:choose>
+    	<c:when test="${member.me_num eq teacher.tc_me_num }">
+    		<form action="<c:url value="/teacher/${member.me_num}"/>">
+    			 <c:choose>
+			    	<c:when test="${teacher.tc_intro eq null }">
+						<a href="<c:url value="/teacher/${member.me_num}/post"/>" class="upload-btn btn-outline">소개글 작성</a>
+			    	</c:when>
+			    	<c:otherwise>
+			    		<a href="<c:url value="/teacher/${member.me_num}/post"/>" class="upload-btn btn-outline">소개글 수정</a>
+			    	</c:otherwise>
+			    </c:choose>
+    		</form>
+    	</c:when>
+    	<c:otherwise>
+    		<p>${teacher.tc_intro}</p>
+    	</c:otherwise>
+    </c:choose>
+    
 	</div>
-
+	
     <div class="create-class">
-        <div class="class-img"></div>
         <h3>클래스</h3>
+        <div class="class-img">
+        	<h3>${cl_title}</h3>
+        </div>
     </div>
 
 </body>

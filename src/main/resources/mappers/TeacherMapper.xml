@@ -3,11 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team3.dao.TeacherDAO">
-	<select id="selectIntro" resultType="kr.kh.team3.model.vo.TeacherVO" parameterType="String">
-	    SELECT m.me_name, t.tc_intro
-	    FROM member m
-	    LEFT JOIN teacher t ON m.me_num = t.tc_me_num
-	    WHERE m.me_id = #{tcId}
+	<select id="selectIntro" resultType="kr.kh.team3.model.vo.TeacherVO">
+	    select* from teacher where tc_me_num = #{tc_me_num};
 	</select>
 	
 	<insert id="insertIntro" parameterType="map">

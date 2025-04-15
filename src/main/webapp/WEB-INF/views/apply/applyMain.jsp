@@ -66,7 +66,7 @@
    		        return;
    		    }
    		    else{
-    			$(".apply-content").load("/spring/apply/1");
+    			$(".apply-content").load("/team3/apply/1");
    	   			// 현재 텍스트에서 숫자만 추출 (예: '30%' → 30)
    	   		    let currentPercent = parseInt($bar.text().trim());
    	   			

@@ -54,4 +54,11 @@ public class UserController {
 		model.addAttribute("skipFooter", "true");
 		return "/apply/applyMain";
 	}
+	
+	@GetMapping("/apply/1")
+	public String apply1(Model model) {
+		model.addAttribute("skipHeader", "true");
+		model.addAttribute("skipFooter", "true");
+		return "/apply/1";
+	}
 }

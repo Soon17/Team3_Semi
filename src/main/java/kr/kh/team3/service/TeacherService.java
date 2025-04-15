@@ -1,5 +1,7 @@
 package kr.kh.team3.service;
 
+import java.util.Map;
+
 import kr.kh.team3.model.vo.TeacherVO;
 
 public interface TeacherService {

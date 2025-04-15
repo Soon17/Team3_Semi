@@ -46,31 +46,23 @@ public class TeacherController {
         map.put("tc_me_num", me_num);
 
         teacherService.save(map);
-        return "redirect:/";
+        return "/teacher/page";
     }
 
      @GetMapping("/{tc_me_num}")
     public String myPage(Model model, HttpSession session, @PathVariable int tc_me_num) {
         MemberVO user = (MemberVO) session.getAttribute("member");
-        TeacherVO teacher = teacherService.selectIntro(tc_me_num);
         
         if (user == null || user.getMe_num() != tc_me_num) {
-        	model.addAttribute("teacher",teacher);
+        	model.addAttribute("teacher",null);
         	return "/teacher/page";
         }
- 
+        //티쳐가 만들어져야함 인트로는 "" 하든 널로 하든 if문으로 이미 있으면 안 만듬
+        TeacherVO teacher = teacherService.selectIntro(tc_me_num);
+        
         model.addAttribute("teacher", teacher);
         model.addAttribute("member", user);
         return "/teacher/page";
-    }
-
-    @PostMapping("/{tc_me_num}/post")
-    public String insertIntroPage(HttpSession session, String intro, @PathVariable int tc_me_num) {
-        MemberVO user = (MemberVO) session.getAttribute("member");
-        String tcId = user.getMe_id();
-
-        teacherService.insertIntro(tcId, intro);
-        return "redirect:/teacher/post";
     }
 
     @GetMapping("/{tc_me_num}/post")

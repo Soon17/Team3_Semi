@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team3.dao.TeacherDAO">
+	<insert id="insertContent" parameterType="map">
+	  INSERT INTO teacher (TC_INTRO, TC_ME_NUM)
+	  VALUES (#{map.tc_intro}, #{map.tc_me_num})
+	</insert>
+</mapper>

@@ -1,6 +1,8 @@
 package kr.kh.team3.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.MemberVO;
+import kr.kh.team3.model.vo.SubCategoryVO;
 import kr.kh.team3.service.CategoryService;
 import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.MemberService;
+import kr.kh.team3.service.SubCategoryService;
 import lombok.extern.log4j.Log4j;
 
 /**
@@ -29,11 +34,16 @@ public class HomeController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
 	@Autowired
 	private ClassService classService;
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private SubCategoryService subCategoryService;
+	
 	
 	@GetMapping("/")
 	public String home(Model model) {
@@ -117,5 +127,25 @@ public class HomeController {
 		List<CategoryVO> categoryList = categoryService.selectCateList();
 		model.addAttribute("list",categoryList);
 		return "/categorylist";
+	}
+	
+	@GetMapping("/category/{ca_num}")
+	public String categoryPage(@PathVariable int ca_num, Model model) {
+	    CategoryVO category = categoryService.getCategoryNum(ca_num);
+	    model.addAttribute("ca_num", ca_num);
+	    model.addAttribute("ca_name", category.getCa_name());
+	    return "/category/category"; // 메인 화면 + 빈 영역
+	}
+
+	@ResponseBody
+	@GetMapping("/category/data/{ca_num}")
+	public Map<String, Object> getCategoryData(@PathVariable int ca_num) {
+	    List<SubCategoryVO> subList = subCategoryService.getSubListCaNum(ca_num);
+	    List<ClassVO> classList = classService.getClassListCaNum(ca_num);
+	   
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("subList", subList);
+	    map.put("classList", classList);
+	    return map;
 	}
 }

@@ -32,8 +32,7 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background-image: none;
-            background-color: WHITE;
+            background-color: white;
             border: 1px solid black;
             position: absolute;
             left: 20px;
@@ -61,6 +60,8 @@
             border: 1px solid black; 
             border-radius: 5px;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
         }
         .upload-btn:hover {
             background-color: #ddd; 
@@ -88,34 +89,32 @@
     </div>
 
     <div class="creator-info">
-    <h2>강사 소개</h2>
-    <p>${teacher.tc_intro}</p>
-    <c:choose>
-    	<c:when test="${member.me_num eq teacher.tc_me_num }">
-    		<form action="<c:url value="/teacher/${member.me_num}"/>">
-    			 <c:choose>
-			    	<c:when test="${teacher.tc_intro eq null }">
-						<a href="<c:url value="/teacher/${member.me_num}/post"/>" class="upload-btn btn-outline">소개글 작성</a>
-			    	</c:when>
-			    	<c:otherwise>
-			    		<a href="<c:url value="/teacher/${member.me_num}/post"/>" class="upload-btn btn-outline">소개글 수정</a>
-			    	</c:otherwise>
-			    </c:choose>
-    		</form>
-    	</c:when>
-    	<c:otherwise>
-    		<p>${teacher.tc_intro}</p>
-    	</c:otherwise>
-    </c:choose>
-    
-	</div>
-	
+        <h2>강사 소개</h2>
+
+        <c:choose>
+		    <c:when test="${not empty teacher and not empty teacher.tc_intro}">
+		        <p>${tc_intro}</p>
+		        <c:if test="${isOwner}">
+		            <a href="<c:url value='/teacher/${member.me_num}/post' />" class="upload-btn">소개글 수정</a>
+		        </c:if>
+		    </c:when>
+		
+		    <c:otherwise>
+		        <c:if test="${isOwner}">
+		            <a href="<c:url value='/teacher/${member.me_num}/post' />" class="upload-btn">소개글 작성</a>
+		        </c:if>
+		        <c:if test="${not isOwner}">
+		            <p>아직 소개글이 등록되지 않았습니다.</p>
+		        </c:if>
+		    </c:otherwise>
+		</c:choose>
+    </div>
+
     <div class="create-class">
         <h3>클래스</h3>
         <div class="class-img">
-        	<h3>${cl_title}</h3>
+            <h3>${cl_title}</h3>
         </div>
     </div>
-
 </body>
 </html>

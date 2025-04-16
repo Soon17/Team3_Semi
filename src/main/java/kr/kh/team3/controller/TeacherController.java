@@ -49,22 +49,23 @@ public class TeacherController {
         return "/teacher/page";
     }
 
-     @GetMapping("/{tc_me_num}")
+    @GetMapping("/{tc_me_num}")
     public String myPage(Model model, HttpSession session, @PathVariable int tc_me_num) {
         MemberVO user = (MemberVO) session.getAttribute("member");
-        
-        if (user == null || user.getMe_num() != tc_me_num) {
-        	model.addAttribute("teacher",null);
-        	return "/teacher/page";
-        }
-        //티쳐가 만들어져야함 인트로는 "" 하든 널로 하든 if문으로 이미 있으면 안 만듬
+
+        // 강사 정보 조회
         TeacherVO teacher = teacherService.selectIntro(tc_me_num);
         
-        model.addAttribute("teacher", teacher);
-        model.addAttribute("member", user);
+        // 로그인한 유저가 본인인지 판단
+        boolean isOwner = (user != null && user.getMe_num() == tc_me_num);
+
+        model.addAttribute("teacher", teacher);      // 강사 정보
+        model.addAttribute("member", user);          // 로그인 유저
+        model.addAttribute("isOwner", isOwner);      // 본인 여부
+
         return "/teacher/page";
     }
-
+    
     @GetMapping("/{tc_me_num}/post")
     public String updateIntro(Model model, HttpSession session, @PathVariable int tc_me_num) {
     	/*MemberVO user = (MemberVO) session.getAttribute("member");

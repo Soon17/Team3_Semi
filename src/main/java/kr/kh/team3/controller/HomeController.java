@@ -1,8 +1,11 @@
 package kr.kh.team3.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.ClassVO;
@@ -26,9 +30,7 @@ import kr.kh.team3.service.SearchService;
 import kr.kh.team3.service.SubCategoryService;
 import lombok.extern.log4j.Log4j;
 
-/**
- * Handles requests for the application home page.
- */
+
 @Log4j
 @Controller
 public class HomeController {
@@ -68,8 +70,12 @@ public class HomeController {
 	}
 	
 	@PostMapping("/signup")
-	public String signup(Model model,MemberVO member) {
-		if(memberService.insertSingup(member)) {
+	public String signup(Model model,
+            MultipartFile profileImage,
+            MemberVO member,
+            HttpSession session) throws IOException {
+
+		if(memberService.insertSingup(member, profileImage)) {
 			model.addAttribute("url", "/signup");
 			model.addAttribute("msg", "회원 가입에 성공했습니다.");
 		}else {

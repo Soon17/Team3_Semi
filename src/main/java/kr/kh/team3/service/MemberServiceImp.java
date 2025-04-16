@@ -1,10 +1,13 @@
 package kr.kh.team3.service;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.dao.MemberDAO;
 import kr.kh.team3.model.vo.MemberVO;
@@ -65,18 +68,37 @@ public class MemberServiceImp implements MemberService{
 	}
 	
 	@Override
-	public boolean insertSingup(MemberVO member) {
-		if(member == null) return false;
-		System.out.println(member.getMe_pw());
-		String encPw = passwordEncoder.encode(member.getMe_pw());
-		member.setMe_pw(encPw);
-		try {
-			//가입된 아이디로 가입한 경우.
-			return memberDao.insertSignup(member);
-		}catch(Exception e) {
-			//e.printStackTrace();
-			return false;
-		}
+	public boolean insertSingup(MemberVO member, MultipartFile profileImage) {
+	    if(member == null) return false;
+
+	    // 비밀번호 암호화
+	    String encPw = passwordEncoder.encode(member.getMe_pw());
+	    member.setMe_pw(encPw);
+
+	    // 프로필 이미지 저장
+	    if(profileImage != null && !profileImage.isEmpty()) {
+	        try {
+	            String uploadPath = "D:/upload/profile"; // 또는 resources/static 등등
+	            File folder = new File(uploadPath);
+	            if(!folder.exists()) folder.mkdirs();
+
+	            String fileName = UUID.randomUUID().toString() + "_" + profileImage.getOriginalFilename();
+	            File dest = new File(uploadPath, fileName);
+	            profileImage.transferTo(dest);
+
+	            member.setMe_profile(fileName); // 저장된 파일명을 DB에 넣기
+	        } catch(Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+
+	    try {
+	        return memberDao.insertSignup(member);
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
 	@Override

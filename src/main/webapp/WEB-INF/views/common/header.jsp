@@ -131,13 +131,13 @@
 							<ul class="navbar-nav">
 								 <!-- Dropdown -->
 								 <li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" id="navbardrop"
-										data-toggle="dropdown">관리자 전용</a>
-										<div class="dropdown-menu">
-											 <a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
-								 <a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
-														 <a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
-										</div>
+									class="nav-link dropdown-toggle" href="#" id="navbardrop"
+									data-toggle="dropdown">관리자 전용</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
+										<a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
+										<a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
+									</div>
 								 </li>
 							</ul>
 					 </div>
@@ -158,12 +158,13 @@
 							<ul class="navbar-nav">
 								 <!-- Dropdown -->
 								 <li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" id="navbardrop"
-										data-toggle="dropdown">강사 전용</a>
-										<div class="dropdown-menu">
-											 <a class="dropdown-item" href="<c:url value='teacher/${member.me_num }'/>">강사페이지</a>
-											 <a class="dropdown-item" href="<c:url value='#'/>">클래스 등록</a>
-										</div>
+									class="nav-link dropdown-toggle" href="#" id="navbardrop"
+									data-toggle="dropdown">강사 전용</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="<c:url value='/user/myPage'/>">마이페이지</a>
+										<a class="dropdown-item" href="<c:url value='/teacher/${member.me_num }'/>">강사페이지</a>
+										<a class="dropdown-item" href="<c:url value='/class/insert/${me_num }'/>">클래스 등록</a>
+									</div>
 								 </li>
 							</ul>
 					 	</div>

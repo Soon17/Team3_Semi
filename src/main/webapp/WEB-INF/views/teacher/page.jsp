@@ -14,31 +14,34 @@
             padding: 0;
         }
         .header {
-            background-color: white;
-            color: black;
-            padding: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .header h1 {
-            margin: 0;
-            margin-left: 80px;
-        }
-        .profile-pic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: white;
-            border: 1px solid black;
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+		    background-color: white;
+		    color: black;
+		    padding: 50px;
+		    display: flex;
+		    align-items: center;
+		    justify-content: flex-start;
+		    position: relative;
+		    border-radius: 5px;
+		    margin-top: 10px;
+		    padding-left: 140px; /* 이미지 공간 확보 */
+		}
+		
+		.header h1 {
+		    margin: 0;
+		}
+		
+		.profile-pic {
+		    width: 100px;
+		    height: 100px;
+		    border-radius: 50%;
+		    background-color: white;
+		    border: 1px solid black;
+		    position: absolute;
+		    left: 20px;
+		    top: 50%;
+		    transform: translateY(-50%);
+		    overflow: hidden;
+		}
         .creator-info {
             background-color: white; 
             padding: 20px;
@@ -84,7 +87,16 @@
 </head>
 <body>
     <div class="header">
-        <div class="profile-pic">${owner.me_profile}</div>
+        <div class="profile-pic">
+		    <c:choose>
+		        <c:when test="${not empty owner.me_profile}">
+		            <img src="<c:url value='/resources/profile/${owner.me_profile}' />">
+		        </c:when>
+		        <c:otherwise>
+		            <img src="/resources/profile/default.png">
+		        </c:otherwise>
+		    </c:choose>
+		</div>
         <h1>${owner.me_nick}님의 페이지</h1>
     </div>
 

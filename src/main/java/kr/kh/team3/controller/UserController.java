@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team3.model.vo.MemberVO;
+import kr.kh.team3.service.MemberService;
 import kr.kh.team3.service.UserService;
 import lombok.extern.log4j.Log4j;
 
@@ -23,6 +24,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	@GetMapping("/myPage")
 	public String myPage(Model model, HttpSession session) {
@@ -61,4 +65,5 @@ public class UserController {
 		model.addAttribute("skipFooter", "true");
 		return "/apply/1";
 	}
+
 }

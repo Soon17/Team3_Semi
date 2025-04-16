@@ -2,6 +2,8 @@ package kr.kh.team3.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.pagination.MemberCriteria;
 
@@ -19,7 +21,7 @@ public interface MemberService {
 
 	public MemberVO login(MemberVO member);
 	
-	public boolean insertSingup(MemberVO member);
+	public boolean insertSingup(MemberVO member, MultipartFile profileImage);
 
 	public boolean checkId(String id);
 

@@ -69,7 +69,7 @@
         .create-class {
             margin-top: 30px;
             text-align: center;
-            background-color: white; 
+            background-color: transparent; 
             margin: 20px;
             padding: 20px;
             border-radius: 5px;

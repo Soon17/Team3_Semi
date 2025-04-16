@@ -188,7 +188,7 @@
   <!-- 에디터 -->
   <div class="editor-wrapper">
     <form action="<c:url value='/teacher/savePost' />" method="post">
-	  <textarea id="content" name="content"></textarea>
+	  <textarea id="content" name="content">${teacher.tc_intro}</textarea>
 	</form>
   </div>
 

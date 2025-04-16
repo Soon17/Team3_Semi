@@ -9,12 +9,8 @@ public interface TeacherService {
 
 	void save(Map<String, Object> map);
 
-	void updateIntro(String tcId, String intro);
-
 	TeacherVO selectIntro(int tc_me_num);
 
 	MemberVO getMemberNum(int tc_me_num);
-
-
 
 }

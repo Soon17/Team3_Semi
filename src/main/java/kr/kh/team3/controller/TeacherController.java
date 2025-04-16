@@ -43,7 +43,6 @@ public class TeacherController {
         Map<String, Object> map = new HashMap<>();
         map.put("tc_intro", content);
         map.put("tc_me_num", me_num);
-
         teacherService.save(map);
         return "redirect:/teacher/" + me_num;
     }
@@ -69,13 +68,12 @@ public class TeacherController {
     
     @GetMapping("/{tc_me_num}/post")
     public String updateIntro(Model model, HttpSession session, @PathVariable int tc_me_num) {
-    	/*MemberVO user = (MemberVO) session.getAttribute("member");
-        String tcId = user.getMe_id();
-
-        TeacherVO teacher = teacherService.selectIntro(tcId);
-        String intro = (teacher != null) ? teacher.getTc_intro() : null;
-        model.addAttribute("intro", intro);
-*/
+    	MemberVO user = (MemberVO)session.getAttribute("member");
+    	TeacherVO teacher = teacherService.selectIntro(tc_me_num);
+    	
+    	model.addAttribute("teacher", teacher);
+    	
         return "/teacher/post";
     }
+
 }

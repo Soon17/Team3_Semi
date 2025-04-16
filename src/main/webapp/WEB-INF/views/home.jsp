@@ -133,16 +133,27 @@
 
   <!-- 슬라이드 초기화 스크립트 -->
   <script>
-    var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 3,
-      spaceBetween: 10,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      },
-      grabCursor: true
-    });
-    
+  var swiper = createSwiper(swiper, ".mySwiper");
+  var swiper2 = createSwiper(swiper2, ".mySwiper2");
+  function createSwiper(swiper, selector){
+	// 기존 swiper 제거 (있다면)
+      if (swiper) swiper.destroy(true, true);
+
+      // swiper 다시 초기화
+      return new Swiper(selector, {
+        slidesPerView: 3,
+        spaceBetween: 10,
+        slidesPerGroup: 2,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        grabCursor: true
+      });  
+  }
+   
     $(".category-link").on("click",function(e){
     	e.preventDefault();
     	const ca_num = $(this).data("category");
@@ -154,24 +165,8 @@
     		success: function (data) {
     			
     			$(".swiper-Class").html(data);
+    			var swiper = createSwiper(swiper,".mySwiper");
     			
-    			
-    		      // 기존 swiper 제거 (있다면)
-    		      if (swiper) swiper.destroy(true, true);
-
-    		      // swiper 다시 초기화
-    		      swiper = new Swiper(".mySwiper", {
-    		        slidesPerView: 3,
-    		        spaceBetween: 10,
-    		        slidesPerGroup: 2,
-    		        loop: true,
-    		        loopFillGroupWithBlank: true,
-    		        navigation: {
-    		          nextEl: ".swiper-button-next",
-    		          prevEl: ".swiper-button-prev"
-    		        },
-    		        grabCursor: true
-    		      });
     		}
     	});
     });

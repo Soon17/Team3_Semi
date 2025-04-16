@@ -36,7 +36,6 @@ public class TeacherController {
         
         if (user == null) {
             user = new MemberVO();
-            user.setMe_num(1); // 테스트할 때 쓰고 싶은 회원 번호 적으면 됨
             session.setAttribute("member", user);
         }
         int me_num = user.getMe_num(); // 세션에서 로그인한 유저 번호 가져옴
@@ -46,7 +45,7 @@ public class TeacherController {
         map.put("tc_me_num", me_num);
 
         teacherService.save(map);
-        return "/teacher/page";
+        return "redirect:/teacher/" + me_num;
     }
 
     @GetMapping("/{tc_me_num}")

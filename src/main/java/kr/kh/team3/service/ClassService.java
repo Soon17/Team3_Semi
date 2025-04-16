@@ -14,5 +14,13 @@ public interface ClassService {
 
 	ClassVO getClass(int cl_tc_me_num);
 
+	List<ClassVO> getClassListCaNum(int ca_num);
+	
+	List<ClassVO> getCaClassList(int ca_num);
+
+	List<ClassVO> getLatestClassList();
+
+	List<ClassVO> getMostClassList();
+
 
 }

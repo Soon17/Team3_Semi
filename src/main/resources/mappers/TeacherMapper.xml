@@ -4,19 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team3.dao.TeacherDAO">
 	<select id="selectIntro" resultType="kr.kh.team3.model.vo.TeacherVO">
-	    select* from teacher where tc_me_num = #{tc_me_num};
+	    select * from teacher where tc_me_num = #{tc_me_num};
 	</select>
 	
-	<insert id="insertIntro" parameterType="map">
-        INSERT INTO teacher (tc_me_num, tc_intro)
-        VALUES (
-            (SELECT me_num FROM member WHERE me_id = #{tcId}),
-            #{intro})
-    </insert>
+	<insert id="insertContent" parameterType="map">
+	  INSERT INTO teacher (TC_INTRO, TC_ME_NUM)
+	  VALUES (#{map.tc_intro}, #{map.tc_me_num})
+	</insert>
     
-    <update id="updateIntro" parameterType="map">
-        UPDATE teacher
-        SET tc_intro = #{intro}
-        WHERE tc_me_num = (SELECT me_num FROM member WHERE me_id = #{tcId})
+    <select id="selectTcNum" resultType="MemberVO">
+    	select member.* from member join
+        teacher on tc_me_num = me_num
+        where tc_me_num=#{tc_me_num}
+    </select>
+    
+    <update id="updateContent">
+    	update teacher set tc_intro = #{map.tc_intro} where tc_me_num = #{map.tc_me_num}
     </update>
 </mapper>

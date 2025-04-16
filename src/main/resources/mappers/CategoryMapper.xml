@@ -6,4 +6,7 @@
 	<select id="selectCateList" resultType="CategoryVO">
 		select * from category; 
 	</select>
+	<select id="selectCategoryNum" resultType="CategoryVO">
+    	SELECT * FROM category WHERE ca_num = #{ca_num}
+	</select>
 </mapper>

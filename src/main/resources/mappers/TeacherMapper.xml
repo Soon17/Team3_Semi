@@ -17,4 +17,9 @@
         SET tc_intro = #{intro}
         WHERE tc_me_num = (SELECT me_num FROM member WHERE me_id = #{tcId})
     </update>
+    <select id="selectTcNum" resultType="MemberVO">
+    	select member.* from member join
+        teacher on tc_me_num = me_num
+        where tc_me_num=#{tc_me_num}
+    </select>
 </mapper>

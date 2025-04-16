@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.TeacherVO;
 
 public interface TeacherDAO {
@@ -13,6 +14,8 @@ public interface TeacherDAO {
 	void insertContent(@Param("map")Map<String, Object> map);
 
 	void updateIntro(@Param("tcId")String tcId, @Param("intro")String intro);
+
+	MemberVO selectTcNum(@Param("tc_me_num")int tc_me_num);
 
 
 

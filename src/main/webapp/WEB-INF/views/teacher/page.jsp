@@ -93,11 +93,11 @@
 
         <c:choose>
 		    <c:when test="${not empty teacher and not empty teacher.tc_intro}">
-		        <p>${teacher.tc_intro}</p>
-		        <c:if test="${isOwner}">
-		            <a href="<c:url value='/teacher/${member.me_num}/post' />" class="upload-btn">소개글 수정</a>
-		        </c:if>
-		    </c:when>
+			    <p>${teacher.tc_intro}</p> 
+			    <c:if test="${isOwner}">
+			        <a href="<c:url value='/teacher/${member.me_num}/post' />" class="upload-btn">소개글 수정</a>
+			    </c:if>
+			</c:when>
 		
 		    <c:otherwise>
 		        <c:if test="${isOwner}">

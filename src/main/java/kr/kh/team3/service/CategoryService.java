@@ -8,4 +8,6 @@ public interface CategoryService {
 
 	List<CategoryVO> selectCateList();
 
+	CategoryVO getCategoryNum(int ca_num);
+
 }

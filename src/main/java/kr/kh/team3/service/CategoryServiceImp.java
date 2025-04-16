@@ -17,5 +17,10 @@ public class CategoryServiceImp implements CategoryService{
 	public List<CategoryVO> selectCateList() {
 		return categotyDao.selectCateList();
 	}
+
+	@Override
+	public CategoryVO getCategoryNum(int ca_num) {
+		return categotyDao.selectCategoryNum(ca_num);
+	}
 	
 }

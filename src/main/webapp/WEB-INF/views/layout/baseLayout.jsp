@@ -13,10 +13,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <tiles:insertAttribute name="header"/>
+    <c:if test="${empty skipHeader or skipHeader != 'true'}">
+        <!-- skipHeader가 없거나 'true'가 아닐 경우 header를 출력 -->
+        <tiles:insertAttribute name="header" />
+    </c:if>
     <div class="container">
         <tiles:insertAttribute name="body" />
-    </div>                                                  
-    <tiles:insertAttribute name="footer" />
+    </div>
+    <c:if test="${empty skipFooter or skipFooter != 'true'}">
+        <!-- skipHeader가 없거나 'true'가 아닐 경우 header를 출력 -->
+        <tiles:insertAttribute name="footer" />
+    </c:if>
   </body>
 </html>

@@ -16,9 +16,32 @@
 	<select id="getClass" resultType="ClassVO">
 		select * from class where  cl_tc_me_num = #{cl_tc_me_num};
 	</select>
+	<select id="selectClassListCaNum" resultType="ClassVO">
+	  SELECT 
+	    c.cl_num, c.cl_title, c.cl_item, c.cl_intro, c.cl_money, 
+	    c.cl_date, c.cl_level, c.cl_able, c.cl_tc_me_num, 
+	    m.me_name, s.sc_name
+	  FROM class c
+	  JOIN subcategory s ON s.sc_cl_num = c.cl_num
+	  JOIN member m ON c.cl_tc_me_num = m.me_num
+	  WHERE s.sc_ca_num = #{ca_num} and CL_ABLE="Y"
+	</select>
 	<select id="getCaClassList" resultType="ClassVO">
 		select *,
 		(select me_name from member where me_num = cl_tc_me_num)as me_name from class where cl_num in (select sc_cl_num from subcategory where sc_ca_num = #{ca_num})
 		and cl_able = "Y";
+	</select>
+	<select id="getLatestClassList" resultType="ClassVO">
+		select *,
+		(select me_name from member where me_num = cl_tc_me_num)as me_name from class where cl_able="Y" ORDER BY cl_num DESC 
+  		LIMIT 8; 
+	</select>
+	<select id="getMostClassList" resultType="ClassVO">
+		SELECT cl.*, COUNT(su.su_cl_num) AS mostClass,me_name FROM  class cl 
+		join  member on me_num = cl_tc_me_num
+		LEFT JOIN subscribe su ON su.su_cl_num = cl.cl_num
+		where cl_able="Y"
+		GROUP BY cl.cl_num 
+		ORDER BY  mostClass desc limit 8;
 	</select>
 </mapper>

@@ -53,8 +53,8 @@
 			#search {
 				position: absolute;
 				width: 17px;
-				top: 10px;
-				right: 12px;
+				top: 3px;
+				right: 2px;
 				margin: 0;
 			}
 			
@@ -89,8 +89,17 @@
 		<div class="container-fluid d-flex justify-content-center align-items-center" style="padding: 10px 0; ">
 	
 			<!-- 로고 -->
-			<a class="navbar-brand px-3 mr-4" href="<c:url value="/"/>">로고이미지~</a>
-	
+			<a class="navbar-brand px-3 mr-4" href="<c:url value='/'/>">
+			  <svg width="160" height="40" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+			    <text x="0" y="45"
+			          font-family="Arial, Helvetica, sans-serif"
+			          font-size="40"
+			          font-weight="bold"
+			          fill="#111">
+			      Class<tspan fill="#007BFF">KH</tspan>
+			    </text>
+			  </svg>
+			</a>
 			<!-- 메뉴 -->
 			<ul class="navbar-nav d-flex flex-row align-items-center mr-4">
 				<li class="nav-item mr-3">
@@ -106,9 +115,11 @@
 	
 			<!-- 검색창 -->
 			<div class="search mr-4">
-				<form action="/search" method="GET">
-					<input type="text" name="query" class="searchHolder" placeholder="관심주제, 클래스, 크리에이터 찾기">
-					<img id="search" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+				<form action="<c:url value='/search' />" method="GET">
+				    <input type="text" name="keyword" class="searchHolder" placeholder="관심주제, 클래스, 크리에이터 찾기">
+				    <button type="submit" style="background: none; border: none; position: absolute; right: 12px; top: 10px;">
+				        <img id="search" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="검색">
+				    </button>
 				</form>
 			</div>
 	
@@ -124,8 +135,8 @@
 										data-toggle="dropdown">관리자 전용</a>
 										<div class="dropdown-menu">
 											 <a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
-											 <a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
-											 <a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
+								 <a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
+														 <a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
 										</div>
 								 </li>
 							</ul>
@@ -150,9 +161,7 @@
 										class="nav-link dropdown-toggle" href="#" id="navbardrop"
 										data-toggle="dropdown">강사 전용</a>
 										<div class="dropdown-menu">
-
 											 <a class="dropdown-item" href="<c:url value='teacher/${member.me_num }'/>">강사페이지</a>
-
 											 <a class="dropdown-item" href="<c:url value='/class/insert/${me_num }'/>">클래스 등록</a>
 										</div>
 								 </li>

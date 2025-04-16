@@ -84,8 +84,8 @@
 </head>
 <body>
     <div class="header">
-        <div class="profile-pic">${member.me_profile}</div>
-        <h1>${member.me_nick}님의 페이지</h1>
+        <div class="profile-pic">${owner.me_profile}</div>
+        <h1>${owner.me_nick}님의 페이지</h1>
     </div>
 
     <div class="creator-info">

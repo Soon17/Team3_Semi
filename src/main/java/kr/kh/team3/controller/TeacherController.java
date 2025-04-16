@@ -61,8 +61,9 @@ public class TeacherController {
 
         model.addAttribute("teacher", teacher);      // 강사 정보
         model.addAttribute("member", user);          // 로그인 유저
+        model.addAttribute("owner", owner);
         model.addAttribute("isOwner", isOwner);      // 본인 여부
-
+        
         return "/teacher/page";
     }
     

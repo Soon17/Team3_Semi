@@ -54,6 +54,7 @@ public class TeacherController {
 
         // 강사 정보 조회
         TeacherVO teacher = teacherService.selectIntro(tc_me_num);
+        MemberVO owner = teacherService.getMemberNum(tc_me_num);
         
         // 로그인한 유저가 본인인지 판단
         boolean isOwner = (user != null && user.getMe_num() == tc_me_num);

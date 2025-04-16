@@ -11,13 +11,6 @@
 	  INSERT INTO teacher (TC_INTRO, TC_ME_NUM)
 	  VALUES (#{map.tc_intro}, #{map.tc_me_num})
 	</insert>
-    
-    <select id="selectTcNum" resultType="MemberVO">
-    	select member.* from member join
-        teacher on tc_me_num = me_num
-        where tc_me_num=#{tc_me_num}
-    </select>
-    
     <update id="updateContent">
     	update teacher set tc_intro = #{map.tc_intro} where tc_me_num = #{map.tc_me_num}
     </update>

@@ -41,12 +41,5 @@ public class TeacherServiceImp implements TeacherService{
 		return teacherDao.selectTcNum(tc_me_num);
 	}
 
-	@Override
-	public MemberVO getMemberNum(int tc_me_num) {	
-		return teacherDao.selectTcNum(tc_me_num);
-	}
-
-	
-
 
 }

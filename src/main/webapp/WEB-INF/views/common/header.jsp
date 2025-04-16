@@ -53,8 +53,8 @@
 			#search {
 				position: absolute;
 				width: 17px;
-				top: 10px;
-				right: 12px;
+				top: 3px;
+				right: 2px;
 				margin: 0;
 			}
 			
@@ -115,9 +115,11 @@
 	
 			<!-- 검색창 -->
 			<div class="search mr-4">
-				<form action="/search" method="GET">
-					<input type="text" name="query" class="searchHolder" placeholder="관심주제, 클래스, 크리에이터 찾기">
-					<img id="search" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+				<form action="<c:url value='/search' />" method="GET">
+				    <input type="text" name="keyword" class="searchHolder" placeholder="관심주제, 클래스, 크리에이터 찾기">
+				    <button type="submit" style="background: none; border: none; position: absolute; right: 12px; top: 10px;">
+				        <img id="search" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="검색">
+				    </button>
 				</form>
 			</div>
 	
@@ -133,8 +135,8 @@
 										data-toggle="dropdown">관리자 전용</a>
 										<div class="dropdown-menu">
 											 <a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
-											 <a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
-											 <a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
+								 <a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
+														 <a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
 										</div>
 								 </li>
 							</ul>

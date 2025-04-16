@@ -113,7 +113,7 @@
     <div class="create-class">
         <h3>클래스</h3>
         <div class="class-img">
-            <h3>${cl_title}</h3>
+			<p>${cl_title}123</p>
         </div>
     </div>
 </body>

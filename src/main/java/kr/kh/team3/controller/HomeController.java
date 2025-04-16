@@ -22,6 +22,7 @@ import kr.kh.team3.model.vo.SubCategoryVO;
 import kr.kh.team3.service.CategoryService;
 import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.MemberService;
+import kr.kh.team3.service.SearchService;
 import kr.kh.team3.service.SubCategoryService;
 import lombok.extern.log4j.Log4j;
 
@@ -43,6 +44,9 @@ public class HomeController {
 	
 	@Autowired
 	private SubCategoryService subCategoryService;
+	
+	@Autowired
+	private SearchService searchService;
 	
 	
 	@GetMapping("/")
@@ -148,4 +152,5 @@ public class HomeController {
 	    map.put("classList", classList);
 	    return map;
 	}
+	
 }

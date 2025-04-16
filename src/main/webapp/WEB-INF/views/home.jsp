@@ -61,7 +61,6 @@
 	 </style>
 	</head>
 	
-	<body style="height:2000px">
 	<!-- 캐러셀 -->
 	<div id="demo" class="carousel slide" data-ride="carousel">
 	  <ul class="carousel-indicators">
@@ -243,6 +242,7 @@
     		}
     	});
     });
+    $(".category-link").first().trigger("click");
   </script>
 
   <!-- 강사 목록 버튼 -->

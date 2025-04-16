@@ -24,6 +24,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	        </div>
 		</c:forEach>
 		
+		
+		
         
 	</body>
 </html>

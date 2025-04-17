@@ -22,5 +22,9 @@ public interface ClassService {
 
 	List<ClassVO> getMostClassList();
 
+	boolean insertClass(ClassVO cl);
+
+	ClassVO checkRequest(int me_num);
+
 
 }

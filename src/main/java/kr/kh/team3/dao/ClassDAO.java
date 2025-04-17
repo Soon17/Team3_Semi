@@ -24,4 +24,8 @@ public interface ClassDAO {
 
 	List<ClassVO> getMostClassList();
 
+	void insertClass(@Param("cl")ClassVO cl);
+
+	ClassVO checkRequest(@Param("me_num")int me_num);
+
 }

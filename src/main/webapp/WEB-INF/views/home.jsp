@@ -205,8 +205,6 @@
 	        slidesPerView: 4,
 	        spaceBetween: 10,
 	        slidesPerGroup: 2,
-	        loop: true,
-	        loopFillGroupWithBlank: true,
 	        navigation: {
 	          nextEl: selector + " .swiper-button-next",
 	          prevEl: selector + " .swiper-button-prev"
@@ -226,7 +224,6 @@
 	    		type: 'GET',
 	    		data: { ca_num : ca_num },
 	    		success: function (data) {
-	    			console.log(data);
 	    			$(".swiper-Class").html(data);
 	    			swiper = createSwiper(swiper, ".mySwiper");
 	               

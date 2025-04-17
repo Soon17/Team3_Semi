@@ -10,11 +10,11 @@ public class ClassVO {
 	private String cl_title;
 	private String cl_item;
 	private String cl_intro;
-	private String cl_money;
+	private int cl_money;
 	private Date cl_date;
 	private String cl_level;
 	private String cl_able;
-	private String cl_tc_me_num;
+	private int cl_tc_me_num;
 	private String me_name;
 	//서브카테고리 담는곳
 	private String sc_name;

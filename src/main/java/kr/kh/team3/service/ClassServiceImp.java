@@ -55,6 +55,22 @@ public class ClassServiceImp implements ClassService{
 		return classDao.getMostClassList();
 	}
 
+	@Override
+	public boolean insertClass(ClassVO cl) {
+		try {
+			classDao.insertClass(cl);
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
+		
+	}
+
+	@Override
+	public ClassVO checkRequest(int me_num) {
+		return classDao.checkRequest(me_num);
+	}
+
 	
 	
 }

@@ -23,5 +23,7 @@ public interface ClassDAO {
 	List<ClassVO> getLatestClassList();
 
 	List<ClassVO> getMostClassList();
+	
+	ClassVO ClassDetail(@Param("cl_num")int cl_num);
 
 }

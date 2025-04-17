@@ -6,43 +6,6 @@
    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
    
    <style>
-   .swiper-button-next,
-   .swiper-button-prev {
-     color: #fff; /* 버튼 색상 */
-     background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-     border-radius: 50%; /* 버튼을 둥글게 */
-     width: 40px; /* 버튼 너비 */
-     height: 40px; /* 버튼 높이 */
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     z-index: 10; /* 버튼이 다른 요소 위로 보이게 */
-     transition: all 0.3s ease; /* 버튼에 호버 효과 */
-   }
-   
-   /* 버튼 호버 효과 */
-   .swiper-button-next:hover,
-   .swiper-button-prev:hover {
-     background-color: rgba(0, 0, 0, 0.8); /* 호버 시 배경 색상 변경 */
-     transform: scale(1.1); /* 버튼 크기 커지기 */
-   }
-   
-   /* 버튼의 화살표 아이콘 스타일 */
-   .swiper-button-next::after,
-   .swiper-button-prev::after {
-     font-size: 20px; /* 아이콘 크기 */
-     font-weight: bold; /* 아이콘 두껍게 */
-   }
-   
-   /* 오른쪽 버튼 */
-   .swiper-button-next {
-     right: 10px; /* 오른쪽에 배치 */
-   }
-   
-   /* 왼쪽 버튼 */
-   .swiper-button-prev {
-     left: 10px; /* 왼쪽에 배치 */
-   }
       .card {
         color: black;
         text-decoration: none;
@@ -242,8 +205,6 @@
            slidesPerView: 4,
            spaceBetween: 10,
            slidesPerGroup: 2,
-           loop: true,
-           loopFillGroupWithBlank: true,
            navigation: {
              nextEl: selector + " .swiper-button-next",
              prevEl: selector + " .swiper-button-prev"
@@ -263,10 +224,9 @@
              type: 'GET',
              data: { ca_num : ca_num },
              success: function (data) {
-                
                 $(".swiper-Class").html(data);
                 swiper = createSwiper(swiper, ".mySwiper");
-                
+                  
              }
           });
        });

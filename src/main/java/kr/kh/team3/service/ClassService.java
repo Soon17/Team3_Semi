@@ -22,5 +22,5 @@ public interface ClassService {
 
 	List<ClassVO> getMostClassList();
 
-
+	ClassVO ClassDetail(int cl_num);
 }

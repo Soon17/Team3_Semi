@@ -3,45 +3,75 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team3.dao.ClassDAO">
-	<select id="getClassList" resultType="ClassVO">
-		select *,
-		(select me_name from member where me_num = cl_tc_me_num)as me_name from class where cl_able="요청"; 
-	</select>
-	<update id="updateAccept">
-		update `class` set cl_able = "Y" where cl_num = #{cl_num};
-	</update>
-	<update id="rejectAccept">
-		update `class` set cl_able = "N" where cl_num = #{cl_num};
-	</update>
-	<select id="getClass" resultType="ClassVO">
-		select * from class where  cl_tc_me_num = #{cl_tc_me_num};
-	</select>
-	<select id="selectClassListCaNum" resultType="ClassVO">
-	  SELECT 
-	    c.cl_num, c.cl_title, c.cl_item, c.cl_intro, c.cl_money, 
-	    c.cl_date, c.cl_level, c.cl_able, c.cl_tc_me_num, 
-	    m.me_name, s.sc_name
-	  FROM class c
-	  JOIN subcategory s ON s.sc_cl_num = c.cl_num
-	  JOIN member m ON c.cl_tc_me_num = m.me_num
-	  WHERE s.sc_ca_num = #{ca_num} and CL_ABLE="Y"
-	</select>
-	<select id="getCaClassList" resultType="ClassVO">
-		select *,
-		(select me_name from member where me_num = cl_tc_me_num)as me_name from class where cl_num in (select sc_cl_num from subcategory where sc_ca_num = #{ca_num})
-		and cl_able = "Y";
-	</select>
-	<select id="getLatestClassList" resultType="ClassVO">
-		select *,
-		(select me_name from member where me_num = cl_tc_me_num)as me_name from class where cl_able="Y" ORDER BY cl_num DESC 
-  		LIMIT 8; 
-	</select>
-	<select id="getMostClassList" resultType="ClassVO">
-		SELECT cl.*, COUNT(su.su_cl_num) AS mostClass,me_name FROM  class cl 
-		join  member on me_num = cl_tc_me_num
-		LEFT JOIN subscribe su ON su.su_cl_num = cl.cl_num
-		where cl_able="Y"
-		GROUP BY cl.cl_num 
-		ORDER BY  mostClass desc limit 8;
+	<resultMap id="classMap" type="ClassVO">
+	    <result property="cl_num" column="cl_num"/>
+	    <result property="cl_title" column="cl_title"/>
+	    <result property="cl_item" column="cl_item"/>
+	    <result property="cl_intro" column="cl_intro"/>
+	    <result property="cl_money" column="cl_money"/>
+	    <result property="cl_date" column="cl_date"/>
+	    <result property="cl_level" column="cl_level"/>
+	    <result property="cl_able" column="cl_able"/>
+	    <result property="cl_tc_me_num" column="cl_tc_me_num"/>
+	    <result property="me_nick" column="me_nick"/>
+	    <result property="me_name" column="me_name"/>
+	</resultMap>
+
+   <select id="getClassList" resultType="ClassVO">
+      select *,
+      (select me_name from member where me_num = cl_tc_me_num)as me_name from class where cl_able="요청"; 
+   </select>
+   <update id="updateAccept">
+      update `class` set cl_able = "Y" where cl_num = #{cl_num};
+   </update>
+   <update id="rejectAccept">
+      update `class` set cl_able = "N" where cl_num = #{cl_num};
+   </update>
+   <select id="getClass" resultType="ClassVO">
+      select * from class where  cl_num = #{cl_tc_me_num};
+   </select>
+   <select id="selectClassListCaNum" resultType="ClassVO">
+     SELECT 
+       c.cl_num, c.cl_title, c.cl_item, c.cl_intro, c.cl_money, 
+       c.cl_date, c.cl_level, c.cl_able, c.cl_tc_me_num, 
+       m.me_name, s.sc_name
+     FROM class c
+     JOIN subcategory s ON s.sc_cl_num = c.cl_num
+     JOIN member m ON c.cl_tc_me_num = m.me_num
+     WHERE s.sc_ca_num = #{ca_num} and CL_ABLE="Y"
+   </select>
+   <select id="getCaClassList" resultType="ClassVO">
+      select *,
+      (select me_nick from member where me_num = cl_tc_me_num)as me_name from class where cl_num in (select sc_cl_num from subcategory where sc_ca_num = #{ca_num})
+      and cl_able = "Y";
+   </select>
+   <select id="getLatestClassList" resultType="ClassVO">
+      select *,
+      (select me_nick from member where me_num = cl_tc_me_num)as me_name from class where cl_able="Y" ORDER BY cl_num DESC 
+        LIMIT 8; 
+   </select>
+   <select id="getMostClassList" resultType="ClassVO">
+      SELECT cl.*, COUNT(su.su_cl_num) AS mostClass,me_nick as me_name FROM  class cl 
+      join  member on me_num = cl_tc_me_num
+      LEFT JOIN subscribe su ON su.su_cl_num = cl.cl_num
+      where cl_able="Y"
+      GROUP BY cl.cl_num 
+      ORDER BY  mostClass desc limit 8;
+   </select>
+   <insert id="insertClass">
+      insert into class (cl_title,cl_item,cl_intro,cl_money,cl_level,cl_tc_me_num)
+      values(#{cl.cl_title},#{cl.cl_item},#{cl.cl_intro},#{cl.cl_money},#{cl.cl_level},#{cl.cl_tc_me_num});
+   </insert>
+   <select id="checkRequest" resultType="ClassVO">
+      select* from class where cl_tc_me_num = #{me_num} and cl_able="요청";
+   </select>
+   <select id="ClassDetail" resultMap="classMap">
+	    SELECT 
+	        c.cl_num, c.cl_title, c.cl_item, c.cl_intro, c.cl_money,
+	        c.cl_date, c.cl_level, c.cl_able, c.cl_tc_me_num,
+	        m.me_nick
+	    FROM class c
+	    JOIN member m ON c.cl_tc_me_num = m.me_num
+	    WHERE c.cl_num = #{cl_num}
 	</select>
 </mapper>

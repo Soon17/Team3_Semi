@@ -21,9 +21,9 @@
         }
 
         h2 {
-            text-align: center;
             margin-bottom: 40px;
             font-size: 24px;
+            font-weight: bold;
         }
 
         .card-grid {
@@ -89,7 +89,7 @@
                     <div class="card">
                         <div class="card-image"></div>
                         <div class="card-info">
-                            <div class="card-sub">${item.teacherName}</div>
+                            <div class="card-sub">${item.teacherNick}</div>
                             <div class="card-title">${item.name}</div>
                         </div>
                     </div>

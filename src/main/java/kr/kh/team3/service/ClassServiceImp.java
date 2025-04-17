@@ -55,6 +55,9 @@ public class ClassServiceImp implements ClassService{
 		return classDao.getMostClassList();
 	}
 
-	
+	@Override
+	public ClassVO ClassDetail(int cl_num) {
+		return classDao.ClassDetail(cl_num);
+	}
 	
 }

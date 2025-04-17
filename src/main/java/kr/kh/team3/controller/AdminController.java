@@ -2,9 +2,9 @@ package kr.kh.team3.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.MemberVO;
-import kr.kh.team3.service.ClassService;
+import kr.kh.team3.model.vo.RequestVO;
 import kr.kh.team3.pagination.MemberCriteria;
+import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.MemberService;
 import kr.kh.team3.service.MessageService;
+import kr.kh.team3.service.RequestService;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,6 +36,9 @@ public class AdminController {
 	
 	@Autowired
 	MessageService messageService;
+	
+	@Autowired
+	RequestService requestService;
 
 	@GetMapping("/requestClass")
 	public String requestClass(Model model, HttpSession session) {
@@ -52,6 +57,25 @@ public class AdminController {
 		List<ClassVO> list = classService.getClassList();
 		model.addAttribute("list",list);
 		return"/admin/requestClass";
+	}
+	
+	@GetMapping("/requestCreator")
+	public String requestCreator(Model model, HttpSession session) {
+		if(session.getAttribute("member") == null) {
+			model.addAttribute("url", "/");
+			model.addAttribute("msg", "관리자 전용입니다");
+			return "message";
+		}
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		if(!member.getMe_authority().equals("ADMIN")) {
+			model.addAttribute("url", "/");
+			model.addAttribute("msg", "관리자 전용입니다");
+			return "message";
+		}
+
+		List<RequestVO> r_list = requestService.getRequestList();
+		model.addAttribute("r_list", r_list);
+		return"/admin/requestCreator";
 	}
 	
 	@PostMapping("/acceptRequest")

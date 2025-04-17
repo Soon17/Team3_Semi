@@ -46,8 +46,20 @@
 	
     <script>
         function openNewWindow() {
-            // 새 창 열기 (URL, 창 이름, 창 속성)
-            window.open("<c:url value="/user/applyPage"/>", "apply", "width=1000,height=800");
+        	//이미 요청된 지원이 있는지 체크
+        	$.ajax({
+		        url: "/team3/apply/check",
+		        method: "POST",
+		        success: function(isNewRequest) {
+		            if (isNewRequest) {
+		                // 새 창 열기
+		                window.open("/team3/apply/applyPage", "apply", "width=1000,height=800");
+		            } else {
+		                alert("이미 대기중인 요청이 있습니다. 처리 결과를 기다려주세요!");
+		                return;
+		            }
+		        }
+		    });
         }
     </script>
 

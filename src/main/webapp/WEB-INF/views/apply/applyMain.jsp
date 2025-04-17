@@ -26,52 +26,88 @@
             line-height: 50px;
             margin-bottom: 20px; /* 다른 요소와 간격을 두기 위해 margin 추가 */
         }
-
-		.btn-next {
-		
-		}
 	</style>
 </head>
 <body>
 	
-	<div class="progress mt-3">
-	    <div class="progress-bar bg-success" style="width:20%">20%</div>
+	<div class="progress mt-3" width="800px">
+	    <div class="progress-bar bg-success" style="width:0%">0%</div>
 	</div>
 	<div class="content-box">
 		<div class="box">
-			<h2>클래스101에 지원하고 싶어요!</h2><br>
-			<div class="text-left apply-content">
-				안녕하세요, 크리에이터님! <프로젝트명>입니다.<br>
-				지금은 아쉽게도 <프로젝트명> 내에서 크리에이터님이 직접 클래스를 개설하고 판매하시기는 어렵습니다.<br>
-				담당자 배정을 희망하신다면 아래 양식을 통해 어떤 클래스를 열고 싶으신지,<br>
-				크리에이터님이 어떤 분이신지 알려주세요.<br>
-				저희가 꼼꼼히 살펴본 후, 클래스 오픈이 가능한 경우에 담당자가 직접 연락드리도록 하겠습니다.<br>
-				(클래스 오픈이 불가한 경우 별도 연락을 드리지 않습니다.)
-			</div>
+			<!-- ajax로 불러올 공간 -->
 		</div>
-		<button onclick="nextWindow()" class="btn btn-info btn-next mt-5" style="margin : auto;">다음</button>
+		<div class="btns">
+			<button onclick="beforeWindow()" class="btn btn-info btn-before mt-5" style="margin : auto;">이전</button>
+			<button onclick="afterWindow()" class="btn btn-info btn-after mt-5" style="margin : auto;">다음</button>
+		</div>
 	</div>
     <script>
-    	let obj = {
-    			
+    	let pageNum = 0;
+    	let textareaContent = ""; // 입력한 내용을 여기에 저장
+    	showBeforeBtn();
+    	
+    	$(".box").load("/team3/apply/0");
+    	
+    	function showBeforeBtn(){
+	    	if(pageNum === 0) $('.btn-before').hide();
+	    	else $('.btn-before').show();    		
     	}
-    	function nextWindow() {
+    	
+    	function afterWindow() {
    			
 	    	const $bar = $('.progress-bar');
-	  		const $button = $('.btn-next');
+	  		const $button = $('.btn-after');
     		const buttonText = $button.text().trim();
    			// 버튼 텍스트가 '제출하기'면 창 닫기
    		    if (buttonText === "제출하기") {
-   		        window.close();
+   		  		
+				// 체크박스가 체크되었는지 확인
+				const isChecked = $(".agreeBtn").is(":checked");
+				
+				if (!isChecked) {
+				    alert("약관에 동의하셔야 제출할 수 있습니다.");
+				    return;
+				}
+   		  		
+				$.ajax({
+				    url: "/team3/apply/submit",
+				    method: "POST",
+				    data: { content: textareaContent },
+				    success: function(response) {
+				    	if(response){
+					        alert("제출 완료!");
+					        window.close();				    		
+				    	} else {
+				    		alert("제출 실패!");
+				    	}
+				    }
+				});
    		        return;
    		    }
    		    else{
-    			$(".apply-content").load("/spring/apply/1");
+   		    	
+   		  		// 현재 textarea 내용 저장 (2 페이지로 넘어가기 전에만)
+   		  		if(pageNum === 1){
+	   		        textareaContent = $("textarea").val(); // 페이지에 있던 textarea의 내용
+	   		        if(!textareaContent.trim()){
+	   		        	alert("내용을 입력하세요.")
+	   		        	return;
+	   		        }
+   		  		}
+   		        
+    			$(".box").load("/team3/apply/" + ++pageNum, function () {
+        		    if (pageNum === 1) {
+        		        $("textarea").val(textareaContent);
+        		    }
+        		});
+    			showBeforeBtn();
+    			
    	   			// 현재 텍스트에서 숫자만 추출 (예: '30%' → 30)
    	   		    let currentPercent = parseInt($bar.text().trim());
    	   			
-   	   			// 20% 증가 (최대 100%로 제한)
-   	   		    let newPercent = Math.min(currentPercent + 20, 100);
+   	   			// 50% 증가 (최대 100%로 제한)
+   	   		    let newPercent = Math.min(currentPercent + 50, 100);
    	   			
    	   			// 스타일과 텍스트 모두 업데이트
    	   		    $bar.css('width', newPercent + '%');
@@ -82,6 +118,36 @@
    	   		        $button.text("제출하기");
    	   		    }
    		    }
+    	}
+    	
+		function beforeWindow() {
+   			
+	    	const $bar = $('.progress-bar');
+	  		const $button = $('.btn-after');
+    		const buttonText = $button.text().trim();
+    		
+    		// 현재 textarea 내용 저장 (0 페이지로 넘어가기 전에만)
+	  		if(pageNum === 1){
+  		        textareaContent = $("textarea").val(); // 페이지에 있던 textarea의 내용   		  			
+	  		}
+
+    		$(".box").load("/team3/apply/" + --pageNum, function () {
+    		    if (pageNum === 1) {
+    		        $("textarea").val(textareaContent);
+    		    }
+    		});
+			showBeforeBtn();
+			$button.text("다음");
+			
+   			// 현재 텍스트에서 숫자만 추출 (예: '30%' → 30)
+   		    let currentPercent = parseInt($bar.text().trim());
+   			
+   			// 50% 감소 (최소 0%로 제한)
+   		    let newPercent = Math.max(currentPercent - 50, 0);
+   			
+   			// 스타일과 텍스트 모두 업데이트
+   		    $bar.css('width', newPercent + '%');
+   			$bar.text(newPercent + '%');
     	}
     </script>
 </body>

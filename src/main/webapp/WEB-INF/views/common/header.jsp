@@ -123,7 +123,7 @@
 										class="nav-link dropdown-toggle" href="#" id="navbardrop"
 										data-toggle="dropdown">관리자 전용</a>
 										<div class="dropdown-menu">
-											 <a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
+											 <a class="dropdown-item" href="<c:url value='/admin/requestCreator'/>">강사 요청 리스트</a>
 											 <a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
 											 <a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
 										</div>

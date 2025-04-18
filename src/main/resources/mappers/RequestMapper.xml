@@ -33,7 +33,7 @@
 	<select id="countRequest" resultType="int">
    		select count(*)
    		from request
-   		where rq_me_num = #{user.me_id} and rq_state != "NO"
+   		where rq_me_num = #{user.me_num} and rq_state != "NO"
 	</select>
 	
 	<insert id="insertRequest">

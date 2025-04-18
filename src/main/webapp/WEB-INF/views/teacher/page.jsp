@@ -15,31 +15,42 @@
             padding: 0;
         }
         .header {
-            background-color: white;
-            color: black;
-            padding: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        .header h1 {
-            margin: 0;
-            margin-left: 80px;
-        }
-        .profile-pic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: white;
-            border: 1px solid black;
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+		    background-color: white;
+		    color: black;
+		    padding: 80px;
+		    display: flex;
+		    align-items: center;
+		    justify-content: flex-start;
+		    position: relative;
+		    border-radius: 5px;
+		    margin-top: 10px;
+		    padding-left: 140px; /* 이미지 공간 확보 */
+		}
+		
+		.header h1 {
+		    margin: 0;
+		    margin-left: 240px;
+		    text-align: center;
+		}
+		
+		.profile-pic {
+		    width: 150px;
+		    height: 150px;
+		    border-radius: 50%;
+		    background-color: white;
+		    position: absolute;
+		    left: 20px;
+		    top: 50%;
+		    transform: translateY(-50%);
+		    overflow: hidden;
+		}
+		.profile-pic img {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    display: block;
+		}
+		
         .creator-info {
             background-color: white; 
             padding: 20px;
@@ -85,21 +96,21 @@
 </head>
 <body>
     <div class="header">
-	    <div class="profile-pic">
-	        <c:choose>
-			    <c:when test="${fn:startsWith(owner.me_profile, 'http')}">
-			        <img src="${owner.me_profile}" style="width:100%; height:100%; border-radius:50%;">
-			    </c:when>
-			    <c:when test="${not empty owner.me_profile}">
-			        <img src="<c:url value='/profile/${owner.me_profile}'/>" style="width:100%; height:100%; border-radius:50%;">
-			    </c:when>
-			    <c:otherwise>
-			        <img src="<c:url value='/profile/default.png'/>" style="width:100%; height:100%; border-radius:50%;">
-			    </c:otherwise>
-			</c:choose>
-	    </div>
-	    <h1>${owner.me_nick}님의 페이지</h1>
-	</div>
+       <div class="profile-pic">
+           <c:choose>
+             <c:when test="${fn:startsWith(owner.me_profile, 'http')}">
+                 <img src="${owner.me_profile}" style="width:100%; height:100%; border-radius:50%;">
+             </c:when>
+             <c:when test="${not empty owner.me_profile}">
+                 <img src="<c:url value='/profile/${owner.me_profile}'/>" style="width:100%; height:100%; border-radius:50%;">
+             </c:when>
+             <c:otherwise>
+                 <img src="<c:url value='/profile/default.png'/>" style="width:100%; height:100%; border-radius:50%;">
+             </c:otherwise>
+         </c:choose>
+       </div>
+       <h1>${owner.me_nick}님의 페이지</h1>
+   </div>
 
     <div class="creator-info">
         <h2>강사 소개</h2>
@@ -126,7 +137,7 @@
     <div class="create-class">
         <h3>클래스</h3>
         <div class="class-img">
-            <h3>${cl_title}</h3>
+			<p>${cl_title}123</p>
         </div>
     </div>
 </body>

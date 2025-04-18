@@ -146,7 +146,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       <div id="form-inner-container">
         <div id="sign-up-container" class="hide">
           <h3>Get Started</h3>
-          <form id="f1" action="<c:url value="/signup"/>" method="post">
+          <form id="f1" action="<c:url value='/signup'/>" method="post" enctype="multipart/form-data">
             <label for="name">Name</label>
             <input type="text" name="me_name" id="name" placeholder="Name" />
             <label for="name">ID</label>
@@ -160,6 +160,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <input type="text" name="me_email" id="email" placeholder="Email" />
             <label for="name">전화번호</label>
             <input type="text" name="me_number" id="number" placeholder="전화번호 입력"/>
+            <label for="profile">프로필 사진</label>
+			<input type="file" name="profileImage" id="profile" accept="image/*" />
             <div id="form-controls">
               <button type="submit">Sign Up</button>
               <button type="button" id="toggleSignIn">Login</button>
@@ -182,6 +184,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <a class="p-2" href="<c:url value="/kakao/login"/>">
                   <img src="<c:url value='/resources/static/kakao_login_medium_narrow.png' />" alt="카카오 로그인" style="height:35px" />
                 </a>
+                <div class="form-check">
+					<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" value="true" name="auto" checked>자동로그인
+					</label>
+				</div>
               </div>
             </div>
           </form>

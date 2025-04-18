@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,6 +44,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
+            	<th></th>
                 <th>이름</th>
                 <th>아이디</th>
                 <th>닉네임</th>
@@ -54,6 +56,25 @@
         <tbody>
             <c:forEach items="${list}" var="member">
                 <tr>
+                	<td>
+					<c:choose>
+					    <c:when test="${fn:startsWith(member.me_profile, 'http')}">
+					        <img src="${member.me_profile}"
+					             alt="프로필"
+					             style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px;" />
+					    </c:when>
+					    <c:when test="${not empty member.me_profile}">
+					        <img src="<c:url value='/profile/${member.me_profile}' />"
+					             alt="프로필"
+					             style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px;" />
+					    </c:when>
+					    <c:otherwise>
+					        <img src="<c:url value='/profile/default.png' />"
+					             alt="기본 프로필"
+					             style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px;" />
+					    </c:otherwise>
+					</c:choose>
+					</td>
                     <td>${member.me_name}</td>
                     <td>${member.me_id}</td>
                     <td>${member.me_nick}</td>

@@ -1,8 +1,10 @@
 package kr.kh.team3.interceptor;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,14 +30,33 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		//컨트롤러가 보내준 회원 정보를 가져옴
 		//가져온 회원 정보가 있으면 세션에 회원 정보를 저장
 		HttpSession session = request.getSession();
-		System.out.println((MemberVO)session.getAttribute("member"));
 		if(session.getAttribute("member") != null) {
 			MemberVO user = (MemberVO)session.getAttribute("member");
+
 			memberService.onlineMember(user);
 			timer(session);
+			
+			if(user == null) {
+				return;
+			}
+			
+			if(!user.isAuto()) {
+				return;
+			}
+			Cookie cookie = new Cookie("T3", session.getId());
+			cookie.setPath("/");
+			int time = 60 * 60 * 24 * 7; //단위 초(7일을 초로 환산)
+			cookie.setMaxAge(time);
+			//response 객체에 쿠키를 담아서 전송 => 클라이언트에 쿠키가 전송
+			response.addCookie(cookie);
+			//db에 자동로그인 정보를 저장
+			user.setMe_cookie(session.getId());
+			//System.currentTimeMillis() : 현재 시간을 밀리초로 반환
+			Date date = new Date(System.currentTimeMillis() + time * 1000);
+			user.setMe_limit(date);
+			memberService.updateCookie(user);
 		}
 	}
-	//
 	private void timer(HttpSession session) {
 		
 		Timer timer =  new Timer();

@@ -14,6 +14,7 @@
 			<ul style="list-style: none; padding-left: 0;">
 				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('subs')">구독 목록</a></li>				
 				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('teacher')">강사 신청</a></li>
+				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('update')">개인 정보 수정</a></li>
 			</ul>	
 		</div>
 
@@ -50,6 +51,23 @@
             window.open("<c:url value="/user/applyPage"/>", "apply", "width=1000,height=800");
         }
     </script>
-
+	<script>
+		$(document).on("change", "[name=file]", function(e){
+			const $this = $(this);
+			const file = this.files[0];
+			
+			if(file){
+				const reader = new FileReader();
+				reader.onload = function(e){
+					$this.prev().attr("src", e.target.result).show();
+					$("#file").hide();
+				}
+				reader.readAsDataURL(file);
+			}else{
+				$this.prev().hide();
+				$("#file").show();
+			}
+		});
+	</script>
 </body>
 </html>

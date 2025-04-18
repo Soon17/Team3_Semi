@@ -21,7 +21,7 @@ public interface MemberService {
 
 	public MemberVO login(MemberVO member);
 	
-	public boolean insertSingup(MemberVO member, MultipartFile profileImage);
+	public boolean insertSingup(MemberVO member, MultipartFile fileList);
 
 	public boolean checkId(String id);
 
@@ -31,5 +31,6 @@ public interface MemberService {
 
 	public boolean clearMemberList(int me_num);
 
+	public boolean updateUser(MemberVO member, MemberVO user, MultipartFile fileList);
 
 }

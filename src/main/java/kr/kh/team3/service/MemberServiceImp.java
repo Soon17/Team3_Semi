@@ -68,7 +68,7 @@ public class MemberServiceImp implements MemberService{
 	}
 	
 	@Override
-	public boolean insertSingup(MemberVO member, MultipartFile profileImage) {
+	public boolean insertSingup(MemberVO member, MultipartFile fileList) {
 	    if(member == null) return false;
 
 	    // 비밀번호 암호화
@@ -76,15 +76,15 @@ public class MemberServiceImp implements MemberService{
 	    member.setMe_pw(encPw);
 
 	    // 프로필 이미지 저장
-	    if(profileImage != null && !profileImage.isEmpty()) {
+	    if(fileList != null && !fileList.isEmpty()) {
 	        try {
 	            String uploadPath = "D:/upload/profile"; // 또는 resources/static 등등
 	            File folder = new File(uploadPath);
 	            if(!folder.exists()) folder.mkdirs();
 
-	            String fileName = UUID.randomUUID().toString() + "_" + profileImage.getOriginalFilename();
+	            String fileName = UUID.randomUUID().toString() + "_" + fileList.getOriginalFilename();
 	            File dest = new File(uploadPath, fileName);
-	            profileImage.transferTo(dest);
+	            fileList.transferTo(dest);
 
 	            member.setMe_profile(fileName); // 저장된 파일명을 DB에 넣기
 	        } catch(Exception e) {
@@ -125,5 +125,46 @@ public class MemberServiceImp implements MemberService{
 		return memberDao.clearMember(me_num);
 	}
 
+	@Override
+	public boolean updateUser(MemberVO member, MemberVO user, MultipartFile fileList) {
+		if(member == null || user == null) {
+			return false;
+		}
+		//MemberVO user = memberDao.selectMember(member.getMe_id());
+		if (user == null || user.getMe_pw() == null || member.getMe_pw() == null) {
+		    return false;
+		}
+		if(!passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
+			return false;
+		}
+		if(member.getMe_newPassword() != null && !member.getMe_newPassword().isBlank()) {
+			String encPw = passwordEncoder.encode(member.getMe_newPassword());
+			user.setMe_pw(encPw);
+		}
+		if (fileList != null && !fileList.isEmpty()) {
+	        try {
+	            String uploadPath = "D:/upload/profile";
+	            File folder = new File(uploadPath);
+	            if (!folder.exists()) folder.mkdirs();
 
+	            String fileName = UUID.randomUUID().toString() + "_" + fileList.getOriginalFilename();
+	            File dest = new File(uploadPath, fileName);
+	            fileList.transferTo(dest);
+
+	            user.setMe_profile(fileName);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    } 
+		try {
+			user.setMe_nick(member.getMe_nick());
+	        return memberDao.updateUser(user);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+	
 }

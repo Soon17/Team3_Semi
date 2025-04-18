@@ -70,4 +70,11 @@
 		update member set me_del = 'Y'
 		where me_num = #{me_num}
 	</update>
+	<update id="updateUser" parameterType="kr.kh.team3.model.vo.MemberVO">
+		update member set 
+		me_nick = #{member.me_nick},
+		me_pw = #{member.me_pw},
+		me_profile = #{member.me_profile}
+		where me_id = #{member.me_id}
+	</update>
 </mapper>

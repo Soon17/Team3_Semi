@@ -15,4 +15,5 @@ public class MemberVO {
     private String me_online;
     private String me_del ;
     private String me_profile;
+    private String me_newPassword;
 }

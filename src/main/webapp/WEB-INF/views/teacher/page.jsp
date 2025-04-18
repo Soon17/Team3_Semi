@@ -16,7 +16,7 @@
         .header {
 		    background-color: white;
 		    color: black;
-		    padding: 50px;
+		    padding: 80px;
 		    display: flex;
 		    align-items: center;
 		    justify-content: flex-start;
@@ -28,20 +28,28 @@
 		
 		.header h1 {
 		    margin: 0;
+		    margin-left: 240px;
+		    text-align: center;
 		}
 		
 		.profile-pic {
-		    width: 100px;
-		    height: 100px;
+		    width: 150px;
+		    height: 150px;
 		    border-radius: 50%;
 		    background-color: white;
-		    border: 1px solid black;
 		    position: absolute;
 		    left: 20px;
 		    top: 50%;
 		    transform: translateY(-50%);
 		    overflow: hidden;
 		}
+		.profile-pic img {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    display: block;
+		}
+		
         .creator-info {
             background-color: white; 
             padding: 20px;
@@ -90,10 +98,11 @@
         <div class="profile-pic">
 		    <c:choose>
 		        <c:when test="${not empty owner.me_profile}">
-		            <img src="<c:url value='/resources/profile/${owner.me_profile}' />">
+		        
+		            <img src="<c:url value='/profile/${owner.me_profile}' />" width="150">
 		        </c:when>
 		        <c:otherwise>
-		            <img src="/resources/profile/default.png">
+		            <img src="<c:url value='/profile/default.png'/>" >
 		        </c:otherwise>
 		    </c:choose>
 		</div>

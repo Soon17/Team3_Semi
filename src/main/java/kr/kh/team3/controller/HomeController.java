@@ -71,11 +71,11 @@ public class HomeController {
 	
 	@PostMapping("/signup")
 	public String signup(Model model,
-            MultipartFile profileImage,
+            MultipartFile fileList,
             MemberVO member,
             HttpSession session) throws IOException {
 
-		if(memberService.insertSingup(member, profileImage)) {
+		if(memberService.insertSingup(member, fileList)) {
 			model.addAttribute("url", "/signup");
 			model.addAttribute("msg", "회원 가입에 성공했습니다.");
 		}else {

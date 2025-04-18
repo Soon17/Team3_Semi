@@ -11,7 +11,7 @@ pageEncoding="UTF-8" %>
         <style>
             /* 공통 스타일 */
             
-            button {
+            .btn-all {
                 font-size: 16px;
                 padding: 10px 20px;
                 border: none;
@@ -63,20 +63,20 @@ pageEncoding="UTF-8" %>
                         <td>${cl.me_name}</td>
                         <td>${cl.cl_tc_me_num}</td>
                         <td>
-						    <a href="<c:url value="/admin/detail/${cl.cl_tc_me_num}"/>">${cl.cl_title}</a>
+						    <a href="<c:url value="/admin/detail/${cl.cl_num}"/>">${cl.cl_title}</a>
 						</td>
                         <td>
                             <!-- 수락 버튼 (초록색) -->
                             <form action="<c:url value="/admin/acceptRequest"/>" method="POST">
                                 <input type="hidden" name="cl_num" value="${cl.cl_num}" />
-                                <button type="submit" class="accept-button">수락</button>
+                                <button type="submit" class= " btn-all accept-button">수락</button>
                             </form>
                         </td>
                         <td>
                             <!-- 거절 버튼 (빨간색) -->
                             <form action="<c:url value="/admin/rejectRequest"/>" method="POST">
                                 <input type="hidden" name="cl_num" value="${cl.cl_num}" />
-                                <button type="submit" class="reject-button">거절</button>
+                                <button type="submit" class=" btn-all reject-button">거절</button>
                             </form>
                         </td>
                     </tr>

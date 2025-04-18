@@ -53,7 +53,7 @@
         }
 
         .card-info {
-            padding: 12px;
+            padding: 10px;
         }
 
         .card-title {

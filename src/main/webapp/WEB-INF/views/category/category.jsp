@@ -123,25 +123,25 @@
   });
 
   function renderAllClasses() {
-    let classHtml = "";
-    classList.forEach(function (cls) {
-      classHtml += `
-        <div class="class-card">
-          <div class="image"></div>
-          <p>\${cls.me_name || "이름 없음"}</p>
-          <h5>\${cls.cl_title || "제목 없음"}</h5>
-        </div>
-      `;
-    });
-    $("#class-list").html(classHtml);
-  }
+	  let classHtml = "";
+	  classList.forEach(function (cls) {
+	    classHtml += `
+	      <div class="class-card class-link" data-clnum="\${cls.cl_num}" style="cursor:pointer;">
+	        <div class="image"></div>
+	        <p>\${cls.me_name || "이름 없음"}</p>
+	        <h5>\${cls.cl_title || "제목 없음"}</h5>
+	      </div>
+	    `;
+	  });
+	  $("#class-list").html(classHtml);
+	}
 
-  function renderClassesBySubName(sc_name) {
+	function renderClassesBySubName(sc_name) {
 	  const filtered = classList.filter(cls => cls.sc_name === sc_name);
 	  let classHtml = "";
 	  filtered.forEach(function (cls) {
 	    classHtml += `
-	      <div class="class-card">
+	      <div class="class-card class-link" data-clnum="\${cls.cl_num}" style="cursor:pointer;">
 	        <div class="image"></div>
 	        <p>\${cls.me_name || "이름 없음"}</p>
 	        <h5>\${cls.cl_title || "제목 없음"}</h5>
@@ -152,17 +152,10 @@
 	}
 
   // 클릭 이벤트
-  $(document).on("click", "#sub-list li", function () {
-    $("#sub-list li").removeClass("active");
-    $(this).addClass("active");
-
-    const sc_name = $(this).data("scname");
-    if (sc_name === "all") {
-      renderAllClasses();
-    } else {
-      renderClassesBySubName(sc_name);
-    }
-  });
+	 $(document).on("click", ".class-link", function () {
+	  const clNum = $(this).data("clnum");
+	  window.location.href = "/team3/class/" + clNum;
+	});
 </script>
 
 </body>

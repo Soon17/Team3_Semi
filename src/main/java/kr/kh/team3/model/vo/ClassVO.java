@@ -15,8 +15,11 @@ public class ClassVO {
 	private String cl_level;
 	private String cl_able;
 	private int cl_tc_me_num;
+	//맴버
 	private String me_nick;
 	private String me_name;
+	private String me_profile;
 	//서브카테고리 담는곳
 	private String sc_name;
+	
 }

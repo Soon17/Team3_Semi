@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team3.model.vo.ClassVO;
+import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.CurriculumService;
+import kr.kh.team3.service.SubscribeService;
 
 @Controller
 @RequestMapping("/class")
@@ -26,6 +30,9 @@ public class ClassController {
 	@Autowired
 	CurriculumService curriculumService;
 	
+	@Autowired
+	SubscribeService subscribeService;
+	
 	@GetMapping("/categoryClass")
 	public String categoryClass(Model model,@RequestParam("ca_num") int ca_num) {
 		System.out.println(ca_num);
@@ -34,10 +41,24 @@ public class ClassController {
 		model.addAttribute("list",list);
 		return "/categoryClass";
 	}
+	
 	@GetMapping("/{num}")
-	public String classDetail(@PathVariable("num") int cl_num, Model model) {
-	    ClassVO classDetail = classService.ClassDetail(cl_num);
+	public String classDetail(@PathVariable("num") int cl_num, HttpSession session, Model model) {
+		ClassVO classDetail = classService.ClassDetail(cl_num);
 	    model.addAttribute("classDetail", classDetail);
+
+	    // 구독 여부 확인
+	    MemberVO user = (MemberVO) session.getAttribute("member");
+	    boolean checkSubscribed = false;
+	    if (user != null) {
+	        checkSubscribed = subscribeService.checkSubscribed(user.getMe_num(), cl_num);
+	    }
+	    model.addAttribute("checkSubscribed", checkSubscribed);
+
+	    // 구독 수
+	    int subscribeCount = subscribeService.countSubscribe(cl_num);
+	    model.addAttribute("subscribeCount", subscribeCount);
+
 	    return "/class/classDetail";
 	}
 	

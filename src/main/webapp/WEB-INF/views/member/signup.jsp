@@ -164,7 +164,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               <button type="submit">Sign Up</button>
               <button type="button" id="toggleSignIn">Login</button>
             </div>
-            <input type="checkbox" name="terms" id="terms" />
+            
           </form>
         </div>
 

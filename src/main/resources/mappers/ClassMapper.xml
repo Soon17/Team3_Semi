@@ -69,7 +69,7 @@
 	    SELECT 
 	        c.cl_num, c.cl_title, c.cl_item, c.cl_intro, c.cl_money,
 	        c.cl_date, c.cl_level, c.cl_able, c.cl_tc_me_num,
-	        m.me_nick
+	        m.me_nick, m.me_profile
 	    FROM class c
 	    JOIN member m ON c.cl_tc_me_num = m.me_num
 	    WHERE c.cl_num = #{cl_num}

@@ -122,11 +122,11 @@
                 <div class="col-md-3 text-center">
 				    <c:choose>
 				        <c:when test="${not empty classDetail.me_profile}">
-				            <img src="${classDetail.me_profile}" class="img-fluid rounded-circle"
+				            <img src="<c:url value='/profile/${classDetail.me_profile}'/>" class="img-fluid rounded-circle"
 				                 style="width: 120px; height: 120px; object-fit: cover;" />
 				        </c:when>
 				        <c:otherwise>
-				            <img src="<c:url value='/resources/img/profile.png' />" class="img-fluid rounded-circle"
+				            <img src="<c:url value='/profile/default.png' />" class="img-fluid rounded-circle"
 				                 style="width: 120px; height: 120px; object-fit: cover;" />
 				        </c:otherwise>
 				    </c:choose>

@@ -165,7 +165,7 @@
 									<div class="dropdown-menu">
 										<a class="dropdown-item" href="<c:url value='/user/myPage'/>">마이페이지</a>
 										<a class="dropdown-item" href="<c:url value='/teacher/${member.me_num }'/>">강사페이지</a>
-									 	<a class="dropdown-item" href="<c:url value='/class/insert/${me_num }'/>">클래스 등록</a>
+									 	<a class="dropdown-item" href="<c:url value='/class/insert/${member.me_num }'/>">클래스 등록</a>
 						 		 	</div>
 								</li>
 							</ul>

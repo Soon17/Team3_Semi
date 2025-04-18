@@ -154,7 +154,20 @@
   // 클릭 이벤트
 	 $(document).on("click", ".class-link", function () {
 	  const clNum = $(this).data("clnum");
+	  
 	  window.location.href = "/team3/class/" + clNum;
+	});
+  
+	  $(document).on("click", "#sub-list li", function () {
+		    $("#sub-list li").removeClass("active");
+		    $(this).addClass("active");
+
+		    const sc_name = $(this).data("scname");
+		    if (sc_name === "all") {
+		      renderAllClasses();
+		    } else {
+		      renderClassesBySubName(sc_name);
+		    }
 	});
 </script>
 

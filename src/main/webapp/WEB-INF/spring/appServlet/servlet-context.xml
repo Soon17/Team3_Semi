@@ -15,9 +15,9 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/profile/**" location="file:///d:/upload/profile/"/>
+	<resources mapping="/uploads/**" location="file:///d:/upload/" />
 
 
-	<resources mapping="/uploads/**" location="file:///c:/han/uploads/" />
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -73,11 +73,7 @@
 		<!-- 업로드 최대 크기 10Mb -->
 		<beans:property name="maxUploadSize" value="10485760"/>
 	</beans:bean>
-	<beans:bean id="multipartResolver" 
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- 업로드 최대 크기 10Mb -->
-		<beans:property name="maxUploadSize" value="10485760"/>
-	</beans:bean>
+	
 	<beans:bean id="uploadPath" class="java.lang.String">
 	<beans:constructor-arg value="C:\\han\\uploads"/>
 	</beans:bean>

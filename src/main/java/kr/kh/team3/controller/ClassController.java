@@ -1,13 +1,12 @@
 package kr.kh.team3.controller;
 
-import java.util.HashMap;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,18 +16,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.MemberVO;
-import kr.kh.team3.service.ClassService;
-import kr.kh.team3.service.CurriculumService;
-import kr.kh.team3.service.SubscribeService;
 import kr.kh.team3.model.vo.SubCategoryVO;
 import kr.kh.team3.model.vo.TeacherVO;
 import kr.kh.team3.service.CategoryService;
+import kr.kh.team3.service.ClassService;
+import kr.kh.team3.service.CurriculumService;
 import kr.kh.team3.service.SubCategoryService;
+import kr.kh.team3.service.SubscribeService;
 import kr.kh.team3.service.TeacherService;
 
 @Controller
@@ -68,7 +68,7 @@ public class ClassController {
 	public String classDetail(@PathVariable("num") int cl_num, HttpSession session, Model model) {
 		ClassVO classDetail = classService.ClassDetail(cl_num);
 	    model.addAttribute("classDetail", classDetail);
-
+	    
 	    // 구독 여부 확인
 	    MemberVO user = (MemberVO) session.getAttribute("member");
 	    boolean checkSubscribed = false;

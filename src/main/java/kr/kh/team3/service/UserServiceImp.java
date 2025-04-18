@@ -22,17 +22,4 @@ public class UserServiceImp implements UserService {
     public List<Map<String, Object>> getSubscribeList(int me_num) {
         return userDao.selectSubscribeList(me_num);
     }
-
-	@Override
-	public boolean insertRequest(String content, MemberVO user) {
-		if(content == null || content == "" || user == null) return false;
-		return userDao.insertRequest(content, user);
-	}
-
-	@Override
-	public boolean isNewRequest(MemberVO user) {
-		if(user == null) return false;
-		int count = userDao.countRequest(user);
-		return count == 0;
-	}
 }

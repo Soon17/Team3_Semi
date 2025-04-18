@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.CategoryService;
+import kr.kh.team3.service.RequestService;
 import kr.kh.team3.service.UserService;
 import lombok.extern.log4j.Log4j;
 
@@ -29,6 +30,9 @@ public class ApplyController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	RequestService requestService;
 	
 	@GetMapping("/applyPage")
 	public String applyCreator(Model model) {
@@ -64,7 +68,7 @@ public class ApplyController {
 		
 		MemberVO user = (MemberVO)session.getAttribute("member");
 	    // 받은 content를 활용하여 저장
-	    boolean result = userService.insertRequest(content, user);
+	    boolean result = requestService.insertRequest(content, user);
 
 	    return result;
 	}
@@ -75,7 +79,7 @@ public class ApplyController {
 		
 		MemberVO user = (MemberVO)session.getAttribute("member");
 	    // 받은 content를 활용하여 저장
-	    boolean result = userService.isNewRequest(user);
+	    boolean result = requestService.isNewRequest(user);
 
 	    return result;
 	}

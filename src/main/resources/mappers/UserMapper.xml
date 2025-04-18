@@ -10,15 +10,4 @@
 		join `MEMBER` on ME_NUM = SU_ME_NUM
 		where SU_ME_NUM = #{me_num};
    </select>
-   
-   <insert id="insertRequest">
-   		insert into request(rq_content, rq_me_num)
-   		value(#{content}, #{user.me_num})
-   </insert>
-   
-   <select id="countRequest" resultType="int">
-   		select count(*)
-   		from request
-   		where rq_me_num = 3 and rq_state != "NO"
-   </select>
 </mapper>

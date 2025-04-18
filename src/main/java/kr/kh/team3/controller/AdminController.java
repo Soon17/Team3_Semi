@@ -78,6 +78,16 @@ public class AdminController {
 		return"/admin/requestCreator";
 	}
 	
+	@GetMapping("/applyDetail/{rqNum}")
+	public String applyDetail(Model model, @PathVariable("rqNum") int rqNum) {
+		model.addAttribute("skipHeader", "true");
+		model.addAttribute("skipFooter", "true");
+		
+		RequestVO rq = requestService.getRequest(rqNum);
+		model.addAttribute("rq", rq);
+		return "/admin/applyDetail";
+	}
+	
 	@PostMapping("/acceptRequest")
 	public String acceptRequest(@RequestParam int cl_num) {
 		classService.acceptRequest(cl_num);

@@ -11,8 +11,4 @@ public interface UserDAO {
 
 	List<Map<String, Object>> selectSubscribeList(@Param("me_num") int me_num);
 
-	boolean insertRequest(@Param("content") String content, @Param("user") MemberVO user);
-
-	int countRequest(@Param("user") MemberVO user);
-
 }

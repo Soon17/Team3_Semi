@@ -126,7 +126,7 @@ public class MemberServiceImp implements MemberService{
 	}
 
 	@Override
-	public boolean updateUser(MemberVO member, MemberVO user, MultipartFile fileList) {
+	public boolean updateUser(MemberVO member, MemberVO user, MultipartFile file) {
 		if(member == null || user == null) {
 			return false;
 		}
@@ -141,15 +141,15 @@ public class MemberServiceImp implements MemberService{
 			String encPw = passwordEncoder.encode(member.getMe_newPassword());
 			user.setMe_pw(encPw);
 		}
-		if (fileList != null && !fileList.isEmpty()) {
+		if (file != null && !file.isEmpty()) {
 	        try {
 	            String uploadPath = "D:/upload/profile";
 	            File folder = new File(uploadPath);
 	            if (!folder.exists()) folder.mkdirs();
 
-	            String fileName = UUID.randomUUID().toString() + "_" + fileList.getOriginalFilename();
+	            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 	            File dest = new File(uploadPath, fileName);
-	            fileList.transferTo(dest);
+	            file.transferTo(dest);
 
 	            user.setMe_profile(fileName);
 	        } catch (Exception e) {

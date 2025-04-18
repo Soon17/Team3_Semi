@@ -72,9 +72,9 @@ public class UserController {
 	}
 	
 	@PostMapping("/update")
-	public String updateUser(Model model, HttpSession session, MultipartFile fileList, MemberVO member) throws IOException {
+	public String updateUser(Model model, HttpSession session, MultipartFile file, MemberVO member) throws IOException {
 		MemberVO user = (MemberVO)session.getAttribute("member");
-		if(memberService.updateUser(member,user, fileList)) {
+		if(memberService.updateUser(member,user, file)) {
 			model.addAttribute("url", "/user/myPage");
 			model.addAttribute("msg", "회원 정보 수정을 완료했습니다.");
 			session.setAttribute("member", user);

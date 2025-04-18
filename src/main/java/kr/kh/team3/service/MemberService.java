@@ -31,6 +31,6 @@ public interface MemberService {
 
 	public boolean clearMemberList(int me_num);
 
-	public boolean updateUser(MemberVO member, MemberVO user, MultipartFile fileList);
+	public boolean updateUser(MemberVO member, MemberVO user, MultipartFile file);
 
 }

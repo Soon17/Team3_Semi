@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -122,8 +123,16 @@
                 <div class="col-md-3 text-center">
 				    <c:choose>
 				        <c:when test="${not empty classDetail.me_profile}">
-				            <img src="<c:url value='/profile/${classDetail.me_profile}'/>" class="img-fluid rounded-circle"
-				                 style="width: 120px; height: 120px; object-fit: cover;" />
+				            <c:choose>
+				                <c:when test="${fn:startsWith(classDetail.me_profile, 'http')}">
+				                    <img src="${classDetail.me_profile}" class="img-fluid rounded-circle"
+				                         style="width: 120px; height: 120px; object-fit: cover;" />
+				                </c:when>
+				                <c:otherwise>
+				                    <img src="<c:url value='/profile/${classDetail.me_profile}'/>" class="img-fluid rounded-circle"
+				                         style="width: 120px; height: 120px; object-fit: cover;" />
+				                </c:otherwise>
+				            </c:choose>
 				        </c:when>
 				        <c:otherwise>
 				            <img src="<c:url value='/profile/default.png' />" class="img-fluid rounded-circle"
@@ -131,10 +140,10 @@
 				        </c:otherwise>
 				    </c:choose>
 				</div>
-                <div class="col-md-9">
-                    <h5 class="mb-1" style="font-weight: bold;">${classDetail.me_nick}</h5>
-                    <p class="mb-0 text-muted">${classDetail.cl_intro}</p>
-                </div>
+              <div class="col-md-9">
+                  <h5 class="mb-1" style="font-weight: bold;">${classDetail.me_nick}</h5>
+                  <p class="mb-0 text-muted">${classDetail.cl_intro}</p>
+              </div>
             </div>
         </div>
 

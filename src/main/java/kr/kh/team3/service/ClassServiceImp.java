@@ -3,16 +3,25 @@ package kr.kh.team3.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.dao.ClassDAO;
+import kr.kh.team3.dao.SubCategoryDAO;
 import kr.kh.team3.model.vo.ClassVO;
+import kr.kh.team3.model.vo.SubCategoryVO;
+import kr.kh.team3.model.vo.ThumbnailVO;
+import utils.UploadFileUtils;
 
 @Service
 public class ClassServiceImp implements ClassService{
 	@Autowired
 	private ClassDAO classDao;
-
+	@Autowired
+    private SubCategoryDAO subCategoryDao;
+	@Value("${file.location}")
+	String classProfilePath;
 	@Override
 	public List<ClassVO> getClassList() {
 		return classDao.getClassList();
@@ -56,9 +65,22 @@ public class ClassServiceImp implements ClassService{
 	}
 
 	@Override
-	public boolean insertClass(ClassVO cl) {
+	public boolean insertClass(ClassVO cl, int me_num, SubCategoryVO sc, MultipartFile file) {
 		try {
 			classDao.insertClass(cl);
+			System.out.println(cl.getCl_num()+"=================================");
+			subCategoryDao.insertClass(cl,sc);
+			String th_name= file.getOriginalFilename();
+			int index = th_name.lastIndexOf("."); 
+			String suffix = th_name.substring(index);
+			try {
+				String th_picture = UploadFileUtils.uploadFile(classProfilePath+"\\thumnail",""+me_num, cl.getCl_num()+suffix, file.getBytes());
+				ThumbnailVO thumbnail = new ThumbnailVO(th_name,th_picture,cl.getCl_num());
+				classDao.insertThumbnail(thumbnail);
+			}catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
 			return true;
 		}catch (Exception e) {
 			return false;

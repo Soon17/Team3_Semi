@@ -18,4 +18,5 @@ public class ClassVO {
 	private String me_name;
 	//서브카테고리 담는곳
 	private String sc_name;
+	private String cl_th_picture;
 }

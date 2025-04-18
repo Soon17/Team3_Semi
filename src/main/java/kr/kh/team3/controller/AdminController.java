@@ -99,6 +99,11 @@ public class AdminController {
 		}else {
 			messageService.sendMessage(response, request, "해당 유저를 차단하지 못했습니다.", "/admin/list");
 		}
-		return "redirect:/admin/list";
+		return "/admin/list";
+	}
+	
+	@GetMapping("/update")
+	public String update() {
+		return "/admin/update";
 	}
 }

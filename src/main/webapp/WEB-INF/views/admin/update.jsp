@@ -91,5 +91,23 @@
 		</div>
         <button type="submit" class="btn btn-outline-success mt-3 col-12">개인 정보 수정</button>
     </form>
+    <script>
+		$(document).on("change", "[name=file]", function(e){
+			const $this = $(this);
+			const file = this.files[0];
+			
+			if(file){
+				const reader = new FileReader();
+				reader.onload = function(e){
+					$this.prev().attr("src", e.target.result).show();
+					$("#file").hide();
+				}
+				reader.readAsDataURL(file);
+			}else{
+				$this.prev().hide();
+				$("#file").show();
+			}
+		});
+	</script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -95,19 +96,21 @@
 </head>
 <body>
     <div class="header">
-        <div class="profile-pic">
-		    <c:choose>
-		        <c:when test="${not empty owner.me_profile}">
-		        
-		            <img src="<c:url value='/profile/${owner.me_profile}' />" width="150">
-		        </c:when>
-		        <c:otherwise>
-		            <img src="<c:url value='/profile/default.png'/>" >
-		        </c:otherwise>
-		    </c:choose>
-		</div>
-        <h1>${owner.me_nick}님의 페이지</h1>
-    </div>
+       <div class="profile-pic">
+           <c:choose>
+             <c:when test="${fn:startsWith(owner.me_profile, 'http')}">
+                 <img src="${owner.me_profile}" style="width:100%; height:100%; border-radius:50%;">
+             </c:when>
+             <c:when test="${not empty owner.me_profile}">
+                 <img src="<c:url value='/profile/${owner.me_profile}'/>" style="width:100%; height:100%; border-radius:50%;">
+             </c:when>
+             <c:otherwise>
+                 <img src="<c:url value='/profile/default.png'/>" style="width:100%; height:100%; border-radius:50%;">
+             </c:otherwise>
+         </c:choose>
+       </div>
+       <h1>${owner.me_nick}님의 페이지</h1>
+   </div>
 
     <div class="creator-info">
         <h2>강사 소개</h2>

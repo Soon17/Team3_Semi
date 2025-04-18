@@ -82,7 +82,13 @@ public class UserController {
 			model.addAttribute("url", "/user/myPage");
 			model.addAttribute("msg", "회원 정보 수정에 실패했습니다.");
 		}
-		
-		return "redirect:/user/myPage";
+		if(user.getMe_authority().equals("ADMIN")) {
+			model.addAttribute("url", "/admin/update");
+			model.addAttribute("msg", "회원 정보 수정을 완료했습니다.");
+		}else {
+			model.addAttribute("url", "/admin/update");
+			model.addAttribute("msg", "회원 정보 수정에 실패했습니다.");
+		}
+		return "message";
 	}
 }

@@ -183,6 +183,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <a class="p-2" href="<c:url value="/kakao/login"/>">
                   <img src="<c:url value='/resources/static/kakao_login_medium_narrow.png' />" alt="카카오 로그인" style="height:35px" />
                 </a>
+                <div class="form-check">
+					<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" value="true" name="auto" checked>자동로그인
+					</label>
+				</div>
               </div>
             </div>
           </form>

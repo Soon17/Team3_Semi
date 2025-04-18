@@ -31,4 +31,8 @@ public interface MemberDAO {
 
 	public boolean updateUser(@Param("member")MemberVO member);
 
+	public void updateCookie(@Param("user")MemberVO user);
+
+	public MemberVO selectMemberByCookie(String cookieId);
+
 }

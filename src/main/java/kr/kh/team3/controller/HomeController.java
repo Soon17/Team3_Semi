@@ -71,11 +71,11 @@ public class HomeController {
 	
 	@PostMapping("/signup")
 	public String signup(Model model,
-            MultipartFile fileList,
+            MultipartFile profileImage,
             MemberVO member,
             HttpSession session) throws IOException {
 
-		if(memberService.insertSingup(member, fileList)) {
+		if(memberService.insertSingup(member, profileImage)) {
 			model.addAttribute("url", "/signup");
 			model.addAttribute("msg", "회원 가입에 성공했습니다.");
 		}else {
@@ -92,6 +92,10 @@ public class HomeController {
 	    	memberService.offlineMember(member); // 온라인N으로 변경
 	    }
 	    session.removeAttribute("member"); // 세션 제거
+	    if(member != null) {
+	    	member.setMe_cookie(null);
+			memberService.updateCookie(member);
+		}
 	    return "redirect:/"; // 홈으로 이동
 	}
 	
@@ -107,7 +111,9 @@ public class HomeController {
 			model.addAttribute("msg", "차단된 유저입니다.");
 			return "message";
 		}
+		user.setAuto(member.isAuto());
 		
+		model.addAttribute("user", user);
 		session.setAttribute("member", user);
 		memberService.onlineMember(user);
         return "redirect:/"; // 홈으로 이동

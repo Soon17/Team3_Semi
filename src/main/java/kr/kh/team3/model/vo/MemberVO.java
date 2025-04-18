@@ -1,5 +1,7 @@
 package kr.kh.team3.model.vo;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -16,4 +18,7 @@ public class MemberVO {
     private String me_del ;
     private String me_profile;
     private String me_newPassword;
+    private String me_cookie;
+	private Date me_limit;
+	private boolean auto;
 }

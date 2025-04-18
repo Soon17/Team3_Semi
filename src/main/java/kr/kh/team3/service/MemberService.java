@@ -33,4 +33,8 @@ public interface MemberService {
 
 	public boolean updateUser(MemberVO member, MemberVO user, MultipartFile file);
 
+	public void updateCookie(MemberVO user);
+
+	public MemberVO getMemberByCookie(String cookieId);
+
 }

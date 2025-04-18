@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -137,6 +138,7 @@
 										<a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
 										<a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
 										<a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
+										<a class="dropdown-item" href="<c:url value='/admin/update'/>">개인 정보 수정</a>
 									</div>
 								 </li>
 							</ul>
@@ -179,12 +181,30 @@
 		<div class="d-flex align-items-center justify-content-center" style="width: 200px; height: 50px;">
 			<c:choose>
 				<c:when test="${not empty sessionScope.member}">
-				  <!-- 알림 벨 자리 -->
+					<!-- 알림 벨 자리 -->
 				    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24"
 				    	style="margin-right: 10px">
 				      <path d="M18 8a6 6 0 00-12 0v5H4l1 2h14l1-2h-2V8z" />
 				      <path d="M13.73 21a2 2 0 01-3.46 0" />
 				    </svg>
+					<c:choose>
+						<c:when test="${fn:startsWith(sessionScope.member.me_profile, 'http')}">
+							<img src="${sessionScope.member.me_profile}"
+							     alt="프로필"
+							     style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px;" />
+						</c:when>
+						<c:when test="${not empty sessionScope.member.me_profile}">
+							<img src="<c:url value='/profile/${sessionScope.member.me_profile}' />"
+							     alt="프로필"
+							     style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px;" />
+						</c:when>
+						<c:otherwise>
+							<img src="<c:url value='/profile/default.png' />"
+							     alt="기본 프로필"
+							     style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px;" />
+						</c:otherwise>
+					</c:choose>
+				  
 					<div style="display: flex; align-items: center; gap: 6px;">
 						<span class="css-login" title="${sessionScope.member.me_nick}">
 							${sessionScope.member.me_nick}

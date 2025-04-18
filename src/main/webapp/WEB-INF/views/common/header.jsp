@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -53,8 +54,8 @@
 			#search {
 				position: absolute;
 				width: 17px;
-				top: 10px;
-				right: 12px;
+				top: 3px;
+				right: 2px;
 				margin: 0;
 			}
 			
@@ -89,8 +90,17 @@
 		<div class="container-fluid d-flex justify-content-center align-items-center" style="padding: 10px 0; ">
 	
 			<!-- 로고 -->
-			<a class="navbar-brand px-3 mr-4" href="<c:url value="/"/>">로고이미지~</a>
-	
+			<a class="navbar-brand px-3 mr-4" href="<c:url value='/'/>">
+			  <svg width="160" height="40" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+			    <text x="0" y="45"
+			          font-family="Arial, Helvetica, sans-serif"
+			          font-size="40"
+			          font-weight="bold"
+			          fill="#111">
+			      Class<tspan fill="#007BFF">KH</tspan>
+			    </text>
+			  </svg>
+			</a>
 			<!-- 메뉴 -->
 			<ul class="navbar-nav d-flex flex-row align-items-center mr-4">
 				<li class="nav-item mr-3">
@@ -106,9 +116,11 @@
 	
 			<!-- 검색창 -->
 			<div class="search mr-4">
-				<form action="/search" method="GET">
-					<input type="text" name="query" class="searchHolder" placeholder="관심주제, 클래스, 크리에이터 찾기">
-					<img id="search" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png">
+				<form action="<c:url value='/search' />" method="GET">
+				    <input type="text" name="keyword" class="searchHolder" placeholder="관심주제, 클래스, 크리에이터 찾기">
+				    <button type="submit" style="background: none; border: none; position: absolute; right: 12px; top: 10px;">
+				        <img id="search" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="검색">
+				    </button>
 				</form>
 			</div>
 	
@@ -120,16 +132,17 @@
 							<ul class="navbar-nav">
 								 <!-- Dropdown -->
 								 <li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" id="navbardrop"
-										data-toggle="dropdown">관리자 전용</a>
-										<div class="dropdown-menu">
-											 <a class="dropdown-item" href="<c:url value='/admin/requestCreator'/>">강사 요청 리스트</a>
-											 <a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
-											 <a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
-										</div>
+									class="nav-link dropdown-toggle" href="#" id="navbardrop"
+									data-toggle="dropdown">관리자 전용</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="<c:url value='/admin/requestCreator'/>">강사 요청 리스트</a>
+										<a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
+										<a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
+										<a class="dropdown-item" href="<c:url value='/admin/update'/>">개인 정보 수정</a>
+									</div>
 								 </li>
 							</ul>
-					 </div>
+				    	</div>
 					</c:when>
 					<c:when test="${sessionScope.member.me_authority eq 'USER'}">
 						<a href="<c:url value='/user/myPage'/>" class="nav-link p-0" style="color: black;">
@@ -145,15 +158,16 @@
 					<c:when test="${sessionScope.member.me_authority eq 'TEACHER'}">
 						<div>
 							<ul class="navbar-nav">
-								 <!-- Dropdown -->
-								 <li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" id="navbardrop"
-										data-toggle="dropdown">강사 전용</a>
-										<div class="dropdown-menu">
-											 <a class="dropdown-item" href="<c:url value='#'/>">강사페이지</a>
-											 <a class="dropdown-item" href="<c:url value='#'/>">클래스 등록</a>
-										</div>
-								 </li>
+							 	<!-- Dropdown -->
+								<li class="nav-item dropdown"><a
+								class="nav-link dropdown-toggle" href="#" id="navbardrop"
+								data-toggle="dropdown">강사 전용</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="<c:url value='/user/myPage'/>">마이페이지</a>
+										<a class="dropdown-item" href="<c:url value='/teacher/${member.me_num }'/>">강사페이지</a>
+									 	<a class="dropdown-item" href="<c:url value='/class/insert/${member.me_num }'/>">클래스 등록</a>
+						 		 	</div>
+								</li>
 							</ul>
 					 	</div>
 					</c:when>
@@ -167,12 +181,30 @@
 		<div class="d-flex align-items-center justify-content-center" style="width: 200px; height: 50px;">
 			<c:choose>
 				<c:when test="${not empty sessionScope.member}">
-				  <!-- 알림 벨 자리 -->
+					<!-- 알림 벨 자리 -->
 				    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24"
 				    	style="margin-right: 10px">
 				      <path d="M18 8a6 6 0 00-12 0v5H4l1 2h14l1-2h-2V8z" />
 				      <path d="M13.73 21a2 2 0 01-3.46 0" />
 				    </svg>
+					<c:choose>
+						<c:when test="${fn:startsWith(sessionScope.member.me_profile, 'http')}">
+							<img src="${sessionScope.member.me_profile}"
+							     alt="프로필"
+							     style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px;" />
+						</c:when>
+						<c:when test="${not empty sessionScope.member.me_profile}">
+							<img src="<c:url value='/profile/${sessionScope.member.me_profile}' />"
+							     alt="프로필"
+							     style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px;" />
+						</c:when>
+						<c:otherwise>
+							<img src="<c:url value='/profile/default.png' />"
+							     alt="기본 프로필"
+							     style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px;" />
+						</c:otherwise>
+					</c:choose>
+				  
 					<div style="display: flex; align-items: center; gap: 6px;">
 						<span class="css-login" title="${sessionScope.member.me_nick}">
 							${sessionScope.member.me_nick}

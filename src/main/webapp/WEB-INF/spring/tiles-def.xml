@@ -16,4 +16,8 @@
     <definition name="*" extends=".root">
     	<put-attribute name="body" value="/WEB-INF/views/{1}.jsp" />
     </definition>
+    
+    <definition name="search" extends=".root">
+	    <put-attribute name="body" value="/WEB-INF/views/search.jsp"/>
+	</definition>
 </tiles-definitions>

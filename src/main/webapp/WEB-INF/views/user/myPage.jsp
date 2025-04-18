@@ -12,8 +12,13 @@
 		<div style="width: 200px; background-color: white-space; padding: 20px;">
 			<h4>메뉴</h4>
 			<ul style="list-style: none; padding-left: 0;">
-				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('subs')">구독 목록</a></li>				
-				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('teacher')">강사 신청</a></li>
+				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('subs')">구독 목록</a></li>
+				<c:if test="${user.me_authority eq 'USER' }">
+					<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('teacher')">강사 신청</a></li>
+				</c:if>
+				<c:if test="${user.me_pw ne 'kakao'}">
+					<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('update')">개인 정보 수정</a></li>
+				</c:if>
 			</ul>	
 		</div>
 
@@ -62,6 +67,26 @@
 		    });
         }
     </script>
-
+	<script>
+		$(document).on("change", "[name=file]", function(e){
+	        const $input = $(this); 
+	        const file = this.files[0];
+	        const $label = $input.closest(".file-label"); 
+	        const $img = $label.find(".sel-img");
+	        const $base = $label.find(".base-img"); 
+	 
+	        if (file) {
+	            const reader = new FileReader();
+	            reader.onload = function(e){
+	                $img.attr("src", e.target.result).show(); 
+	                $base.hide();
+	            };
+	            reader.readAsDataURL(file);
+	        } else {
+	            $img.hide();
+	            $base.show();
+	        }
+	    });
+	</script>
 </body>
 </html>

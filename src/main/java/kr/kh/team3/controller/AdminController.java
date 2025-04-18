@@ -99,10 +99,9 @@ public class AdminController {
 		classService.rejectRequest(cl_num);
 		return "redirect:/admin/requestClass";
 	}
-	@GetMapping("/detail/{cl_tc_me_num}")
-	public String detailCalss(Model model,@PathVariable("cl_tc_me_num") int cl_tc_me_num) {
-		ClassVO cl = classService.getClass(cl_tc_me_num);
-		System.out.println(cl);
+	@GetMapping("/detail/{cl_num}")
+	public String detailCalss(Model model,@PathVariable("cl_num") int cl_num) {
+		ClassVO cl = classService.getClass(cl_num);
 		model.addAttribute("cl",cl);
 		return "/admin/detail";
 	}
@@ -133,6 +132,11 @@ public class AdminController {
 		}else {
 			messageService.sendMessage(response, request, "해당 유저를 차단하지 못했습니다.", "/admin/list");
 		}
-		return "redirect:/admin/list";
+		return "/admin/list";
+	}
+	
+	@GetMapping("/update")
+	public String update() {
+		return "/admin/update";
 	}
 }

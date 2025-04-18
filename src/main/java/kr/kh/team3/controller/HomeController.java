@@ -1,8 +1,11 @@
 package kr.kh.team3.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.ClassVO;
@@ -22,12 +26,11 @@ import kr.kh.team3.model.vo.SubCategoryVO;
 import kr.kh.team3.service.CategoryService;
 import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.MemberService;
+import kr.kh.team3.service.SearchService;
 import kr.kh.team3.service.SubCategoryService;
 import lombok.extern.log4j.Log4j;
 
-/**
- * Handles requests for the application home page.
- */
+
 @Log4j
 @Controller
 public class HomeController {
@@ -43,6 +46,9 @@ public class HomeController {
 	
 	@Autowired
 	private SubCategoryService subCategoryService;
+	
+	@Autowired
+	private SearchService searchService;
 	
 	
 	@GetMapping("/")
@@ -64,8 +70,12 @@ public class HomeController {
 	}
 	
 	@PostMapping("/signup")
-	public String signup(Model model,MemberVO member) {
-		if(memberService.insertSingup(member)) {
+	public String signup(Model model,
+            MultipartFile profileImage,
+            MemberVO member,
+            HttpSession session) throws IOException {
+
+		if(memberService.insertSingup(member, profileImage)) {
 			model.addAttribute("url", "/signup");
 			model.addAttribute("msg", "회원 가입에 성공했습니다.");
 		}else {
@@ -82,6 +92,10 @@ public class HomeController {
 	    	memberService.offlineMember(member); // 온라인N으로 변경
 	    }
 	    session.removeAttribute("member"); // 세션 제거
+	    if(member != null) {
+	    	member.setMe_cookie(null);
+			memberService.updateCookie(member);
+		}
 	    return "redirect:/"; // 홈으로 이동
 	}
 	
@@ -97,7 +111,9 @@ public class HomeController {
 			model.addAttribute("msg", "차단된 유저입니다.");
 			return "message";
 		}
+		user.setAuto(member.isAuto());
 		
+		model.addAttribute("user", user);
 		session.setAttribute("member", user);
 		memberService.onlineMember(user);
         return "redirect:/"; // 홈으로 이동
@@ -148,4 +164,5 @@ public class HomeController {
 	    map.put("classList", classList);
 	    return map;
 	}
+	
 }

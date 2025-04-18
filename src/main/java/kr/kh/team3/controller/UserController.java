@@ -35,6 +35,7 @@ public class UserController {
 	public String myPage(Model model, HttpSession session) {
 		MemberVO user = (MemberVO) session.getAttribute("member");
 	    List<Map<String, Object>> list = userService.getSubscribeList(user.getMe_num());
+	    model.addAttribute("user", user);
 	    model.addAttribute("subscribeList", list);
 	    return "/user/myPage";
 	}
@@ -73,22 +74,27 @@ public class UserController {
 	
 	@PostMapping("/update")
 	public String updateUser(Model model, HttpSession session, MultipartFile file, MemberVO member) throws IOException {
-		MemberVO user = (MemberVO)session.getAttribute("member");
-		if(memberService.updateUser(member,user, file)) {
-			model.addAttribute("url", "/user/myPage");
-			model.addAttribute("msg", "회원 정보 수정을 완료했습니다.");
-			session.setAttribute("member", user);
-		}else {
-			model.addAttribute("url", "/user/myPage");
-			model.addAttribute("msg", "회원 정보 수정에 실패했습니다.");
-		}
-		if(user.getMe_authority().equals("ADMIN")) {
-			model.addAttribute("url", "/admin/update");
-			model.addAttribute("msg", "회원 정보 수정을 완료했습니다.");
-		}else {
-			model.addAttribute("url", "/admin/update");
-			model.addAttribute("msg", "회원 정보 수정에 실패했습니다.");
-		}
-		return "message";
+	    MemberVO user = (MemberVO) session.getAttribute("member");
+	    boolean result = memberService.updateUser(member, user, file);
+
+	    String url = "/user/myPage"; // 기본 사용자용
+
+	    if (user != null) {
+	        if ("ADMIN".equals(user.getMe_authority())) {
+	            url = "/admin/update";
+	        } else if ("TEACHER".equals(user.getMe_authority())) {
+	            url = "/teacher/update";
+	        }
+	    }
+
+	    model.addAttribute("url", url);
+	    model.addAttribute("msg", result ? "회원 정보 수정을 완료했습니다." : "회원 정보 수정에 실패했습니다.");
+
+	    if (result) {
+	        session.setAttribute("member", user); // 성공 시 세션 갱신
+	    }
+
+	    return "message";
 	}
+
 }

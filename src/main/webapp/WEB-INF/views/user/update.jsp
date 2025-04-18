@@ -82,7 +82,7 @@
 		                </c:when>
 		                <c:otherwise>
 		                	<span class="base-img">+</span>
-		                	<img class="sel-img" width="150" height="200"  style="display: none">
+		                	<img class="sel-img" width="150" height="200"  style="display: none " >
 		                </c:otherwise>
 		            </c:choose>
 					<input type="file" class="form-control" name="file" accept="image/*">

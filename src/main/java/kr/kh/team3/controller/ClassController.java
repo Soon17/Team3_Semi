@@ -132,18 +132,27 @@ public class ClassController {
 	}
 	
 	@PostMapping("/insert/{me_num}")
-	public String insertPost(Model model,
-							@PathVariable("me_num")int me_num,
-							ClassVO cl,SubCategoryVO sc, 
-							MultipartFile file) throws IOException {
-		cl.setCl_tc_me_num(me_num);
-		if(classService.insertClass(cl,me_num,sc,file)) {
-			model.addAttribute("url", "/");
-			model.addAttribute("msg", "제출 완료");
-			return"message";
-		}
-		return "/class/insert";
+		public String insertPost(Model model,
+	                         @PathVariable("me_num") int me_num,
+	                         ClassVO cl, SubCategoryVO sc,
+	                         @RequestParam("file") MultipartFile file) throws IOException {
+
+	    cl.setCl_tc_me_num(me_num);
+
+	    boolean classResult = classService.insertClass(cl, me_num, sc, file); // 썸네일 저장
+	    boolean videoResult = classService.insertVideo(cl, sc);         // 커리큘럼 + 비디오 저장
+
+	    if (classResult && videoResult) {
+	        model.addAttribute("url", "/");
+	        model.addAttribute("msg", "제출 완료");
+	        return "message";
+	    }
+
+	    model.addAttribute("url", "/");
+	    model.addAttribute("msg", "등록 실패");
+	    return "message";
 	}
+	
 	@GetMapping("/subcategoryList")
 	public String subcategoryList(Model model,@RequestParam("ca_num") int ca_num) {
 		List<SubCategoryVO> list = subcategoryService.getScNameList(ca_num);

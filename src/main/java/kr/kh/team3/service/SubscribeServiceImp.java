@@ -23,5 +23,10 @@ public class SubscribeServiceImp implements SubscribeService{
 		return subscribeDao.countSubscribe(cl_num);
 	}
 
+	@Override
+	public boolean subscribe(int me_num, int cl_num) {
+		return subscribeDao.insertSubscribe(me_num, cl_num);
+	}
+
 	
 }

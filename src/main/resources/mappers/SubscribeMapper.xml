@@ -14,4 +14,8 @@
 	    FROM subscribe 
 	    WHERE su_cl_num = #{cl_num}
 	</select>
+	<insert id="insertSubscribe">
+	    INSERT INTO subscribe (su_date, su_me_num, su_cl_num)
+	    VALUES (NOW(), #{me_num}, #{cl_num});
+	</insert>
 </mapper>

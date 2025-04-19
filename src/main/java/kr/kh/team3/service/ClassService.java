@@ -31,5 +31,7 @@ public interface ClassService {
 
 	ClassVO checkRequest(int me_num);
 
+	boolean insertVideo(ClassVO cl, SubCategoryVO sc);
+
 
 }

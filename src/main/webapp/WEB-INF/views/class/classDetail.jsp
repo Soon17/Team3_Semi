@@ -153,14 +153,17 @@
                 <div class="price-area">
                     <strong>${classDetail.cl_money}원</strong>
                 </div>
-                <c:choose>
-				    <c:when test="${checkSubscribed}">
-				        <button class="btn btn-secondary btn-block mt-2" disabled>구독 중</button>
-				    </c:when>
-				    <c:otherwise>
-				        <button class="btn btn-warning btn-block mt-2">구독으로 시작하기</button>
-				    </c:otherwise>
-				</c:choose>
+                	<c:choose>
+					    <c:when test="${checkSubscribed}">
+					        <button class="btn btn-secondary btn-block mt-2" disabled>구독 중</button>
+					    </c:when>
+					    <c:otherwise>
+					        <form method="post" action="<c:url value='/subscribe'/>">
+					            <input type="hidden" name="cl_num" value="${classDetail.cl_num}" />
+					            <button type="submit" class="btn btn-warning btn-block mt-2">구독으로 시작하기</button>
+					        </form>
+					    </c:otherwise>
+					</c:choose>
                 <div class="d-flex justify-content-around mt-3">
 				    <span>구독 : ${subscribeCount} 명</span>
 				</div>
@@ -206,88 +209,98 @@
 </div>
 
 <script>
-	$(function() {
-	    $(".nav-link").click(function(e) {
-	        e.preventDefault();
-	        const type = $(this).data("type");
-	        const classNum = "${classDetail.cl_num}";
-	        const checkSubscribed = ${checkSubscribed};
-	        
-	        $(".nav-link").removeClass("active");
-	        $(this).addClass("active");
-	
-	        $.ajax({
-	            url: "/team3/class/" + classNum + "/tab",
-	            type: "GET",
-	            data: { type: type },
-	            success: function(res) {
-	                console.log(res.curriculum);
-	                let html = "";
-	
-	                if (type === "intro") {
-	                    html = "<p>" + (res.intro || "소개 내용이 없습니다") + "</p>";
-	                } else if (type === "item") {
-	                    if (res.item && res.item.length > 0) {
-	                        const items = res.item.split(",");
-	                        html = "<ul>";
-	                        for (let item of items) {
-	                            html += "<li>" + item + "</li>";
-	                        }
-	                        html += "</ul>";
-	                    } else {
-	                        html = "<p>등록된 준비물이 없습니다</p>";
-	                    }
-	                } else if (type === "curriculum") {
-	                    if (res.curriculum && Array.isArray(res.curriculum) && res.curriculum.length > 0) {
-	                        html = "<div class='curriculum-wrapper'>";
-	                        let printed = new Set();
-	                        let count = 1;
-	                        let prevTitle = "";
-	
-	                        for (let cur of res.curriculum) {
-	                            if (!printed.has(cur.cr_title)) {
-	                                html += "<div class='curriculum-item'>" + cur.cr_title + "</div>";
-	                                printed.add(cur.cr_title);
-	                                count = 1; // 타이틀 바뀌면 번호 초기화
-	                            }
-	
-	                            if (cur.vd_num) {
-	                                if (checkSubscribed) {
-	                                    html += "<div class='video-wrapper' onclick='openVideoWindow(\"" + cur.vd_vidoe + "\")'>" 
-	                                          + (count++) + ". " + cur.vd_name + "</div>";
-	                                } else {
-	                                    html += "<div class='video-wrapper' style='color:gray; cursor: not-allowed;'>" 
-	                                          + (count++) + ". " + cur.vd_name + " (구독 필요)</div>";
-	                                }
-	                            }
-	                        }
-	                        html += "</div>";
-	                    } else {
-	                        html = "<p>등록된 커리큘럼이 없습니다</p>";
-	                    }
-	                }else if (type === "creator") {
-	                    const teacherNum = "${classDetail.cl_tc_me_num}";
-	                    window.location.href = "/team3/teacher/" + teacherNum;
-	                    return;
-	                }
-	                $("#tabContent").html(html);
-	            },
-	            error: function() {
-	                $("#tabContent").html("<p> 불러오기 실패했습니다 </p>");
-	            }
-	        });
-	    });
-	});
+	const contextPath = '${pageContext.request.contextPath}';
+</script>
 
-    // 새 창에서 비디오 재생
-   function openVideoWindow(videoUrl) {
+<script>
+$(function() {
+    $("#classTab .nav-link").click(function(e) {
+        e.preventDefault();
+        const type = $(this).data("type");
+        const classNum = "${classDetail.cl_num}";
+        const checkSubscribed = "${checkSubscribed}" === "true";
+
+        $("#classTab .nav-link").removeClass("active");
+        $(this).addClass("active");
+
+        $.ajax({
+            url: contextPath + "/class/" + classNum + "/tab",
+            type: "GET",
+            data: { type: type },
+            success: function(res) {
+                console.log(res.curriculum);
+                let html = "";
+
+                if (type === "intro") {
+                    html = "<p>" + (res.intro || "소개 내용이 없습니다") + "</p>";
+                } else if (type === "item") {
+                    if (res.item && res.item.length > 0) {
+                        const items = res.item.split(",");
+                        html = "<ul>";
+                        for (let item of items) {
+                            html += "<li>" + item + "</li>";
+                        }
+                        html += "</ul>";
+                    } else {
+                        html = "<p>등록된 준비물이 없습니다</p>";
+                    }
+                } else if (type === "curriculum") {
+                    if (res.curriculum && Array.isArray(res.curriculum) && res.curriculum.length > 0) {
+                        html = "<div class='curriculum-wrapper'>";
+                        let printed = new Set();
+                        let count = 1;
+
+                        for (let cur of res.curriculum) {
+                            if (!printed.has(cur.cr_title)) {
+                                html += "<div class='curriculum-item'>" + cur.cr_title + "</div>";
+                                printed.add(cur.cr_title);
+                                count = 1;
+                            }
+
+                            if (cur.vd_num) {
+                                if (checkSubscribed) {
+                                    html += "<div class='video-wrapper' onclick='openVideoWindow(\"" + cur.vd_vidoe + "\")'>" 
+                                          + (count++) + ". " + cur.vd_name + "</div>";
+                                } else {
+                                    html += "<div class='video-wrapper' style='color:gray; cursor: not-allowed;'>" 
+                                          + (count++) + ". " + cur.vd_name + " (구독 필요)</div>";
+                                }
+                            }
+                        }
+                        html += "</div>";
+                    } else {
+                        html = "<p>등록된 커리큘럼이 없습니다</p>";
+                    }
+                } else if (type === "creator") {
+                    const teacherNum = "${classDetail.cl_tc_me_num}";
+                    window.location.href = contextPath + "/teacher/" + teacherNum;
+                    return;
+                }
+
+                $("#tabContent").html(html);
+            },
+            error: function() {
+                $("#tabContent").html("<p> 불러오기 실패했습니다 </p>");
+            }
+        });
+    });
+
+    setTimeout(() => {
+        $('#classTab .nav-link[data-type="intro"]').trigger('click');
+    }, 10);
+});
+</script>
+
+<!-- ✅ 여기 추가 -->
+<script>
+window.openVideoWindow = function(videoUrl) {
     const popup = window.open('', '_blank', 'width=1000,height=700,resizable=yes,scrollbars=no');
     if (!popup) {
         alert("팝업 차단 해제해주세요!");
         return;
     }
 
-    const videoPath = "/team3/resources/static/" + videoUrl;
+    const videoPath = contextPath + "/resources/static/" + videoUrl;
 
     popup.document.write(`
         <html>
@@ -304,7 +317,7 @@
                 }
                 video {
                     width: 90%;
-                    max-height: 90vh; 
+                    max-height: 90vh;
                 }
             </style>
         </head>
@@ -323,9 +336,11 @@
     `);
 
     popup.document.close();
-}
-
+};
 </script>
+
+</body>
+</html>
 
 </body>
 </html>

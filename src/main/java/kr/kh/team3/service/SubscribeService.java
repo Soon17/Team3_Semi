@@ -6,4 +6,6 @@ public interface SubscribeService {
 
 	int countSubscribe(int cl_num);
 
+	boolean subscribe(int me_num, int cl_num);
+
 }

@@ -8,4 +8,6 @@ public interface SubscribeDAO {
 
 	int countSubscribe(@Param("cl_num")int cl_num);
 
+	boolean insertSubscribe(@Param("me_num")int me_num,@Param("cl_num") int cl_num);
+
 }

@@ -109,6 +109,9 @@
     <div id="curriculum" class="section">
         <label>커리큘럼</label>
         <!-- 여기에 커리큘럼 입력 요소 추가 -->
+        <div class="curricullum-container">
+        	
+        </div>
     </div>
 
     <div class="section">

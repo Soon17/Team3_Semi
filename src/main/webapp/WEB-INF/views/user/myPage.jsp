@@ -53,20 +53,23 @@
     </script>
 	<script>
 		$(document).on("change", "[name=file]", function(e){
-			const $this = $(this);
-			const file = this.files[0];
-			
-			if(file){
-				const reader = new FileReader();
-				reader.onload = function(e){
-					$this.prev().attr("src", e.target.result).show();
-					$("#file").hide();
-				}
-				reader.readAsDataURL(file);
-			}else{
-				$this.prev().hide();
-				$("#file").show();
-			}
+		    const $input = $(this); 
+		    const file = this.files[0];
+		    const $label = $input.closest(".file-label"); 
+		    const $img = $label.find(".sel-img");
+		    const $base = $label.find(".base-img"); 
+	
+		    if (file) {
+		        const reader = new FileReader();
+		        reader.onload = function(e){
+		            $img.attr("src", e.target.result).show(); 
+		            $base.hide();
+		        };
+		        reader.readAsDataURL(file);
+		    } else {
+		        $img.hide();
+		        $base.show();
+		    }
 		});
 	</script>
 </body>

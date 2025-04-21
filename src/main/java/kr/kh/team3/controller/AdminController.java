@@ -146,17 +146,31 @@ public class AdminController {
     @PostMapping("/approve")
     @ResponseBody
     public boolean approve(@RequestBody Map<String, Object> data) {
-        boolean authorityTeacher = memberService.setTeacher((int)data.get("me_num"));
-        boolean approveRequest = requestService.setOk((int)data.get("rq_num"));
+        boolean setAuthorityTeacher = memberService.setTeacher((int)data.get("me_num"));
+        boolean setStateOk = requestService.setOk((int)data.get("rq_num"));
         
-        boolean res = authorityTeacher && approveRequest;
+        boolean res = setAuthorityTeacher && setStateOk;
         return res;
     }
 
     @PostMapping("/reject")
     @ResponseBody
     public boolean reject(@RequestBody Map<String, Object> data) {
-        boolean rejectRequest = requestService.setNo((int)data.get("rq_num"));
-        return rejectRequest;
+        boolean setRequestNo = requestService.setNo((int)data.get("rq_num"));
+        return setRequestNo;
+    }
+    
+    @PostMapping("/handling")
+    @ResponseBody
+    public boolean handling(@RequestParam int rq_num) {
+        boolean setStateHandling = requestService.setHandling(rq_num);
+        return setStateHandling;
+    }
+    
+    @PostMapping("/waiting")
+    @ResponseBody
+    public boolean waiting(@RequestParam int rq_num) {
+        boolean setStateWaiting = requestService.setWaiting(rq_num);
+        return setStateWaiting;
     }
 }

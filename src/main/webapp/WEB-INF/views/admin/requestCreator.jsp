@@ -111,6 +111,24 @@ pageEncoding="UTF-8" %>
 		  color: #aaa;
 		  font-weight: bold;
 		}
+		
+		.request-table {
+		  table-layout: fixed;
+		  width: 100%;
+		}
+		
+		.col-id {
+		  width: 20%;
+		}
+		.col-content {
+		  width: 20%;
+		}
+		.col-date {
+		  width: 30%;
+		}
+		.col-state {
+		  width: 30%;
+		}
     </style>
   </head>
 
@@ -121,28 +139,29 @@ pageEncoding="UTF-8" %>
       <table class="request-table">
         <thead>
           <tr>
-            <th>회원 아이디</th>
-            <th>요청 내용</th>
-            <th>요청 일시</th>
-            <th>처리 상태</th>
+            <th class="col-id">회원 아이디</th>
+            <th class="col-content">요청 내용</th>
+            <th class="col-date">요청 일시</th>
+            <th class="col-state">처리 상태</th>
           </tr>
         </thead>
         <tbody id="request-body">
           <!-- JSTL 반복문 안에 각각 row에 paging 클래스 추가 -->
-          <c:forEach items="${r_list}" var="rl" varStatus="loop">
-            <tr class="paging-row">
-              <td>${rl.member.me_id}</td>
-              <td>
+          <c:forEach items="${r_list}" var="rq" varStatus="loop">
+            <tr class="paging-row" data-rqnum="${rq.rq_num}">
+              <td>${rq.member.me_id}</td>
+              <td class="rqContent">
 				  <c:choose>
-				    <c:when test="${rl.rq_state eq 'HANDLING'}">
-				      <span class="handling-message">처리중인 건입니다</span>
+				    <c:when test="${rq.rq_state eq 'HANDLING'}">
+				      <span class="handling-message">처리중입니다</span>
 				    </c:when>
 				    <c:otherwise>
 				      <a
 				        href="#"
 				        class="request-link"
-				        data-url="<c:url value='/admin/applyDetail/${rl.rq_num}'/>"
-				        onclick="window.open(this.dataset.url, 'popupWindow', 'width=800,height=1000,scrollbars=yes'); return false;"
+				        data-rqnum="${rq.rq_num}"
+				        data-rqstate="${rq.rq_state}"
+				        data-url="<c:url value='/admin/applyDetail/${rq.rq_num}'/>"
 				      >
 				        상세보기
 				      </a>
@@ -151,19 +170,19 @@ pageEncoding="UTF-8" %>
 
               </td>
               <td>
-                <fmt:formatDate value="${rl.rq_date}" pattern="yyyy.MM.dd HH:mm:ss" />
+                <fmt:formatDate value="${rq.rq_date}" pattern="yyyy.MM.dd HH:mm:ss" />
               </td>
-              <td>
-                <c:if test="${rl.rq_state eq 'WAITING'}">
+              <td class="rqState">
+                <c:if test="${rq.rq_state eq 'WAITING'}">
                   <div class="state waiting">대기 중</div>
                 </c:if>
-                <c:if test="${rl.rq_state eq 'HANDLING'}">
+                <c:if test="${rq.rq_state eq 'HANDLING'}">
                   <div class="state handling">처리 중</div>
                 </c:if>
-                <c:if test="${rl.rq_state eq 'OK'}">
+                <c:if test="${rq.rq_state eq 'OK'}">
                   <div class="state ok">승인</div>
                 </c:if>
-                <c:if test="${rl.rq_state eq 'NO'}">
+                <c:if test="${rq.rq_state eq 'NO'}">
                   <div class="state no">반려</div>
                 </c:if>
               </td>
@@ -191,7 +210,7 @@ pageEncoding="UTF-8" %>
           $rows.hide().slice(start, end).show();
 
           $pagination.find('button').removeClass('active');
-          $pagination.find(`button[data-page=${page}]`).addClass('active');
+          $pagination.find(`button[data-page="${page}"]`).addClass('active');
         }
 
         function createPagination() {
@@ -207,6 +226,60 @@ pageEncoding="UTF-8" %>
         createPagination();
         showPage(1);
       });
+      
+      $(document).on("click", ".request-link", function(e) {
+    	  
+    	  const rqNum = $(this).data('rqnum');
+    	  const rqState = $(this).data("rqstate");
+    	  const $row = $(this).closest("tr");
+    	  const url = $(this).data("url");
+    	  window.open(url, 'popupWindow', 'width=800,height=700,scrollbars=yes')
+    	  
+    	  // 상태가 WAITING이면 처리 중으로 전환
+    	  if(rqState === "WAITING"){
+	    	  $.ajax({
+				    url: "/team3/admin/handling",
+				    method: "POST",
+				    data: { rq_num : rqNum },
+				    success: function(response) {
+				    	// td의 '처리 상태' 컬럼 값을 바꿈
+				        $row.find(".rqState").html(`<div class="state handling">처리 중</div>`);
+				        // 링크도 같이 수정 (span으로 변경)
+				        $row.find(".rqContent").html(`<span class="handling-message">처리중입니다</span>`);
+				    }
+				});    	  
+    	  }
+   	  });
+      
+		function popupClosed(rq_num) {
+		    
+			const $row = $(`.paging-row[data-rqnum="${rq_num}"]`);
+			
+			$.ajax({
+			    url: "/team3/admin/waiting",
+			    method: "POST",
+			    data: { rq_num : rq_num },
+			    success: function(response) {
+			    	// td의 '처리 상태' 컬럼 값을 바꿈
+			        $row.find(".rqState").html(`<div class="state waiting">대기 중</div>`);
+			    	
+			        // 링크도 같이 수정 (a태그로 변경)
+			        const detailUrl = `/team3/admin/applyDetail/${rq_num}`;
+			        
+			        $row.find(".rqContent").html(
+			        		`<a href="#" 
+			        		class="request-link" 
+			        		data-rqnum="${rq_num}" 
+			        		data-rqstate="WAITING" 
+			        		data-url="${detailUrl}">
+			        			상세보기
+			        		</a>`
+					);
+			        console.log("찾는 rq_num:", rq_num);
+			        console.log("찾은 row:", $row.length);
+			    }
+			});
+		}
     </script>
   </body>
 </html>

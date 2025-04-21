@@ -299,6 +299,16 @@
 		        }
 		    });
 	  }
+	  
+	  window.addEventListener('beforeunload', function () {
+		  if (window.opener && !window.opener.closed && typeof window.opener.popupClosed === 'function') {
+		    try {
+		      window.opener.popupClosed(${rq.rq_num});
+		    } catch (e) {
+		      console.error('popupClosed 실행 중 오류:', e);
+		    }
+		  }
+		});
 	</script>
 
 </body>

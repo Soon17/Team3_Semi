@@ -58,4 +58,14 @@
 		set rq_state = "OK"
 		where rq_num = #{rq_num}
 	</update>
+	<update id="setHandling">
+		update request
+		set rq_state = "HANDLING"
+		where rq_num = #{rq_num}
+	</update>
+	<update id="setWaiting">
+		update request
+		set rq_state = "WAITING"
+		where rq_num = #{rq_num} and rq_state = "HANDLING"
+	</update>
 </mapper>

@@ -21,4 +21,8 @@ public interface RequestDAO {
 
 	boolean setOk(@Param("rq_num")int rq_num);
 
+	boolean setHandling(@Param("rq_num")int rq_num);
+
+	boolean setWaiting(@Param("rq_num")int rq_num);
+
 }

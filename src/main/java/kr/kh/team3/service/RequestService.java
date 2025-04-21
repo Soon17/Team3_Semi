@@ -18,5 +18,9 @@ public interface RequestService {
 	boolean setNo(int rq_num);
 
 	boolean setOk(int rq_num);
+
+	boolean setHandling(int rq_num);
+
+	boolean setWaiting(int rq_num);
 	
 }

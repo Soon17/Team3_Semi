@@ -49,4 +49,16 @@ public class RequestServiceImp implements RequestService{
 		
 		return requestDao.setOk(rq_num);
 	}
+
+	@Override
+	public boolean setHandling(int rq_num) {
+		
+		return requestDao.setHandling(rq_num);
+	}
+
+	@Override
+	public boolean setWaiting(int rq_num) {
+		
+		return requestDao.setWaiting(rq_num);
+	}
 }

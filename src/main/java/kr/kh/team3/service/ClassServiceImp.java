@@ -131,14 +131,14 @@ public class ClassServiceImp implements ClassService{
 	                            String uuid = UUID.randomUUID().toString();
 	                            String newFileName = uuid + "_" + origin;
 	                            
-	                            String savePath = uploadPath + "/resources/static/" + newFileName;
-	                            File dir = new File(uploadPath + "/resources/static");
+	                            String savePath = uploadPath + "/static/" + newFileName;
+	                            File dir = new File(uploadPath + "/static");
 	                            if (!dir.exists()) {
 	                                dir.mkdirs();
 	                            }
 	                            
 	                            f.transferTo(new File(savePath));
-	                            video.setVd_vidoe("/resources/static/" + newFileName);
+	                            video.setVd_vidoe("/static/" + newFileName);
 	                            video.setVd_cr_num(cr_num);
 	                            classDao.insertVideo(video);
 	                        }

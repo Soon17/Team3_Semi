@@ -291,7 +291,6 @@ $(function() {
 });
 </script>
 
-<!-- ✅ 여기 추가 -->
 <script>
 window.openVideoWindow = function(videoUrl) {
     const popup = window.open('', '_blank', 'width=1000,height=700,resizable=yes,scrollbars=no');
@@ -300,7 +299,7 @@ window.openVideoWindow = function(videoUrl) {
         return;
     }
 
-    const videoPath = contextPath + "/resources/static/" + videoUrl;
+    const videoPath = contextPath + videoUrl;
 
     popup.document.write(`
         <html>

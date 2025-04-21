@@ -290,56 +290,29 @@ $(function() {
     }, 10);
 });
 </script>
-
 <script>
-window.openVideoWindow = function(videoUrl) {
+  function openVideoWindow(videoUrl) {
+    const fileName = videoUrl.split('/').pop();
+    const videoPath = contextPath + '/video/' + fileName;
     const popup = window.open('', '_blank', 'width=1000,height=700,resizable=yes,scrollbars=no');
     if (!popup) {
-        alert("팝업 차단 해제해주세요!");
-        return;
+      alert('팝업 차단을 해제해주세요!');
+      return;
     }
+    const html =
+      '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>강의 영상</title>' +
+      '<style>body{margin:0;background:#000;display:flex;justify-content:center;align-items:center;height:100vh;}video{width:90%;max-height:90vh;}</style>' +
+      '</head><body>' +
+        '<video controls autoplay muted playsinline>' +
+          '<source src="' + videoPath + '" type="video/mp4">' +
+          '이 브라우저는 비디오 태그를 지원하지 않습니다.' +
+        '</video>' +
+      '</body></html>';
 
-    const videoPath = contextPath + videoUrl;
-
-    popup.document.write(`
-        <html>
-        <head>
-            <title>강의 영상</title>
-            <style>
-                body {
-                    margin: 0;
-                    background-color: black;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                }
-                video {
-                    width: 90%;
-                    max-height: 90vh;
-                }
-            </style>
-        </head>
-        <body>
-            <video id="videoPlayer" controls autoplay muted playsinline>
-                <source src="` + videoPath + `" type="video/mp4">
-                이 브라우저는 비디오 태그를 지원하지 않습니다.
-            </video>
-            <script>
-                const video = document.getElementById('videoPlayer');
-                video.muted = true;
-                video.play();
-            <\/script>
-        </body>
-        </html>
-    `);
-
+    popup.document.open();
+    popup.document.write(html);
     popup.document.close();
-};
+  }
 </script>
-
-</body>
-</html>
-
 </body>
 </html>

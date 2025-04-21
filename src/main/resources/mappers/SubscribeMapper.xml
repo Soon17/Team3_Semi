@@ -18,4 +18,8 @@
 	    INSERT INTO subscribe (su_date, su_me_num, su_cl_num)
 	    VALUES (NOW(), #{me_num}, #{cl_num});
 	</insert>
+	<delete id="deleteSubscribe">
+	  DELETE FROM subscribe 
+	  WHERE su_me_num = #{me_num} AND su_cl_num = #{cl_num}
+	</delete>
 </mapper>

@@ -10,4 +10,6 @@ public interface SubscribeDAO {
 
 	boolean insertSubscribe(@Param("me_num")int me_num,@Param("cl_num") int cl_num);
 
+	int deleteSubscribe(@Param("me_num")int me_num, @Param("cl_num")int cl_num);
+
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,6 +154,20 @@
 		.reject-btn:hover {
 		  background-color: #d32f2f;
 		}
+		
+		.status-label {
+		  font-weight: bold;
+		  font-size: 18px;
+		  padding: 10px;
+		}
+		
+		.approved {
+		  color: green;
+		}
+		
+		.rejected {
+		  color: red;
+		}
 	</style>
 </head>
 <body>
@@ -224,17 +239,65 @@
 	</div>
 	<!-- 하단 버튼 영역 -->
 	<div class="action-buttons">
-		<button class="approve-btn" onclick="handleApprove()">✔ 승인</button>
-		<button class="reject-btn" onclick="handleReject()">✖ 반려</button>
+	  <c:choose>
+	    <c:when test="${rq.rq_state eq 'WAITING'}">
+	      <button class="approve-btn" onclick="handleApprove()">✔ 승인</button>
+	      <button class="reject-btn" onclick="handleReject()">✖ 반려</button>
+	    </c:when>
+	    <c:when test="${rq.rq_state eq 'OK'}">
+	      <div class="status-label approved">✔ 승인 완료된 건입니다.</div>
+	    </c:when>
+	    <c:when test="${rq.rq_state eq 'NO'}">
+	      <div class="status-label rejected">✖ 반려 완료된 건입니다.</div>
+	    </c:when>
+	  </c:choose>
 	</div>
 
 	<script>
 	  function handleApprove() {
-	    alert("승인되었습니다!");
+		    $.ajax({
+		        url: '/team3/admin/approve',
+		        type: 'POST',
+		        contentType: 'application/json; charset=utf-8',
+		        data: JSON.stringify({
+		        	me_num : ${rq.rq_me_num},
+		        	rq_num : ${rq.rq_num}
+		        }), // 예: 승인할 항목의 ID
+		        success: function(response) {
+		          alert("승인되었습니다!");
+		       // 부모 창 새로고침
+		          if (window.opener && !window.opener.closed) {
+		            window.opener.location.reload(); // or 원하는 함수 호출
+		          }
+		          window.close();
+		        },
+		        error: function(xhr, status, error) {
+		          alert("승인 실패: " + error);
+		        }
+	    	});
 	  }
 	
 	  function handleReject() {
-	    alert("반려되었습니다!");
+		    $.ajax({
+		        url: '/team3/admin/reject',
+		        type: 'POST',
+		        contentType: 'application/json; charset=utf-8',
+		        data: JSON.stringify({
+		        	me_num : ${rq.rq_me_num},
+		        	rq_num : ${rq.rq_num}
+		        }), // 예: 반려할 항목의 ID
+		        success: function(response) {
+		          alert("반려되었습니다!");
+		          // 부모 창 새로고침
+		          if (window.opener && !window.opener.closed) {
+		            window.opener.location.reload(); // or 원하는 함수 호출
+		          }
+		          window.close();
+		        },
+		        error: function(xhr, status, error) {
+		          alert("반려 실패: " + error);
+		        }
+		    });
 	  }
 	</script>
 

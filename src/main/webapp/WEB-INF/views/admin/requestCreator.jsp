@@ -106,6 +106,11 @@ pageEncoding="UTF-8" %>
       .pagination button:hover {
         background-color: #ccc;
       }
+      
+      .handling-message {
+		  color: #aaa;
+		  font-weight: bold;
+		}
     </style>
   </head>
 
@@ -128,14 +133,22 @@ pageEncoding="UTF-8" %>
             <tr class="paging-row">
               <td>${rl.member.me_id}</td>
               <td>
-                <a
-                  href="#"
-                  class="request-link"
-                  data-url="<c:url value='/admin/applyDetail/${rl.rq_num}'/>"
-                  onclick="window.open(this.dataset.url, 'popupWindow', 'width=800,height=1000,scrollbars=yes'); return false;"
-                >
-                  상세보기
-                </a>
+				  <c:choose>
+				    <c:when test="${rl.rq_state eq 'HANDLING'}">
+				      <span class="handling-message">처리중인 건입니다</span>
+				    </c:when>
+				    <c:otherwise>
+				      <a
+				        href="#"
+				        class="request-link"
+				        data-url="<c:url value='/admin/applyDetail/${rl.rq_num}'/>"
+				        onclick="window.open(this.dataset.url, 'popupWindow', 'width=800,height=1000,scrollbars=yes'); return false;"
+				      >
+				        상세보기
+				      </a>
+				    </c:otherwise>
+				  </c:choose>
+
               </td>
               <td>
                 <fmt:formatDate value="${rl.rq_date}" pattern="yyyy.MM.dd HH:mm:ss" />

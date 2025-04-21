@@ -177,5 +177,11 @@ public class MemberServiceImp implements MemberService{
 		return memberDao.selectMemberByCookie(cookieId);
 	}
 
+	@Override
+	public boolean setTeacher(int me_num) {
+		
+		return memberDao.setTeacher(me_num);
+	}
+
 	
 }

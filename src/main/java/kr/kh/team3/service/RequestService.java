@@ -14,5 +14,9 @@ public interface RequestService {
 	boolean insertRequest(String content, MemberVO user);
 
 	RequestVO getRequest(int rqNum);
+
+	boolean setNo(int rq_num);
+
+	boolean setOk(int rq_num);
 	
 }

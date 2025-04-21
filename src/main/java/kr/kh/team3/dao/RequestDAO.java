@@ -17,4 +17,8 @@ public interface RequestDAO {
 
 	RequestVO selectRequest(@Param("rqNum") int rqNum);
 
+	boolean setNo(@Param("rq_num")int rq_num);
+
+	boolean setOk(@Param("rq_num")int rq_num);
+
 }

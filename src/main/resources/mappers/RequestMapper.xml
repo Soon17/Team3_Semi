@@ -47,4 +47,15 @@
 		join member on me_num = rq_me_num
 		where rq_num = #{rqNum}
 	</select>
+	
+	<update id="setNo">
+		update request
+		set rq_state = "NO"
+		where rq_num = #{rq_num}
+	</update>
+	<update id="setOk">
+		update request
+		set rq_state = "OK"
+		where rq_num = #{rq_num}
+	</update>
 </mapper>

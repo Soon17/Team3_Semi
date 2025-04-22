@@ -228,11 +228,16 @@ pageEncoding="UTF-8" %>
       });
       
       $(document).on("click", ".request-link", function(e) {
+    	  e.preventDefault();
     	  
     	  const rqNum = $(this).data('rqnum');
     	  const rqState = $(this).data("rqstate");
     	  const $row = $(this).closest("tr");
     	  const url = $(this).data("url");
+    	  if (!url) {
+    		    alert("상세보기 URL이 없습니다.");
+    		    return;
+    		  }
     	  window.open(url, 'popupWindow', 'width=800,height=700,scrollbars=yes')
     	  
     	  // 상태가 WAITING이면 처리 중으로 전환
@@ -252,31 +257,12 @@ pageEncoding="UTF-8" %>
    	  });
       
 		function popupClosed(rq_num) {
-		    
-			const $row = $(`.paging-row[data-rqnum="${rq_num}"]`);
-			
 			$.ajax({
 			    url: "/team3/admin/waiting",
 			    method: "POST",
 			    data: { rq_num : rq_num },
 			    success: function(response) {
-			    	// td의 '처리 상태' 컬럼 값을 바꿈
-			        $row.find(".rqState").html(`<div class="state waiting">대기 중</div>`);
-			    	
-			        // 링크도 같이 수정 (a태그로 변경)
-			        const detailUrl = `/team3/admin/applyDetail/${rq_num}`;
-			        
-			        $row.find(".rqContent").html(
-			        		`<a href="#" 
-			        		class="request-link" 
-			        		data-rqnum="${rq_num}" 
-			        		data-rqstate="WAITING" 
-			        		data-url="${detailUrl}">
-			        			상세보기
-			        		</a>`
-					);
-			        console.log("찾는 rq_num:", rq_num);
-			        console.log("찾은 row:", $row.length);
+			    	location.reload();
 			    }
 			});
 		}

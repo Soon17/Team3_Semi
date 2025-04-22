@@ -61,4 +61,10 @@ public class RequestServiceImp implements RequestService{
 		
 		return requestDao.setWaiting(rq_num);
 	}
+
+	@Override
+	public int getWaitingCount() {
+		
+		return requestDao.getWaitingCount();
+	}
 }

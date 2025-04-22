@@ -26,6 +26,7 @@ import kr.kh.team3.model.vo.SubCategoryVO;
 import kr.kh.team3.service.CategoryService;
 import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.MemberService;
+import kr.kh.team3.service.RequestService;
 import kr.kh.team3.service.SearchService;
 import kr.kh.team3.service.SubCategoryService;
 import lombok.extern.log4j.Log4j;
@@ -49,6 +50,9 @@ public class HomeController {
 	
 	@Autowired
 	private SearchService searchService;
+	
+	@Autowired
+	RequestService requestService;
 	
 	
 	@GetMapping("/")
@@ -165,4 +169,11 @@ public class HomeController {
 	    return map;
 	}
 	
+	@PostMapping("/noticeBell")
+	public String noticeBell(Model model) {
+		int waitingRequestCount = requestService.getWaitingCount();
+		model.addAttribute("waitingRequestCount", waitingRequestCount);
+		System.out.println("시팔");
+		return "/noticeBell";
+	}
 }

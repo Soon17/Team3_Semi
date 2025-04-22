@@ -22,5 +22,7 @@ public interface RequestService {
 	boolean setHandling(int rq_num);
 
 	boolean setWaiting(int rq_num);
+
+	int getWaitingCount();
 	
 }

@@ -25,4 +25,6 @@ public interface RequestDAO {
 
 	boolean setWaiting(@Param("rq_num")int rq_num);
 
+	int getWaitingCount();
+
 }

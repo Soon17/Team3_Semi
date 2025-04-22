@@ -173,7 +173,7 @@
 <body>
 	
 	<div class="application-box">
-	
+	${rq.rq_num }
 	  <!-- 회원 정보 -->
 	  <div class="section-title">👤 회원 정보</div>
 	

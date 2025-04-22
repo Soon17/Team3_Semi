@@ -68,4 +68,10 @@
 		set rq_state = "WAITING"
 		where rq_num = #{rq_num} and rq_state = "HANDLING"
 	</update>
+	
+	<select id="getWaitingCount" resultType="int">
+		select count(*)
+		from request
+		where rq_state = "WAITING"
+	</select>
 </mapper>

@@ -16,8 +16,6 @@
 	    <result property="me_nick" column="me_nick"/>
 	    <result property="me_name" column="me_name"/>
 	</resultMap>
-	
-	
 	<select id="getClassList" resultType="ClassVO">
 		select *,
 		(select me_name from member where me_num = cl_tc_me_num)as me_name from class where cl_able="요청"; 
@@ -35,10 +33,12 @@
 	  SELECT 
 	    c.cl_num, c.cl_title, c.cl_item, c.cl_intro, c.cl_money, 
 	    c.cl_date, c.cl_level, c.cl_able, c.cl_tc_me_num, 
-	    m.me_name, s.sc_name
+	    m.me_name, s.sc_name,
+	    t.th_picture AS cl_th_picture
 	  FROM class c
 	  JOIN subcategory s ON s.sc_cl_num = c.cl_num
 	  JOIN member m ON c.cl_tc_me_num = m.me_num
+	  LEFT JOIN thumbnail t ON c.cl_num = t.th_cl_num
 	  WHERE s.sc_ca_num = #{ca_num} and CL_ABLE="Y"
 	</select>
 	<select id="getCaClassList" resultType="ClassVO">

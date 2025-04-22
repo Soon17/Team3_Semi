@@ -292,8 +292,7 @@ $(function() {
 </script>
 <script>
   function openVideoWindow(videoUrl) {
-    const fileName = videoUrl.split('/').pop();
-    const videoPath = contextPath + '/video/' + fileName;
+    const videoPath = contextPath + '/video/' + videoUrl;
     const popup = window.open('', '_blank', 'width=1000,height=700,resizable=yes,scrollbars=no');
     if (!popup) {
       alert('팝업 차단을 해제해주세요!');

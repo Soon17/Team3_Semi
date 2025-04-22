@@ -131,48 +131,4 @@ public class ClassServiceImp implements ClassService{
 		return classDao.checkRequest(me_num);
 	}
 
-	@Override
-	public boolean insertVideo(ClassVO cl, SubCategoryVO sc) {
-	    try {
-	        int cl_num = cl.getCl_num();
-
-	        // 1) 서브카테고리 매핑
-	        sc.setSc_cl_num(cl_num);
-	        
-	        // 2) 커리큘럼 + 비디오
-	        if (cl.getList() != null) {
-	            for (CurriculumVO cu : cl.getList()) {
-	                cu.setCr_cl_num(cl_num);
-	                classDao.insertCurriculum(cu);
-	          
-	                int cr_num = cu.getCr_num();
-	                if (cu.getList() != null) {
-	                    for (VideoVO video : cu.getList()) {
-	                        MultipartFile f = video.getUploadFile();
-	                        if (f != null && !f.isEmpty()) {
-	                            String origin = f.getOriginalFilename();
-	                            String uuid = UUID.randomUUID().toString();
-	                            String newFileName = uuid + "_" + origin;
-	                            
-	                            String savePath = uploadPath + "/static/" + newFileName;
-	                            File dir = new File(uploadPath + "/static");
-	                            if (!dir.exists()) {
-	                                dir.mkdirs();
-	                            }
-	                            
-	                            f.transferTo(new File(savePath));
-	                            video.setVd_vidoe("/static/" + newFileName);
-	                            video.setVd_cr_num(cr_num);
-	                            classDao.insertVideo(video);
-	                        }
-	                    }
-	                }
-	            }
-	        }
-	        return true;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return false;
-	    }
-	}
 }

@@ -14,8 +14,8 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/profile/**" location="file:///c:/han/upload/profile/"/>
-	<resources mapping="/uploads/**" location="file:///c:/han/upload/" />
+	<resources mapping="/profile/**" location="file:///D:/upload/profile/"/>
+	<resources mapping="/uploads/**" location="file:///D:/upload/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -74,6 +74,6 @@
 	</beans:bean>
 	
 	<beans:bean id="uploadPath" class="java.lang.String">
-	<beans:constructor-arg value="C:\\han\\uploads"/>
+	<beans:constructor-arg value="D:\\uploads"/>
 	</beans:bean>
 </beans:beans>

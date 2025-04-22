@@ -210,7 +210,7 @@
 
 <script>
 	$(function() {
-	    $(".nav-link").click(function(e) {
+		$("#classTab .nav-link").click(function(e) {
 	        e.preventDefault();
 	        const type = $(this).data("type");
 	        const classNum = "${classDetail.cl_num}";
@@ -281,6 +281,7 @@
 	            }
 	        });
 	    });
+	    
 	});
 
     // 새 창에서 비디오 재생
@@ -331,106 +332,6 @@
 
 </script>
 
-<script>
-$(function() {
-    $("#classTab .nav-link").click(function(e) {
-        e.preventDefault();
-        const type = $(this).data("type");
-        const classNum = "${classDetail.cl_num}";
-        const checkSubscribed = "${checkSubscribed}" === "true";
 
-        $("#classTab .nav-link").removeClass("active");
-        $(this).addClass("active");
-
-        $.ajax({
-            url: contextPath + "/class/" + classNum + "/tab",
-            type: "GET",
-            data: { type: type },
-            success: function(res) {
-                console.log(res.curriculum);
-                let html = "";
-
-                if (type === "intro") {
-                    html = "<p>" + (res.intro || "소개 내용이 없습니다") + "</p>";
-                } else if (type === "item") {
-                    if (res.item && res.item.length > 0) {
-                        const items = res.item.split(",");
-                        html = "<ul>";
-                        for (let item of items) {
-                            html += "<li>" + item + "</li>";
-                        }
-                        html += "</ul>";
-                    } else {
-                        html = "<p>등록된 준비물이 없습니다</p>";
-                    }
-                } else if (type === "curriculum") {
-                    if (res.curriculum && Array.isArray(res.curriculum) && res.curriculum.length > 0) {
-                        html = "<div class='curriculum-wrapper'>";
-                        let printed = new Set();
-                        let count = 1;
-
-                        for (let cur of res.curriculum) {
-                            if (!printed.has(cur.cr_title)) {
-                                html += "<div class='curriculum-item'>" + cur.cr_title + "</div>";
-                                printed.add(cur.cr_title);
-                                count = 1;
-                            }
-
-                            if (cur.vd_num) {
-                                if (checkSubscribed) {
-                                    html += "<div class='video-wrapper' onclick='openVideoWindow(\"" + cur.vd_vidoe + "\")'>" 
-                                          + (count++) + ". " + cur.vd_name + "</div>";
-                                } else {
-                                    html += "<div class='video-wrapper' style='color:gray; cursor: not-allowed;'>" 
-                                          + (count++) + ". " + cur.vd_name + " (구독 필요)</div>";
-                                }
-                            }
-                        }
-                        html += "</div>";
-                    } else {
-                        html = "<p>등록된 커리큘럼이 없습니다</p>";
-                    }
-                } else if (type === "creator") {
-                    const teacherNum = "${classDetail.cl_tc_me_num}";
-                    window.location.href = contextPath + "/teacher/" + teacherNum;
-                    return;
-                }
-
-                $("#tabContent").html(html);
-            },
-            error: function() {
-                $("#tabContent").html("<p> 불러오기 실패했습니다 </p>");
-            }
-        });
-    });
-
-    setTimeout(() => {
-        $('#classTab .nav-link[data-type="intro"]').trigger('click');
-    }, 10);
-});
-</script>
-<script>
-  function openVideoWindow(videoUrl) {
-    const videoPath = contextPath + '/video/' + videoUrl;
-    const popup = window.open('', '_blank', 'width=1000,height=700,resizable=yes,scrollbars=no');
-    if (!popup) {
-      alert('팝업 차단을 해제해주세요!');
-      return;
-    }
-    const html =
-      '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>강의 영상</title>' +
-      '<style>body{margin:0;background:#000;display:flex;justify-content:center;align-items:center;height:100vh;}video{width:90%;max-height:90vh;}</style>' +
-      '</head><body>' +
-        '<video controls autoplay muted playsinline>' +
-          '<source src="' + videoPath + '" type="video/mp4">' +
-          '이 브라우저는 비디오 태그를 지원하지 않습니다.' +
-        '</video>' +
-      '</body></html>';
-
-    popup.document.open();
-    popup.document.write(html);
-    popup.document.close();
-  }
-</script>
 </body>
 </html>

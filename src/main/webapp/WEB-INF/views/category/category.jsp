@@ -128,8 +128,6 @@
 	    classHtml += `
 	      <div class="class-card class-link" data-clnum="\${cls.cl_num}" style="cursor:pointer;">
 	      <div class="image">
-	      <c:set var="cleanPath" value="${fn:replace(cl.cl_th_picture, '//', '/')}" />
-	      <img src="<c:url value='/uploads/thumnail${cleanPath}'/>" class="card-img-top" alt="썸네일">
 	    </div>
 	        <p>\${cls.me_name || "이름 없음"}</p>
 	        <h5>\${cls.cl_title || "제목 없음"}</h5>
@@ -173,6 +171,5 @@
 		    }
 	});
 </script>
-
 </body>
 </html>

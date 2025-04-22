@@ -6,8 +6,9 @@ import lombok.Data;
 
 @Data
 public class VideoVO {
-    private String vd_name;                   // 영상 제목
-    private String vd_vidoe;                  // DB에 저장될 경로
-    private MultipartFile uploadFile;         // 업로드 받을 때만 사용하는 임시 파일
-    private int vd_cr_num;                    // 커리큘럼 번호 외래키 등 필요시 추가
+	private int vd_num;
+	private String vd_name;
+	private String vd_vidoe;
+	private int vd_cr_num;
+	private MultipartFile vd_file;
 }

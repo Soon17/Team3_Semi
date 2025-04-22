@@ -10,9 +10,9 @@ public class CurriculumVO {
 	private int cr_num;
 	private int cr_cl_num;
 	private String cr_title;
-	
+	private List<VideoVO> list;
 	//비디오
-    private int vd_num;
+    private Integer vd_num;
     private String vd_name;
     private String vd_vidoe;
     private List<VideoVO> list;

@@ -83,5 +83,10 @@
 	    JOIN member m ON c.cl_tc_me_num = m.me_num
 	    WHERE c.cl_num = #{cl_num}
 	</select>
-	
+	<insert id="insertCurriculum" useGeneratedKeys="true" keyProperty="cr_num">
+		insert into curriculum(cr_title,cr_cl_num) values(#{cr_title},#{cr_cl_num})
+	</insert>
+	<insert id="insertVideo">
+		insert into video(vd_name,vd_vidoe,vd_cr_num) values(#{vd_name},#{vd_vidoe},#{vd_cr_num})
+	</insert>
 </mapper>

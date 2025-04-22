@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.CurriculumVO;
-import kr.kh.team3.model.vo.SubCategoryVO;
 import kr.kh.team3.model.vo.ThumbnailVO;
 import kr.kh.team3.model.vo.VideoVO;
 
@@ -36,10 +35,8 @@ public interface ClassDAO {
 
 	void insertThumbnail(@Param("th")ThumbnailVO thumbnail);
 
-	void insertSubCategory(@Param("sc") SubCategoryVO sc);
+	void insertCurriculum(CurriculumVO cr);
 
-	void insertCurriculum(CurriculumVO cu);
-
-	void insertVideo(@Param("video")VideoVO video);
+	void insertVideo(VideoVO vi);
 
 }

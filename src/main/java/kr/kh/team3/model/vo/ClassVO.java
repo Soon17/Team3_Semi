@@ -23,6 +23,5 @@ public class ClassVO {
 	//서브카테고리 담는곳
 	private String sc_name;
 	private String cl_th_picture;
-	//커리큘럼
 	private List<CurriculumVO> list;
 }

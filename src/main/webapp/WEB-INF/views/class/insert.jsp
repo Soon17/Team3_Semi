@@ -58,19 +58,13 @@
       <textarea id="cl_materials" name="cl_item" required></textarea>
     </div>
 
-    <!-- 4. 커리큘럼 -->
-    <div id="curriculum" class="section">
-      <label>커리큘럼</label>
-      <div id="curriculum-list">
-        <!-- JS 로 이 안에 아이템들이 추가됩니다 -->
-      </div>
-      <button type="button"
-              class="btn-submit"
-              id="add-curriculum"
-              style="background-color:#2196F3;">
-        + 커리큘럼 추가
-      </button>
-    </div>
+	<div id="curriculum" class="section">
+	    <label>커리큘럼</label>
+	    <div id="curriculum-list">
+	        <!-- 커리큘럼 아이템들이 여기에 추가됨 -->
+	    </div>
+	    <button type="button" class="btn-submit" style="background-color:#2196F3;" id="add-curriculum">+ 커리큘럼 추가</button>
+	</div>
 
     <!-- 5. 비용/난이도/카테고리 -->
     <div class="section">
@@ -118,88 +112,50 @@
       var target = $(this).attr('href');
       $('html,body').animate({ scrollTop: $(target).offset().top - 80 }, 500);
     });
+    let curriculumCount = 0;
+    let index =0;
+    function createCurriculumTemplate(index) {
+        return '' +
+            '<div class="curriculum-item" style="border:1px solid #ddd; padding:20px; margin-top:20px; border-radius:10px;">' +
+                '<label>커리큘럼명</label>' +
+                '<input type="text" name="list[' + index + '].cr_title" placeholder="예: 챕터 1 - 기본 개념"/>' +
 
-    // 카테고리 변경 → AJAX 로 세부카테고리 로드
-    $('#category').on('change', function(){
-      var ca = $(this).val();
-      $.get('<c:url value="/class/subcategoryList"/>', { ca_num: ca })
-       .done(function(html){
-         $('#subcategory').html(html);
-       })
-       .fail(function(){ console.error('❌ Subcategory load failed'); });
-    });
-
-    // 폼 제출 직전 → 현재 폼 안 모든 필드 찍어보기
-    $('#classForm').on('submit', function(){
-      $(this).find('input, select, textarea').each(function(){
-        console.log('   ▶', $(this).prop('outerHTML'));
-        console.log('      name=', $(this).attr('name'),
-                    'value=', $(this).val());
-      });
-    });
-
-    // 동적 커리큘럼/비디오 추가
-    var curriculumCount = 0;
-
-    function createCurriculumTemplate(idx){
-      console.log('▶ createCurriculumTemplate idx=', idx);
-      var tpl = ''
-        + '<div class="curriculum-item" style="border:1px solid #ddd; padding:20px; margin-top:20px; border-radius:10px;">'
-        +   '<label>커리큘럼명</label>'
-        +   '<input type="text" '
-        +     'name="list['+idx+'].cr_title" '
-        +     'placeholder="챕터 제목" />'
-        +   '<div class="video-list"></div>'
-        +   '<button type="button" class="btn-submit add-video" data-index="'+idx+'" style="margin-top:10px;background-color:#9C27B0;">'
-        +     '+ 강의 영상 추가'
-        +   '</button>'
-        + '</div>';
-      return $(tpl);
+                '<div class="video-list" data-index="' + index + '">' +
+                    '<!-- 영상 항목이 추가될 공간 -->' +
+                '</div>' +
+                '<button type="button" class="btn-submit add-video" data-index="' + index + '" style="margin-top:10px; background-color:#9C27B0;">+ 강의 영상 추가</button>' +
+            '</div>';
     }
 
-    function createVideoTemplate(cIdx,vIdx){
-      console.log('▶ createVideoTemplate cIdx=',cIdx,'vIdx=',vIdx);
-      var tpl = ''
-        + '<div class="video-item" style="margin-top:15px;">'
-        +   '<label>강의영상명</label>'
-        +   '<input type="text" '
-        +     'name="list['+cIdx+'].list['+vIdx+'].vd_name" '
-        +     'placeholder="영상 제목" />'
-        +   '<label>강의영상 업로드</label>'
-        +   '<input type="file" '
-        +     'name="list['+cIdx+'].list['+vIdx+'].uploadFile" />'
-        + '</div>';
-      return tpl;
+    function createVideoTemplate(curriculumIndex, videoIndex) {
+        return '' +
+            '<div class="video-item" style="margin-top:15px;">' +
+                '<label>강의영상명</label>' +
+                '<input type="text" name="list[' + curriculumIndex + '].list[' + videoIndex + '].vd_name" placeholder="예: 개요 설명"/>' +
+                '<label>강의영상 업로드</label>' +
+                '<input type="file" name="list[' + curriculumIndex + '].list[' + videoIndex + '].vd_file"/>' +
+            '</div>';
     }
 
-    // (a) 초기 1개 추가
-    $('#curriculum-list').append(createCurriculumTemplate(curriculumCount));
-    curriculumCount++;
+    $(document).ready(function () {
+        $("#curriculum-list").append(createCurriculumTemplate(curriculumCount));
+        curriculumCount++;
 
-    // (b) "+ 커리큘럼 추가"
-    $('#add-curriculum').on('click', function(){
-      var idx = curriculumCount++;
-      $('#curriculum-list').append(createCurriculumTemplate(idx));
-      console.log('   • appended idx=', idx);
+        // 커리큘럼 추가
+        $("#add-curriculum").on("click", function () {
+            index = curriculumCount++;
+            $("#curriculum-list").append(createCurriculumTemplate(index));
+        });
+
+        // 동적으로 추가된 버튼에도 이벤트 바인딩
+        $("#curriculum-list").on("click", ".add-video", function () {
+            const index = $(this).data("index");
+            const videoList = $(this).siblings(".video-list");
+            const videoCount = videoList.children().length;
+            videoList.append(createVideoTemplate(index, videoCount));
+        });
     });
-
-    // (c) ".add-video" 클릭
-    $('#curriculum-list').on('click','.add-video', function(){
-      var cIdx = $(this).data('index'),
-          $videoList = $(this).siblings('.video-list'),
-          vCount = $videoList.children().length;
-
-      $videoList.append(createVideoTemplate(cIdx, vCount));
-
-      // 추가 직후 다시 name/value 찍어보기
-      $('#classForm').find('input,select,textarea').each(function(){
-        console.log('   -', $(this).attr('name'),
-                    '="', $(this).val(), '"');
-      });
-    });
-
-  });
-  </script>
+</script>
 
 </body>
 </html>

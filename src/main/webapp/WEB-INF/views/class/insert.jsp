@@ -106,13 +106,13 @@
         <textarea id="cl_materials" name="cl_item" required></textarea>
     </div>
 
-    <div id="curriculum" class="section">
-        <label>커리큘럼</label>
-        <!-- 여기에 커리큘럼 입력 요소 추가 -->
-        <div class="curricullum-container">
-        	
-        </div>
-    </div>
+	<div id="curriculum" class="section">
+	    <label>커리큘럼</label>
+	    <div id="curriculum-list">
+	        <!-- 커리큘럼 아이템들이 여기에 추가됨 -->
+	    </div>
+	    <button type="button" class="btn-submit" style="background-color:#2196F3;" id="add-curriculum">+ 커리큘럼 추가</button>
+	</div>
 
     <div class="section">
         <label for="cl_money">구독 비용</label>
@@ -178,6 +178,49 @@
                     $("#subcategory").html(data);
                 }
             });
+        });
+    });
+    let curriculumCount = 0;
+    let index =0;
+    function createCurriculumTemplate(index) {
+        return '' +
+            '<div class="curriculum-item" style="border:1px solid #ddd; padding:20px; margin-top:20px; border-radius:10px;">' +
+                '<label>커리큘럼명</label>' +
+                '<input type="text" name="list[' + index + '].cr_title" placeholder="예: 챕터 1 - 기본 개념"/>' +
+
+                '<div class="video-list" data-index="' + index + '">' +
+                    '<!-- 영상 항목이 추가될 공간 -->' +
+                '</div>' +
+                '<button type="button" class="btn-submit add-video" data-index="' + index + '" style="margin-top:10px; background-color:#9C27B0;">+ 강의 영상 추가</button>' +
+            '</div>';
+    }
+
+    function createVideoTemplate(curriculumIndex, videoIndex) {
+        return '' +
+            '<div class="video-item" style="margin-top:15px;">' +
+                '<label>강의영상명</label>' +
+                '<input type="text" name="list[' + curriculumIndex + '].list[' + videoIndex + '].vd_name" placeholder="예: 개요 설명"/>' +
+                '<label>강의영상 업로드</label>' +
+                '<input type="file" name="list[' + curriculumIndex + '].list[' + videoIndex + '].vd_file"/>' +
+            '</div>';
+    }
+
+    $(document).ready(function () {
+        $("#curriculum-list").append(createCurriculumTemplate(curriculumCount));
+        curriculumCount++;
+
+        // 커리큘럼 추가
+        $("#add-curriculum").on("click", function () {
+            index = curriculumCount++;
+            $("#curriculum-list").append(createCurriculumTemplate(index));
+        });
+
+        // 동적으로 추가된 버튼에도 이벤트 바인딩
+        $("#curriculum-list").on("click", ".add-video", function () {
+            const index = $(this).data("index");
+            const videoList = $(this).siblings(".video-list");
+            const videoCount = videoList.children().length;
+            videoList.append(createVideoTemplate(index, videoCount));
         });
     });
 </script>

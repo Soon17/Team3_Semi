@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.ClassVO;
+import kr.kh.team3.model.vo.CurriculumVO;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.SubCategoryVO;
 import kr.kh.team3.model.vo.TeacherVO;
+import kr.kh.team3.model.vo.VideoVO;
 import kr.kh.team3.service.CategoryService;
 import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.CurriculumService;
@@ -134,9 +137,16 @@ public class ClassController {
 	@PostMapping("/insert/{me_num}")
 	public String insertPost(Model model,
 							@PathVariable("me_num")int me_num,
-							ClassVO cl,SubCategoryVO sc, 
+							@ModelAttribute ClassVO cl,SubCategoryVO sc, 
 							MultipartFile file) throws IOException {
 		cl.setCl_tc_me_num(me_num);
+		for (CurriculumVO cur : cl.getList()) {
+		    System.out.println("커리큘럼: " + cur.getCr_title());
+		    for (VideoVO v : cur.getList()) {
+		        System.out.println("- 영상 제목: " + v.getVd_name());
+		        System.out.println("- 파일 이름: " + v.getVd_file().getOriginalFilename());
+		    }
+		}
 		if(classService.insertClass(cl,me_num,sc,file)) {
 			model.addAttribute("url", "/");
 			model.addAttribute("msg", "제출 완료");

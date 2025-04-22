@@ -1,6 +1,7 @@
 package kr.kh.team3.model.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -22,4 +23,5 @@ public class ClassVO {
 	//서브카테고리 담는곳
 	private String sc_name;
 	private String cl_th_picture;
+	private List<CurriculumVO> list;
 }

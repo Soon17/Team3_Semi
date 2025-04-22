@@ -253,8 +253,9 @@
 	
 	                            if (cur.vd_num) {
 	                                if (checkSubscribed) {
-	                                    html += "<div class='video-wrapper' onclick='openVideoWindow(\"" + cur.vd_vidoe + "\")'>" 
-	                                          + (count++) + ". " + cur.vd_name + "</div>";
+	                                	const contextPath = "/team3"; // 또는 동적으로 window.location.pathname에서 추출 가능
+	                                	html += "<div class='video-wrapper' onclick='openVideoWindow(\"" + contextPath + "/uploads" + cur.vd_vidoe + "\")'>" 
+	                                	        + (count++) + ". " + cur.vd_name + "</div>";
 	                                } else {
 	                                    html += "<div class='video-wrapper' style='color:gray; cursor: not-allowed;'>" 
 	                                          + (count++) + ". " + cur.vd_name + " (구독 필요)</div>";
@@ -287,7 +288,7 @@
         return;
     }
 
-    const videoPath = "/team3/resources/static/" + videoUrl;
+    
 
     popup.document.write(`
         <html>
@@ -310,7 +311,7 @@
         </head>
         <body>
             <video id="videoPlayer" controls autoplay muted playsinline>
-                <source src="` + videoPath + `" type="video/mp4">
+                <source src="` + videoUrl + `" type="video/mp4">
                 이 브라우저는 비디오 태그를 지원하지 않습니다.
             </video>
             <script>

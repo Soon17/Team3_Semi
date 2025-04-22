@@ -84,21 +84,4 @@
 	    WHERE c.cl_num = #{cl_num}
 	</select>
 	
-	<insert id="insertSubCategory">
-	  INSERT INTO subcategory (sc_cl_num, sc_name, sc_ca_num)
-	  VALUES (#{sc.sc_cl_num}, #{sc.sc_name}, #{sc.sc_ca_num})
-	</insert>
-
-	<insert id="insertCurriculum" parameterType="CurriculumVO">
-	  <selectKey keyProperty="cr_num" resultType="int" order="AFTER">
-	    SELECT LAST_INSERT_ID()
-	  </selectKey>
-	  INSERT INTO curriculum (cr_title, cr_cl_num)
-	  VALUES (#{cr_title}, #{cr_cl_num})
-	</insert>
-
-	<insert id="insertVideo" parameterType="VideoVO">
-	  INSERT INTO video (vd_name, vd_vidoe, vd_cr_num)
-	  VALUES (#{video.vd_name}, #{video.vd_vidoe}, #{video.vd_cr_num})
-	</insert>
 </mapper>

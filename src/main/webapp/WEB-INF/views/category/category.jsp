@@ -127,7 +127,8 @@
 	  classList.forEach(function (cls) {
 	    classHtml += `
 	      <div class="class-card class-link" data-clnum="\${cls.cl_num}" style="cursor:pointer;">
-	        <div class="image"></div>
+	      <div class="image">
+	    </div>
 	        <p>\${cls.me_name || "이름 없음"}</p>
 	        <h5>\${cls.cl_title || "제목 없음"}</h5>
 	      </div>
@@ -170,6 +171,5 @@
 		    }
 	});
 </script>
-
 </body>
 </html>

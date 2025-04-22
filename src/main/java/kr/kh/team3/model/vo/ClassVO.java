@@ -1,6 +1,7 @@
 package kr.kh.team3.model.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -10,7 +11,7 @@ public class ClassVO {
 	private String cl_title;
 	private String cl_item;
 	private String cl_intro;
-	private int cl_money;
+	private Integer cl_money;
 	private Date cl_date;
 	private String cl_level;
 	private String cl_able;
@@ -22,4 +23,5 @@ public class ClassVO {
 	//서브카테고리 담는곳
 	private String sc_name;
 	private String cl_th_picture;
+	private List<CurriculumVO> list;
 }

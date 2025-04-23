@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team3.dao.SubscribeDAO">
+	<select id="checkSubscribed" resultType="int">
+        SELECT COUNT(*) 
+        FROM subscribe 
+        WHERE su_me_num = #{me_num} 
+        AND su_cl_num = #{cl_num}
+    </select>
+    <select id="countSubscribe" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM subscribe 
+	    WHERE su_cl_num = #{cl_num}
+	</select>
+	<insert id="insertSubscribe">
+	    INSERT INTO subscribe (su_date, su_me_num, su_cl_num)
+	    VALUES (NOW(), #{me_num}, #{cl_num});
+	</insert>
+	<delete id="deleteSubscribe">
+	  DELETE FROM subscribe 
+	  WHERE su_me_num = #{me_num} AND su_cl_num = #{cl_num}
+	</delete>
+</mapper>

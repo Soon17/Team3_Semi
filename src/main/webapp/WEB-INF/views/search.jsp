@@ -21,9 +21,9 @@
         }
 
         h2 {
-            text-align: center;
             margin-bottom: 40px;
             font-size: 24px;
+            font-weight: bold;
         }
 
         .card-grid {
@@ -53,7 +53,7 @@
         }
 
         .card-info {
-            padding: 12px;
+            padding: 10px;
         }
 
         .card-title {
@@ -86,13 +86,13 @@
         <c:when test="${not empty resultList}">
             <div class="card-grid">
                 <c:forEach var="item" items="${resultList}">
-                    <div class="card">
+                    <a href="<c:url value='/class/${item.cl_num}'/>" class="card">
                         <div class="card-image"></div>
                         <div class="card-info">
-                            <div class="card-sub">${item.teacherName}</div>
+                            <div class="card-sub">${item.teacherNick}</div>
                             <div class="card-title">${item.name}</div>
                         </div>
-                    </div>
+                    </a>
                 </c:forEach>
             </div>
         </c:when>

@@ -16,4 +16,10 @@
 	  GROUP BY 
 	    sc_name, sc_ca_num
 	</select>
+	<select id="getScNameList" resultType="SubCategoryVO">
+		SELECT DISTINCT sc_name FROM subcategory WHERE sc_ca_num = #{ca_num};
+	</select>
+	<insert id="insertClass">
+		insert into subcategory (sc_name,sc_ca_num,sc_cl_num) values(#{sc.sc_name},#{sc.sc_ca_num},#{cl.cl_num});
+	</insert>
 </mapper>

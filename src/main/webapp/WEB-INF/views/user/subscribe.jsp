@@ -19,17 +19,22 @@
 						<th>강의명</th>
 						<th>강사명</th>
 						<th>구독일</th>
-					</tr>
+						<th>구독취소</th>
 				</thead>
 				<tbody>
 					<c:forEach var="sub" items="${subscribeList}">
-						<tr>
-							<td>${sub.CL_TITLE}</td>
-							<td>${sub.teacher_name}</td>
-							<td>
-								<fmt:formatDate value="${sub.SU_DATE}" pattern="yyyy-MM-dd" />
-							</td>
-						</tr>
+					  <tr>
+					    <td>${sub.cl_title}</td>
+					    <td>${sub.teacher_name}</td>
+					    <td><fmt:formatDate value="${sub.su_date}" pattern="yyyy-MM-dd"/></td>
+					    <td>
+					      <form method="post" action="${pageContext.request.contextPath}/unsubscribe">
+					        <!-- hidden 에는 raw column name -->
+					        <input type="hidden" name="cl_num" value="${sub.su_cl_num}" />
+					        <button type="submit" class="btn btn-danger btn-sm">구독 취소</button>
+					      </form>
+					    </td>
+					  </tr>
 					</c:forEach>
 				</tbody>
 			</table>

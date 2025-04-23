@@ -8,34 +8,34 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <style>
-        .file-label {
-            position: relative;
-            width: 150px;
-            height: 200px;
-        }
-        .file-label .base-img {
-            display: block;
-            width: 100%; height: 100%;
-            border: 3px solid black;
-            text-align: center;
-            line-height: 190px;
-            font-size: 50px;
-            background-color: #f4f4f4;
-        }
-        .file-label img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .file-label input {
-            display: none;
-        }
-        .base-img {
-		    width: 150px;
-		    height: 200px;
-		    object-fit: cover;
-		    border: 3px solid black;
-		    cursor: pointer;
+		.file-label {
+		  position: relative;
+		  width: 150px;
+		  height: 200px;
+		}
+		
+		.base-img,
+		.sel-img {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 150px;
+		  height: 200px;
+		  object-fit: cover;
+		  border: 2px solid black;
+		}
+		
+		.base-img {
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  font-size: 50px;
+		  background-color: #f4f4f4;
+		  cursor: pointer;
+		}
+		
+		.file-label input {
+		  display: none;
 		}
     </style>
 </head>
@@ -70,26 +70,51 @@
             <input type="password" class="form-control" name="me_newPassword">
         </div>
 
-		<div class="form-group mt-3">
-			<div class="form-label">첨부파일</div>
+      <div class="form-group mt-3">
+         <div class="form-label">첨부파일</div>
 			<div class="d-flex">
-				<label class="file-label mr-3">
-					<c:choose>
-		                <c:when test="${not empty member.me_profile}">
-		                    <span class="base-img" style="display: none">+</span>
-							<img id="file" class="sel-img" src="<c:url value='/profile/${member.me_profile}'/>"  width="150" height="200"/>
-							<img class="sel-img" width="150" height="200"  style="display: none">
-		                </c:when>
-		                <c:otherwise>
-		                	<span class="base-img">+</span>
-		                	<img class="sel-img" width="150" height="200"  style="display: none">
-		                </c:otherwise>
-		            </c:choose>
-					<input type="file" class="form-control" name="file" accept="image/*">
-				</label>
+			  <label class="file-label mr-3">
+			  
+			    <!-- + 버튼 -->
+				<span class="base-img" style="<c:if test='${not empty member.me_profile}'>display: none;</c:if>">+</span>
+				
+				<!-- 기존 이미지 -->
+			    <img id="current-img" class="sel-img" 
+			         src="<c:if test='${not empty member.me_profile}'><c:url value='/profile/${member.me_profile}'/></c:if>" 
+			         style="<c:choose>
+			                   <c:when test='${not empty member.me_profile}'>display: block;</c:when>
+			                   <c:otherwise>display: none;</c:otherwise>
+			                </c:choose>"
+			    />
+				
+				<!-- 프리뷰 이미지 -->
+    <img id="preview-img" class="sel-img" style="display: none;" />
+
+    <input type="file" class="form-control" name="file" accept="image/*" />
+			  </label>
 			</div>
-		</div>
+
+      </div>
         <button type="submit" class="btn btn-outline-success mt-3 col-12">개인 정보 수정</button>
     </form>
+    <script>
+      $(document).on("change", "[name=file]", function(){
+    	  const file = this.files[0];
+    	    
+    	    if(file){
+    	        const reader = new FileReader();
+    	        reader.onload = function(e){
+    	            $("#preview-img").attr("src", e.target.result).show(); // 프리뷰 이미지 보여줌
+    	            $("#current-img").hide(); // 기존 이미지 숨김
+    	            $(".base-img").hide();
+    	        };
+    	        reader.readAsDataURL(file);
+    	    } else {
+    	        $("#preview-img").hide();
+    	        $("#current-img").show();
+    	        $(".base-img").show();
+    	    }
+      });
+   </script>
 </body>
 </html>

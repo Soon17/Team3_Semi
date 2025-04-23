@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team3.dao.RequestDAO">
+
+	<resultMap id="request_memberMap" type="RequestVO">
+	    <id property="rq_num" column="rq_num" />
+	    <result property="rq_state" column="rq_state" />
+	    <result property="rq_date" column="rq_date" />
+	    <result property="rq_content" column="rq_content" />
+	    <result property="rq_me_num" column="rq_me_num" />
+	    
+	    <association property="member" javaType="MemberVO">
+	        <id property="me_num" column="me_num" />
+	        <result property="me_name" column="me_name" />
+	        <result property="me_id" column="me_id" />
+	        <result property="me_nick" column="me_nick" />
+	        <result property="me_email" column="me_email" />
+	        <result property="me_number" column="me_number" />
+	        <result property="me_del" column="me_del" />
+	        <result property="me_profile" column="me_profile" />
+	    </association>
+	</resultMap>
+
+	<select id="selectRequestList" resultMap="request_memberMap">
+		select *
+		from request
+		join member on me_num = rq_me_num
+		order by rq_num desc
+	</select>
+	
+	<select id="countRequest" resultType="int">
+   		select count(*)
+   		from request
+   		where rq_me_num = #{user.me_num} and rq_state != "NO"
+	</select>
+	
+	<insert id="insertRequest">
+			insert into request(rq_content, rq_me_num)
+			value(#{content}, #{user.me_num})
+	</insert>
+	
+	<select id="selectRequest" resultMap="request_memberMap">
+		select *
+		from request
+		join member on me_num = rq_me_num
+		where rq_num = #{rqNum}
+	</select>
+	
+	<update id="setNo">
+		update request
+		set rq_state = "NO"
+		where rq_num = #{rq_num}
+	</update>
+	<update id="setOk">
+		update request
+		set rq_state = "OK"
+		where rq_num = #{rq_num}
+	</update>
+	<update id="setHandling">
+		update request
+		set rq_state = "HANDLING"
+		where rq_num = #{rq_num}
+	</update>
+	<update id="setWaiting">
+		update request
+		set rq_state = "WAITING"
+		where rq_num = #{rq_num} and rq_state = "HANDLING"
+	</update>
+	
+	<select id="getWaitingCount" resultType="int">
+		select count(*)
+		from request
+		where rq_state = "WAITING"
+	</select>
+</mapper>

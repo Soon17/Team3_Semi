@@ -5,6 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.kh.team3.model.vo.ClassVO;
+import kr.kh.team3.model.vo.CurriculumVO;
+import kr.kh.team3.model.vo.ThumbnailVO;
+import kr.kh.team3.model.vo.VideoVO;
 
 public interface ClassDAO {
 
@@ -23,5 +26,17 @@ public interface ClassDAO {
 	List<ClassVO> getLatestClassList();
 
 	List<ClassVO> getMostClassList();
+	
+	ClassVO ClassDetail(@Param("cl_num")int cl_num);
+
+	void insertClass(@Param("cl")ClassVO cl);
+
+	ClassVO checkRequest(@Param("me_num")int me_num);
+
+	void insertThumbnail(@Param("th")ThumbnailVO thumbnail);
+
+	void insertCurriculum(CurriculumVO cr);
+
+	void insertVideo(VideoVO vi);
 
 }

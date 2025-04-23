@@ -12,9 +12,13 @@
 		<div style="width: 200px; background-color: white-space; padding: 20px;">
 			<h4>메뉴</h4>
 			<ul style="list-style: none; padding-left: 0;">
-				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('subs')">구독 목록</a></li>				
-				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('teacher')">강사 신청</a></li>
-				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('update')">개인 정보 수정</a></li>
+				<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('subs')">구독 목록</a></li>
+				<c:if test="${user.me_authority eq 'USER' }">
+					<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('teacher')">강사 신청</a></li>
+				</c:if>
+				<c:if test="${user.me_pw ne 'kakao'}">
+					<li style="margin-bottom: 10px;"><a href="#" style="color: black; text-decoration: none;" onclick="loadContent('update')">개인 정보 수정</a></li>
+				</c:if>
 			</ul>	
 		</div>
 
@@ -47,30 +51,42 @@
 	
     <script>
         function openNewWindow() {
-            // 새 창 열기 (URL, 창 이름, 창 속성)
-            window.open("<c:url value="/user/applyPage"/>", "apply", "width=1000,height=800");
+        	//이미 요청된 지원이 있는지 체크
+        	$.ajax({
+		        url: "/team3/apply/check",
+		        method: "POST",
+		        success: function(isNewRequest) {
+		            if (isNewRequest) {
+		                // 새 창 열기
+		                window.open("/team3/apply/applyPage", "apply", "width=1000,height=800");
+		            } else {
+		                alert("이미 대기중인 요청이 있습니다. 처리 결과를 기다려주세요!");
+		                return;
+		            }
+		        }
+		    });
         }
     </script>
 	<script>
 		$(document).on("change", "[name=file]", function(e){
-		    const $input = $(this); 
-		    const file = this.files[0];
-		    const $label = $input.closest(".file-label"); 
-		    const $img = $label.find(".sel-img");
-		    const $base = $label.find(".base-img"); 
-	
-		    if (file) {
-		        const reader = new FileReader();
-		        reader.onload = function(e){
-		            $img.attr("src", e.target.result).show(); 
-		            $base.hide();
-		        };
-		        reader.readAsDataURL(file);
-		    } else {
-		        $img.hide();
-		        $base.show();
-		    }
-		});
+	        const $input = $(this); 
+	        const file = this.files[0];
+	        const $label = $input.closest(".file-label"); 
+	        const $img = $label.find(".sel-img");
+	        const $base = $label.find(".base-img"); 
+	 
+	        if (file) {
+	            const reader = new FileReader();
+	            reader.onload = function(e){
+	                $img.attr("src", e.target.result).show(); 
+	                $base.hide();
+	            };
+	            reader.readAsDataURL(file);
+	        } else {
+	            $img.hide();
+	            $base.show();
+	        }
+	    });
 	</script>
 </body>
 </html>

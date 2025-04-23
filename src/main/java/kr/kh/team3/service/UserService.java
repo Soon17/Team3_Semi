@@ -3,6 +3,8 @@ package kr.kh.team3.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.kh.team3.model.vo.MemberVO;
+
 
 public interface UserService {
 	

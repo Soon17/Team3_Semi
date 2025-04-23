@@ -82,6 +82,29 @@
   			  white-space: nowrap;
 			}
 			
+			.notice-bell {
+				position: relative;
+				display: inline-block;
+				cursor: pointer;
+			}
+			
+			.notification-badge {
+			  position: absolute;
+			  top: -5px;
+			  right: -5px;
+			  min-width: 18px;
+			  height: 18px;
+			  padding: 0 5px;
+			  background-color: red;
+			  color: white;
+			  font-size: 11px;
+			  font-weight: bold;
+			  border-radius: 10px;
+			  text-align: center;
+			  line-height: 18px;
+			  display: inline-block;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -135,14 +158,14 @@
 									class="nav-link dropdown-toggle" href="#" id="navbardrop"
 									data-toggle="dropdown">관리자 전용</a>
 									<div class="dropdown-menu">
-										<a class="dropdown-item" href="<c:url value='#'/>">강사 요청 리스트</a>
+										<a class="dropdown-item" href="<c:url value='/admin/requestCreator'/>">강사 요청 리스트</a>
 										<a class="dropdown-item" href="<c:url value='/admin/requestClass'/>">강의 요청 리스트</a>
 										<a class="dropdown-item" href="<c:url value='/admin/list'/>">회원 리스트</a>
 										<a class="dropdown-item" href="<c:url value='/admin/update'/>">개인 정보 수정</a>
 									</div>
 								 </li>
 							</ul>
-					 </div>
+				    	</div>
 					</c:when>
 					<c:when test="${sessionScope.member.me_authority eq 'USER'}">
 						<a href="<c:url value='/user/myPage'/>" class="nav-link p-0" style="color: black;">
@@ -158,16 +181,16 @@
 					<c:when test="${sessionScope.member.me_authority eq 'TEACHER'}">
 						<div>
 							<ul class="navbar-nav">
-								 <!-- Dropdown -->
-								 <li class="nav-item dropdown"><a
-									class="nav-link dropdown-toggle" href="#" id="navbardrop"
-									data-toggle="dropdown">강사 전용</a>
+							 	<!-- Dropdown -->
+								<li class="nav-item dropdown"><a
+								class="nav-link dropdown-toggle" href="#" id="navbardrop"
+								data-toggle="dropdown">강사 전용</a>
 									<div class="dropdown-menu">
 										<a class="dropdown-item" href="<c:url value='/user/myPage'/>">마이페이지</a>
 										<a class="dropdown-item" href="<c:url value='/teacher/${member.me_num }'/>">강사페이지</a>
-										<a class="dropdown-item" href="<c:url value='/class/insert/${me_num }'/>">클래스 등록</a>
-									</div>
-								 </li>
+									 	<a class="dropdown-item" href="<c:url value='/class/insert/${member.me_num }'/>">클래스 등록</a>
+						 		 	</div>
+								</li>
 							</ul>
 					 	</div>
 					</c:when>
@@ -182,11 +205,9 @@
 			<c:choose>
 				<c:when test="${not empty sessionScope.member}">
 					<!-- 알림 벨 자리 -->
-				    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24"
-				    	style="margin-right: 10px">
-				      <path d="M18 8a6 6 0 00-12 0v5H4l1 2h14l1-2h-2V8z" />
-				      <path d="M13.73 21a2 2 0 01-3.46 0" />
-				    </svg>
+					<div class="notice-bell">
+					    
+					</div>
 					<c:choose>
 						<c:when test="${fn:startsWith(sessionScope.member.me_profile, 'http')}">
 							<img src="${sessionScope.member.me_profile}"
@@ -225,15 +246,15 @@
 		</div>
 	</nav>
 	<script type="text/javascript">
-	// 카테고리 리스트 비동기 로딩
-	$.ajax({
-		async: true,
-		url: '<c:url value="/categoryList"/>',
-		type: 'post',
-		success: function (data) {
-			$(".category-list").html(data);
-		}
-	});
+		// 카테고리 리스트 비동기 로딩
+		$.ajax({
+			async: true,
+			url: '<c:url value="/categoryList"/>',
+			type: 'post',
+			success: function (data) {
+				$(".category-list").html(data);
+			}
+		});
 
 		// 카테고리 버튼 클릭 시 토글
 		$('.ca').on('click', function (e) {
@@ -257,7 +278,29 @@
 			$(this).fadeOut(100);
 			$('.dropdown-menu.category-list').removeClass('show');
 		});
-		</script>
+		
+		//알림 벨 비동기 로딩
+		$.ajax({
+			async: true,
+			url: '<c:url value="/noticeBell"/>',
+			type: 'post',
+			success: function (data) {
+				$(".notice-bell").html(data);
+			}
+		});
+		
+		$(".notice-bell").click(() => {
+			const userAuthority = "${sessionScope.member.me_authority}"
+			
+			if (userAuthority === "ADMIN") {
+				let count = $(".notification-badge").text();
+				alert(count + "개의 업무처리가 있습니다.");
+			    // 또는 여기에 모달을 띄우거나, AJAX로 알림 리스트를 불러와도 됨
+			} else {
+			    alert("접근 권한이 없습니다.");
+			}
+		})
+	</script>
 
 	</body>
 </html>

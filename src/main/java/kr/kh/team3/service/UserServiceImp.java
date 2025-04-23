@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team3.dao.UserDAO;
+import kr.kh.team3.model.vo.MemberVO;
 
 
 

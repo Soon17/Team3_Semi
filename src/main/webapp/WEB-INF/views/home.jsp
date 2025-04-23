@@ -31,10 +31,6 @@
 	     padding: 20px 0;
 	   }
 	
-	   .swiper-slide {
-	     width: 250px !important;
-	   }
-	
 	   .card-img-top {
 	     height: 150px;
 	     object-fit: cover;
@@ -141,13 +137,13 @@
 	</div>
 	
 	<div class="container-fluid py-3">
-	  <div class="swiper mySwiper">
+	  <div class="swiper mySwiper2">
 	    <div class="swiper-wrapper">
 	      	<!-- 카드 반복 시작 -->
 			<c:forEach items="${latestClassList }" var="cl">
 				<div class="swiper-slide">
 		          <a class="card" style="border-radius: 16px; overflow: hidden;" href="<c:url value="/class/${cl.cl_num}"/>">
-		            <img src="<c:url value='/resources/img/karina.jpg'/>" class="card-img-top" alt="...">
+		            <img src="<c:url value='/uploads/${cl.cl_th_picture }'/>" class="card-img-top" alt="썸네일">
 		            <div class="card-body p-2">
 		              <h6 class="mb-1 fw-bold">${cl.me_name }</h6>
 		              <p class="mb-0 text-muted" style="font-size: 14px;">${cl.cl_title }</p>
@@ -171,13 +167,13 @@
 	</div>
 	
 	<div class="container-fluid py-3">
-	  <div class="swiper mySwiper">
+	  <div class="swiper mySwiper3">
 	    <div class="swiper-wrapper">
 	      	<!-- 카드 반복 시작 -->
 			<c:forEach items="${mostClassList }" var="cl">
 				<div class="swiper-slide">
 		          <a class="card" style="border-radius: 16px; overflow: hidden;" href="<c:url value="/class/${cl.cl_num}"/>">
-		            <img src="<c:url value='/resources/img/karina.jpg'/>" class="card-img-top" alt="...">
+		            <img src="<c:url value='/uploads/${cl.cl_th_picture }'/>" class="card-img-top" alt="썸네일">
 		            <div class="card-body p-2">
 		              <h6 class="mb-1 fw-bold">${cl.me_name }</h6>
 		              <p class="mb-0 text-muted" style="font-size: 14px;">${cl.cl_title }</p>
@@ -197,52 +193,44 @@
 
   <!-- 슬라이드 초기화 스크립트 -->
   <script>
-    var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 3,
-      spaceBetween: 10,
-      loop: true,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      },
-      grabCursor: true
-    });
-    
-    $(".category-link").on("click",function(e){
-    	$(".category-link").removeClass("choice-category");
-		$(this).addClass("choice-category");
-    	e.preventDefault();
-    	const ca_num = $(this).data("category");
-    	$.ajax({
-    		async: true,
-    		url: '<c:url value="/class/categoryClass"/>',
-    		type: 'GET',
-    		data: { ca_num : ca_num },
-    		success: function (data) {
-    			
-    			$(".swiper-Class").html(data);
-    			
-    			
-    		      // 기존 swiper 제거 (있다면)
-    		      if (swiper) swiper.destroy(true, true);
-
-    		      // swiper 다시 초기화
-    		      swiper = new Swiper(".mySwiper", {
-    		        slidesPerView: 3,
-    		        spaceBetween: 10,
-    		        slidesPerGroup: 2,
-    		        loop: true,
-    		        loopFillGroupWithBlank: true,
-    		        navigation: {
-    		          nextEl: ".swiper-button-next",
-    		          prevEl: ".swiper-button-prev"
-    		        },
-    		        grabCursor: true
-    		      });
-    		}
-    	});
-    });
-    $(".category-link").first().trigger("click");
+	  var swiper = createSwiper(swiper, ".mySwiper");
+	  var swiper2 = createSwiper(swiper2, ".mySwiper2");
+	  var swiper3 = createSwiper(swiper3, ".mySwiper3");
+	  function createSwiper(s, selector){
+		// 기존 swiper 제거 (있다면)
+	      if (s) s.destroy(true, true);
+	
+	      // swiper 다시 초기화
+	      return new Swiper(selector, {
+	        slidesPerView: 4,
+	        spaceBetween: 10,
+	        slidesPerGroup: 2,
+	        navigation: {
+	          nextEl: selector + " .swiper-button-next",
+	          prevEl: selector + " .swiper-button-prev"
+	        },
+	        grabCursor: true
+	      });  
+	  }
+	   
+	    $(".category-link").on("click",function(e){
+	    	$(".category-link").removeClass("choice-category");
+			$(this).addClass("choice-category");
+	    	e.preventDefault();
+	    	const ca_num = $(this).data("category");
+	    	$.ajax({
+	    		async: true,
+	    		url: '<c:url value="/class/categoryClass"/>',
+	    		type: 'GET',
+	    		data: { ca_num : ca_num },
+	    		success: function (data) {
+	    			$(".swiper-Class").html(data);
+	    			swiper = createSwiper(swiper, ".mySwiper");
+	               
+	    		}
+	    	});
+	    });
+	    $(".category-link").first().trigger("click");
   </script>
 
   <!-- 강사 목록 버튼 -->

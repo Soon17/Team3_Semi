@@ -78,7 +78,7 @@ public class MemberServiceImp implements MemberService{
 	    // 프로필 이미지 저장
 	    if(fileList != null && !fileList.isEmpty()) {
 	        try {
-	            String uploadPath = "D:/upload/profile"; // 또는 resources/static 등등
+	        	String uploadPath = "D:/upload/profile"; // 또는 resources/static 등등
 	            File folder = new File(uploadPath);
 	            if(!folder.exists()) folder.mkdirs();
 
@@ -175,6 +175,12 @@ public class MemberServiceImp implements MemberService{
 	@Override
 	public MemberVO getMemberByCookie(String cookieId) {
 		return memberDao.selectMemberByCookie(cookieId);
+	}
+
+	@Override
+	public boolean setTeacher(int me_num) {
+		
+		return memberDao.setTeacher(me_num);
 	}
 
 	

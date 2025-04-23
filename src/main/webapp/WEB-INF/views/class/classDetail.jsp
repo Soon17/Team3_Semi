@@ -153,14 +153,17 @@
                 <div class="price-area">
                     <strong>${classDetail.cl_money}원</strong>
                 </div>
-                <c:choose>
-				    <c:when test="${checkSubscribed}">
-				        <button class="btn btn-secondary btn-block mt-2" disabled>구독 중</button>
-				    </c:when>
-				    <c:otherwise>
-				        <button class="btn btn-warning btn-block mt-2">구독으로 시작하기</button>
-				    </c:otherwise>
-				</c:choose>
+                	<c:choose>
+					    <c:when test="${checkSubscribed}">
+					        <button class="btn btn-secondary btn-block mt-2" disabled>구독 중</button>
+					    </c:when>
+					    <c:otherwise>
+					        <form method="post" action="<c:url value='/subscribe'/>">
+					            <input type="hidden" name="cl_num" value="${classDetail.cl_num}" />
+					            <button type="submit" class="btn btn-warning btn-block mt-2">구독으로 시작하기</button>
+					        </form>
+					    </c:otherwise>
+					</c:choose>
                 <div class="d-flex justify-content-around mt-3">
 				    <span>구독 : ${subscribeCount} 명</span>
 				</div>
@@ -207,7 +210,9 @@
 
 <script>
 	$(function() {
-	    $("#classTab .nav-link").click(function(e) {
+
+		$("#classTab .nav-link").click(function(e) {
+
 	        e.preventDefault();
 	        const type = $(this).data("type");
 	        const classNum = "${classDetail.cl_num}";
@@ -278,6 +283,7 @@
 	            }
 	        });
 	    });
+	    
 	});
 
     // 새 창에서 비디오 재생
@@ -327,6 +333,7 @@
 }
 
 </script>
+
 
 </body>
 </html>

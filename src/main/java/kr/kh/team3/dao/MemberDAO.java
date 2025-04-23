@@ -35,4 +35,6 @@ public interface MemberDAO {
 
 	public MemberVO selectMemberByCookie(String cookieId);
 
+	public boolean setTeacher(@Param("me_num")int me_num);
+
 }

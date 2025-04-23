@@ -135,7 +135,7 @@ public class ClassController {
 	}
 	
 	@PostMapping("/insert/{me_num}")
-	public String insertPost(Model model,
+  public String insertPost(Model model,
 							@PathVariable("me_num")int me_num,
 							@ModelAttribute ClassVO cl,SubCategoryVO sc, 
 							MultipartFile file) throws IOException {
@@ -154,6 +154,7 @@ public class ClassController {
 		}
 		return "/class/insert";
 	}
+
 	@GetMapping("/subcategoryList")
 	public String subcategoryList(Model model,@RequestParam("ca_num") int ca_num) {
 		List<SubCategoryVO> list = subcategoryService.getScNameList(ca_num);

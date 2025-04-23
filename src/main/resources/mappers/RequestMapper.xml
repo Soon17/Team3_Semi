@@ -47,4 +47,31 @@
 		join member on me_num = rq_me_num
 		where rq_num = #{rqNum}
 	</select>
+	
+	<update id="setNo">
+		update request
+		set rq_state = "NO"
+		where rq_num = #{rq_num}
+	</update>
+	<update id="setOk">
+		update request
+		set rq_state = "OK"
+		where rq_num = #{rq_num}
+	</update>
+	<update id="setHandling">
+		update request
+		set rq_state = "HANDLING"
+		where rq_num = #{rq_num}
+	</update>
+	<update id="setWaiting">
+		update request
+		set rq_state = "WAITING"
+		where rq_num = #{rq_num} and rq_state = "HANDLING"
+	</update>
+	
+	<select id="getWaitingCount" resultType="int">
+		select count(*)
+		from request
+		where rq_state = "WAITING"
+	</select>
 </mapper>

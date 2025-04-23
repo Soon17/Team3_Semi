@@ -1,6 +1,8 @@
 package kr.kh.team3.service;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,12 +20,19 @@ import kr.kh.team3.utils.UploadFileUtils;
 
 @Service
 public class ClassServiceImp implements ClassService{
+	
 	@Autowired
 	private ClassDAO classDao;
+	
 	@Autowired
     private SubCategoryDAO subCategoryDao;
+	
 	@Value("${file.location}")
 	String classProfilePath;
+	
+	@Value("${file.location}")
+    private String uploadPath;
+	
 	@Override
 	public List<ClassVO> getClassList() {
 		return classDao.getClassList();
@@ -41,7 +50,6 @@ public class ClassServiceImp implements ClassService{
 
 	@Override
 	public ClassVO getClass(int cl_tc_me_num) {
-		
 		return classDao.getClass(cl_tc_me_num);
 	}
 
@@ -70,6 +78,8 @@ public class ClassServiceImp implements ClassService{
 	public ClassVO ClassDetail(int cl_num) {
 		return classDao.ClassDetail(cl_num);
 	}
+	
+	@Override
 	public boolean insertClass(ClassVO cl, int me_num, SubCategoryVO sc, MultipartFile file) {
 		try {
 			//클래스를 등록
@@ -121,5 +131,4 @@ public class ClassServiceImp implements ClassService{
 		return classDao.checkRequest(me_num);
 	}
 
-	
 }

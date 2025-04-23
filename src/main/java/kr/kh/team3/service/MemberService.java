@@ -37,4 +37,6 @@ public interface MemberService {
 
 	public MemberVO getMemberByCookie(String cookieId);
 
+	public boolean setTeacher(int me_num);
+
 }

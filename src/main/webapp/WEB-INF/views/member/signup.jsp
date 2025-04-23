@@ -10,7 +10,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
     <style type="text/css">
       #form-container {
-        padding: 60px 0; 
+        padding: 60px 0;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -18,7 +18,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       #form-inner-container {
         background-color: white;
-        width: 1200px; 
+        width: 1200px;
         border-radius: 10px;
         box-shadow: 0 0 20px gainsboro;
         display: flex;
@@ -29,12 +29,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
       #sign-up-container,
       #sign-in-container {
-        padding: 30px 50px; 
+        padding: 30px 50px;
         width: 300px;
       }
 
-      #sign-up-container form input,
-      #sign-in-container form input {
+      .form-input {
         display: block;
         margin-bottom: 20px;
         border: 1px solid #e5e9f5;
@@ -45,8 +44,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         width: 150%;
       }
 
-      #sign-up-container form input:focus,
-      #sign-in-container form input:focus {
+      .form-input:focus {
         outline: none;
         box-shadow: none;
         border: 1px solid #c1c1c1;
@@ -69,31 +67,31 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         font-weight: 500;
       }
 
-      label {
+      .form-label {
         color: #7369ab;
       }
 
-      #form-controls button {
+      .form-btn {
         border: none;
         font-size: 120%;
       }
 
-      #form-controls button:hover {
+      .form-btn:hover {
         cursor: pointer;
       }
 
-      button[type="submit"] {
+      .submit-btn {
         padding: 16px 75px;
         background-color: #ed4b5e;
         border-radius: 10px;
         color: white;
       }
 
-      button[type="submit"]:hover {
+      .submit-btn:hover {
         background-color: #ff6678;
       }
 
-      button[type="button"] {
+      .switch-btn {
         padding: 16px 0 16px 35px;
         background-color: transparent;
         color: #ed4b5e;
@@ -128,13 +126,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         }
       }
 
-      .error, .red { 
-        color: red; 
+      .error,
+      .red {
+        color: red;
         font-size: 12px;
         margin-top: 5px;
       }
-      .green { 
-        color: green; 
+
+      .green {
+        color: green;
         font-size: 12px;
         margin-top: 5px;
       }
@@ -147,48 +147,47 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div id="sign-up-container" class="hide">
           <h3>Get Started</h3>
           <form id="f1" action="<c:url value='/signup'/>" method="post" enctype="multipart/form-data">
-            <label for="name">Name</label>
-            <input type="text" name="me_name" id="name" placeholder="Name" />
-            <label for="name">ID</label>
-            <input type="text" name="me_id" id="id" placeholder="아이디를 입력하세요" />
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="me_name" id="name" placeholder="Name" class="form-input" />
+            <label for="id" class="form-label">ID</label>
+            <input type="text" name="me_id" id="id" placeholder="아이디를 입력하세요" class="form-input" />
             <label id="checkId" class="error"></label>
-            <label for="password">Password</label>
-            <input type="password" name="me_pw" id="me_pw" placeholder="비밀번호를 입력하세요" />
-            <label for="name">닉네임</label>
-            <input type="text" name="me_nick" id="nick" placeholder="닉네임을 입력하세요"/>
-            <label for="email">Email</label>
-            <input type="text" name="me_email" id="email" placeholder="Email" />
-            <label for="name">전화번호</label>
-            <input type="text" name="me_number" id="number" placeholder="전화번호 입력"/>
-            <label for="profile">프로필 사진</label>
-			<input type="file" name="profileImage" id="profile" accept="image/*" />
+            <label for="me_pw" class="form-label">Password</label>
+            <input type="password" name="me_pw" id="me_pw" placeholder="비밀번호를 입력하세요" class="form-input" />
+            <label for="nick" class="form-label">닉네임</label>
+            <input type="text" name="me_nick" id="nick" placeholder="닉네임을 입력하세요" class="form-input" />
+            <label for="email" class="form-label">Email</label>
+            <input type="text" name="me_email" id="email" placeholder="Email" class="form-input" />
+            <label for="number" class="form-label">전화번호</label>
+            <input type="text" name="me_number" id="number" placeholder="전화번호 입력" class="form-input" />
+            <label for="profile" class="form-label">프로필 사진</label>
+            <input type="file" name="profileImage" id="profile" accept="image/*" class="form-input" />
             <div id="form-controls">
-              <button type="submit">Sign Up</button>
-              <button type="button" id="toggleSignIn">Login</button>
+              <button type="submit" class="form-btn submit-btn">Sign Up</button>
+              <button type="button" id="toggleSignIn" class="form-btn switch-btn">Login</button>
             </div>
-            
           </form>
         </div>
 
         <div id="sign-in-container">
           <h3>Welcome Back</h3>
-          <form id="f2" action="<c:url value="/login"/>" method="post">
-            <label for="username">ID</label>
-            <input type="text" name="me_id" id="username" placeholder="user@example.com" />
-            <label for="password">Password</label>
-            <input type="password" name="me_pw" id="password" placeholder="비밀번호" />
+          <form id="f2" action="<c:url value='/login'/>" method="post">
+            <label for="username" class="form-label">ID</label>
+            <input type="text" name="me_id" id="username" placeholder="user@example.com" class="form-input" />
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="me_pw" id="password" placeholder="비밀번호" class="form-input" />
             <div id="form-controls">
-              <div><button type="submit">Login</button></div>
-              <div><button type="button" id="toggleSignUp">Sign Up</button></div>
+              <div><button type="submit" class="form-btn submit-btn">Login</button></div>
+              <div><button type="button" id="toggleSignUp" class="form-btn switch-btn">Sign Up</button></div>
               <div>
-                <a class="p-2" href="<c:url value="/kakao/login"/>">
+                <a class="p-2" href="<c:url value='/kakao/login'/>">
                   <img src="<c:url value='/resources/static/kakao_login_medium_narrow.png' />" alt="카카오 로그인" style="height:35px" />
                 </a>
                 <div class="form-check">
-					<label class="form-check-label">
-						<input type="checkbox" class="form-check-input" value="true" name="auto" checked>자동로그인
-					</label>
-				</div>
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" value="true" name="auto" checked />자동로그인
+                  </label>
+                </div>
               </div>
             </div>
           </form>

@@ -11,7 +11,7 @@ public class ClassVO {
 	private String cl_title;
 	private String cl_item;
 	private String cl_intro;
-	private int cl_money;
+	private Integer cl_money;
 	private Date cl_date;
 	private String cl_level;
 	private String cl_able;

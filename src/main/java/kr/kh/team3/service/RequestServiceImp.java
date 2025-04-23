@@ -37,4 +37,34 @@ public class RequestServiceImp implements RequestService{
 	public RequestVO getRequest(int rqNum) {
 		return requestDao.selectRequest(rqNum);
 	}
+
+	@Override
+	public boolean setNo(int rq_num) {
+		
+		return requestDao.setNo(rq_num);
+	}
+
+	@Override
+	public boolean setOk(int rq_num) {
+		
+		return requestDao.setOk(rq_num);
+	}
+
+	@Override
+	public boolean setHandling(int rq_num) {
+		
+		return requestDao.setHandling(rq_num);
+	}
+
+	@Override
+	public boolean setWaiting(int rq_num) {
+		
+		return requestDao.setWaiting(rq_num);
+	}
+
+	@Override
+	public int getWaitingCount() {
+		
+		return requestDao.getWaitingCount();
+	}
 }

@@ -106,13 +106,13 @@
         <textarea id="cl_materials" name="cl_item" required></textarea>
     </div>
 
-	<div id="curriculum" class="section">
-	    <label>커리큘럼</label>
-	    <div id="curriculum-list">
-	        <!-- 커리큘럼 아이템들이 여기에 추가됨 -->
-	    </div>
-	    <button type="button" class="btn-submit" style="background-color:#2196F3;" id="add-curriculum">+ 커리큘럼 추가</button>
-	</div>
+   <div id="curriculum" class="section">
+       <label>커리큘럼</label>
+       <div id="curriculum-list">
+           <!-- 커리큘럼 아이템들이 여기에 추가됨 -->
+       </div>
+       <button type="button" class="btn-submit" style="background-color:#2196F3;" id="add-curriculum">+ 커리큘럼 추가</button>
+   </div>
 
     <div class="section">
         <label for="cl_money">구독 비용</label>
@@ -142,10 +142,10 @@
             </select>
         </div>
     </div>
-	<div class="form-group" style="margin-top: 20px;">
-		<label>썸네일</label>
-		<input type="file" class="form-control" name="file"/>
-	</div>
+   <div class="form-group" style="margin-top: 20px;">
+      <label>썸네일</label>
+      <input type="file" class="form-control" name="file"/>
+   </div>
     <button type="submit" class="btn-submit">제출</button>
 </form>
 

@@ -5,9 +5,17 @@
 <mapper namespace="kr.kh.team3.dao.UserDAO">
   	
   	<select id="selectSubscribeList" resultType="map">
-	   	select CL_TITLE, (select me_name from member where me_num = cl_tc_me_num)as teacher_name, SU_DATE, ME_NAME from SUBSCRIBE
-		join class on CL_NUM = SU_CL_NUM
-		join `MEMBER` on ME_NUM = SU_ME_NUM
-		where SU_ME_NUM = #{me_num};
-   </select>
+		  SELECT 
+		    s.su_cl_num,   
+		    c.cl_title, 
+		    (SELECT m2.me_name
+		       FROM member m2
+		      WHERE m2.me_num = c.cl_tc_me_num) AS teacher_name,
+		    s.su_date,
+		    m.me_name
+		  FROM subscribe s
+		  JOIN class   c ON c.cl_num = s.su_cl_num
+		  JOIN member  m ON m.me_num = s.su_me_num
+		  WHERE s.su_me_num = #{me_num}
+	</select>
 </mapper>

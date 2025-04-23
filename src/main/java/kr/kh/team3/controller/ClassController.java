@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.ClassVO;
+import kr.kh.team3.model.vo.CommentVO;
 import kr.kh.team3.model.vo.CurriculumVO;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.SubCategoryVO;
@@ -29,6 +31,7 @@ import kr.kh.team3.model.vo.TeacherVO;
 import kr.kh.team3.model.vo.VideoVO;
 import kr.kh.team3.service.CategoryService;
 import kr.kh.team3.service.ClassService;
+import kr.kh.team3.service.CommentService;
 import kr.kh.team3.service.CurriculumService;
 import kr.kh.team3.service.SubCategoryService;
 import kr.kh.team3.service.SubscribeService;
@@ -54,6 +57,9 @@ public class ClassController {
 
 	@Autowired
 	SubCategoryService subcategoryService;
+	
+	@Autowired
+	CommentService commentService;
 
 	@Resource
 	String uploadPath;
@@ -103,6 +109,9 @@ public class ClassController {
 	        case "curriculum":
 	            result.put("curriculum", curriculumService.getCurriculum(cl_num));
 	            break;
+	        case "comment":
+	        	List<CommentVO> comment = commentService.getComment(cl_num);
+	        	result.put("comment", comment);
 	        default:
 	            result.put("error", "잘못된 요청입니다.");
 	    }
@@ -160,5 +169,38 @@ public class ClassController {
 		List<SubCategoryVO> list = subcategoryService.getScNameList(ca_num);
 		model.addAttribute("list",list);
 		return "/subcategoryList";
+	}
+	
+	@ResponseBody
+	@PostMapping("/{num}/comment/insert")
+	public boolean insertComment(@RequestParam String co_content,
+	                             @PathVariable("num") int cl_num,
+	                             HttpSession session) {
+	    MemberVO user = (MemberVO) session.getAttribute("member");
+	    if (user == null) return false;
+
+	    CommentVO comment = new CommentVO();
+	    comment.setCo_cl_num(cl_num);
+	    comment.setCo_content(co_content);
+	    comment.setCo_me_num(user.getMe_num());
+
+	    return commentService.insertComment(comment, user);
+	}
+	
+	@ResponseBody
+	@PostMapping("/{num}/comment/update")
+	public boolean updateComment(@RequestParam int co_num,
+	                             @RequestParam String co_content,
+	                             HttpSession session) {
+	    MemberVO user = (MemberVO) session.getAttribute("member");
+	    return commentService.updateComment(co_num, co_content, user);
+	}
+	
+	@ResponseBody
+	@PostMapping("/{num}/comment/delete/{co_num}")
+	public boolean deleteComment(@PathVariable("co_num") int co_num,
+	                             HttpSession session) {
+	    MemberVO user = (MemberVO) session.getAttribute("member");
+	    return commentService.deleteComment(co_num, user);
 	}
 }

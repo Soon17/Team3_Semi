@@ -184,6 +184,9 @@
         <li class="nav-item">
             <a class="nav-link" href="#" data-type="creator">강사 페이지</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" data-type="comment" data-num="${classDetail.cl_num }">강의 리뷰</a>
+        </li>
     </ul>
 
     <div id="tabContent" class="mt-4">
@@ -215,10 +218,10 @@
 	        const type = $(this).data("type");
 	        const classNum = "${classDetail.cl_num}";
 	        const checkSubscribed = ${checkSubscribed};
-	        
+	        const $this = $(this);
 	        $(".nav-link").removeClass("active");
 	        $(this).addClass("active");
-	
+			
 	        $.ajax({
 	            url: "/team3/class/" + classNum + "/tab",
 	            type: "GET",
@@ -273,8 +276,54 @@
 	                    const teacherNum = "${classDetail.cl_tc_me_num}";
 	                    window.location.href = "/team3/teacher/" + teacherNum;
 	                    return;
+	                }else if (type === "comment") {
+	                    if (res.comments && res.comments.length > 0) {
+	                        html = `
+	                            <div class="card p-4 mb-3" style="background:#F9F9F9; border-radius:16px;">
+	                                <h5 class="mb-3" style="font-weight:bold;">이 강의, 이렇게 들었어요!</h5>
+	                        `;
+	                        for (let cmt of res.comments) {
+	                            html += `
+	                                <div class="border-bottom py-2">
+	                                    <strong>${cmt.user}</strong> <small class="text-muted">${cmt.date}</small>
+	                                    <p class="mb-0">${cmt.content}</p>
+	                                </div>
+	                            `;
+	                        }
+	                        html += `</div>`;
+	                    } else {
+	                        html = `<p>아직 리뷰가 없습니다. 첫 리뷰를 남겨보세요!</p>`;
+	                    }
+
+	                    html += `
+	                        <form id="commentForm" class="mt-3">
+	                    		<input type="hidden" name="co_cl_num" value="\${$this.data("num")}">
+	                            <textarea name="comment" class="form-control mb-2" rows="3" placeholder="후기를 입력해보세요 :)"></textarea>
+	                            <button type="submit" class="btn btn-warning">리뷰 등록</button>
+	                        </form>
+	                    `;
 	                }
 	                $("#tabContent").html(html);
+	                if (type === "comment") {
+	                    $("#commentForm").submit(function(e) {
+	                        e.preventDefault();
+	                        const content = $(this).find("textarea").val();
+	                        const classNum = "${classDetail.cl_num}";
+
+	                        $.ajax({
+	                            url: "/team3/class/" + classNum + "/comment",
+	                            type: "POST",
+	                            data: { content: content },
+	                            success: function() {
+	                                alert("리뷰가 등록되었습니다!");
+	                                $(".nav-link[data-type='comment']").click(); // 댓글 탭 새로고침
+	                            },
+	                            error: function() {
+	                                alert("리뷰 등록 실패!");
+	                            }
+	                        });
+	                    });
+	                }
 	            },
 	            error: function() {
 	                $("#tabContent").html("<p> 불러오기 실패했습니다 </p>");

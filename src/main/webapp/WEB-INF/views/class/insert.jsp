@@ -5,7 +5,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
     <style>
         html {
             scroll-behavior: smooth;
@@ -78,9 +79,9 @@
         .btn-submit:hover {
             background-color: #45a049;
         }
-        .file-error{
+        .error,.file-error{
         color: red;
-        font-size: 12px;
+        font-size: 20px;
         margin-top: 5px;
       }
     </style>
@@ -254,18 +255,22 @@
     });
     $("#class-insert").validate({
         rules: {
-     	 cl_title: { required: true, regex: /^[a-zA-Z0-9]{3,50}$/ },
+     	 cl_title: { required: true, regex: /^[^\s]{3,50}$/  },
      	 cl_intro: { required: true},
      	 cl_item: { required: true},
      	 cl_money: { required: true,min: 1000,max: 100000},
      	 cl_level: { required: true},
+     	 sc_ca_num: { required: true},
+     	 sc_name: { required: true},
         },
         messages: {
-     	 cl_title: { required: "필수 항목입니다.", regex: "아이디는 영문, 숫자만 가능하며, 3~50자입니다." },
+     	 cl_title: { required: "필수 항목입니다.", regex: "클래스 타이틀은 3~50자입니다." },
      	 cl_intro: { required: "필수 항목입니다."},
      	 cl_item: { required: "필수 항목입니다."},
      	 cl_money: { required: "필수 항목입니다.", min:"최소 금액은 1000원입니다",max:"최대 금액은 100000원입니다" },
      	 cl_level: { required: "필수 항목입니다."},
+     	 sc_ca_num: { required: "필수 항목입니다."},
+     	 sc_name: { required: "필수 항목입니다."},
         },
         submitHandler: function () { return checkFiles(); },
       });

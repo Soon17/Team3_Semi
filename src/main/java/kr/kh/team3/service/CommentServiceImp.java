@@ -16,35 +16,20 @@ public class CommentServiceImp implements CommentService{
 	CommentDAO commentDao;
 
 	@Override
-	public List<CommentVO> getComment(int cl_num) {
-		
-		return commentDao.selectCommentList(cl_num);
-	}
-
-	@Override
 	public boolean insertComment(CommentVO comment, MemberVO user) {
-		if(comment == null) {
-			return false;
-		}
-		if(user == null) {
+		if(comment == null || user == null || comment.getCo_content().isBlank()) {
 			return false;
 		}
 		comment.setCo_me_num(user.getMe_num());
-		return commentDao.insertComment(comment, user);
-	}
-	
-	@Override
-	public boolean updateComment(int co_num, String content, MemberVO user) {
-	    CommentVO c = commentDao.selectCommentById(co_num);
-	    if(c == null || user == null || c.getCo_me_num() != user.getMe_num()) return false;
-	    return commentDao.updateComment(co_num, content);
+		System.out.println("123123123123"+comment);
+		return commentDao.insertComment(comment);
 	}
 
 	@Override
-	public boolean deleteComment(int co_num, MemberVO user) {
-	    CommentVO c = commentDao.selectCommentById(co_num);
-	    if(c == null || user == null || c.getCo_me_num() != user.getMe_num()) return false;
-	    return commentDao.deleteComment(co_num);
+	public List<CommentVO> getCommentList(int cl_num) {
+		
+		return commentDao.getCommentList(cl_num);
 	}
+
 
 }

@@ -3,40 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team3.dao.CommentDAO">
-
-	<resultMap id="CommentMap" type="kr.kh.team3.model.vo.CommentVO">
-	    <id property="co_num" column="co_num"/>
-	    <result property="co_content" column="co_content"/>
-	    <result property="co_date" column="co_date"/>
-	    <result property="co_me_num" column="co_me_num"/>
-	    <result property="co_cl_num" column="co_cl_num"/>
-	    <result property="me_nick" column="me_nick"/>
-	</resultMap>
-	
-	<select id="selectCommentList" resultMap="CommentMap">
-    SELECT c.*, m.me_nick 
-    FROM comment c
-    JOIN member m ON c.co_me_num = m.me_num
-    WHERE co_cl_num = #{cl_num}
-    ORDER BY co_num DESC
-	</select>
-	
 	<insert id="insertComment">
-	    INSERT INTO comment(co_content, co_date, co_me_num, co_cl_num)
-	    VALUES (#{comment.co_content}, NOW(), #{comment.co_me_num}, #{comment.co_cl_num})
+		insert into comment(co_content, co_me_num, co_cl_num)
+		value(#{co_content}, #{co_me_num}, #{co_cl_num})
 	</insert>
 	
-	<select id="selectCommentById" resultType="CommentVO">
-	    SELECT * FROM comment WHERE co_num = #{co_num}
+	<select id="getCommentList" parameterType="int" resultType="kr.kh.team3.model.vo.CommentVO">
+		select * from comment where co_cl_num = #{cl_num}
 	</select>
-	
-	<update id="updateComment">
-	    UPDATE comment
-	    SET co_content = #{content}
-	    WHERE co_num = #{co_num}
-	</update>
-	
-	<delete id="deleteComment">
-	    DELETE FROM comment WHERE co_num = #{co_num}
-	</delete>
 </mapper>

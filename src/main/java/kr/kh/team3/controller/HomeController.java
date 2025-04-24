@@ -173,7 +173,6 @@ public class HomeController {
 	public String noticeBell(Model model) {
 		int waitingRequestCount = requestService.getWaitingCount();
 		model.addAttribute("waitingRequestCount", waitingRequestCount);
-		System.out.println("시팔");
 		return "/noticeBell";
 	}
 }

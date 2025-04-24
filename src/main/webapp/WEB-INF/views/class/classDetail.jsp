@@ -112,7 +112,71 @@
 		    background: linear-gradient(to right, #1C2B3A, #365C9A);
 		    color: white; 
 		}
-	
+		
+		.comment-box {
+		    margin-top: 30px;
+		}
+		
+		.comment-item {
+		    display: flex;
+		    padding: 16px;
+		    margin-bottom: 12px;
+		    border: 1px solid #eee;
+		    border-radius: 10px;
+		    background-color: #fdfdfd;
+		    box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+		}
+		
+		.comment-avatar {
+		    width: 45px;
+		    height: 45px;
+		    border-radius: 50%;
+		    overflow: hidden;
+		    background-color: #ccc;
+		    margin-right: 14px;
+		}
+		
+		.comment-avatar img {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		}
+		
+		.comment-content {
+		    flex: 1;
+		}
+		
+		.comment-author {
+		    font-weight: bold;
+		    color: #333;
+		}
+		
+		.comment-meta {
+		    font-size: 13px;
+		    color: #999;
+		    margin-bottom: 6px;
+		}
+		
+		.comment-text {
+		    font-size: 15px;
+		    color: #444;
+		    margin-bottom: 8px;
+		}
+		
+		.comment-actions {
+		    font-size: 13px;
+		    color: #555;
+		}
+		
+		.comment-actions a {
+		    margin-right: 8px;
+		    text-decoration: none;
+		    color: #007bff;
+		}
+		
+		.comment-actions a:hover {
+		    text-decoration: underline;
+		}
     </style>
 </head>
 <body>
@@ -184,9 +248,6 @@
         <li class="nav-item">
             <a class="nav-link" href="#" data-type="creator">강사 페이지</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" data-type="comment" data-num="${classDetail.cl_num }">강의 리뷰</a>
-        </li>
     </ul>
 
     <div id="tabContent" class="mt-4">
@@ -211,6 +272,87 @@
     </div>
 </div>
 
+<hr>
+<!-- 댓글 영역 시작 -->
+<div class="comment-box mt-5">
+
+    <!-- Ajax로 댓글 출력될 곳 -->
+    <div id="comment-section">
+        <!-- 댓글이 여기에 들어옵니다 -->
+    </div>
+
+    <!-- 댓글 작성 폼 -->
+    <!-- 로그인 확인 및 구독 확인 후 댓글 작성 띄어지게 -->
+    <form id="commentForm" class="d-flex justify-content-between mt-3">
+	    <input type="hidden" name="co_cl_num" value="${classDetail.cl_num}" />
+	    <textarea name="co_content" class="form-control me-2" placeholder="댓글을 입력해 주세요." required></textarea>
+	    <div>
+	        <button type="submit" class="btn btn-outline-success">등록</button>
+	    </div>
+	</form>
+
+</div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    const cl_num = ${classDetail.cl_num}; // 클래스 번호
+	
+    // 댓글 목록 불러오기
+    function loadComments() {
+        $.ajax({
+            url: "/class/list/" + cl_num,
+            type: "GET",
+            dataType: "json",
+            success: function (comments) {
+                let html = "";
+
+                if (comments.length === 0) {
+                    html = "<p>댓글이 없습니다.</p>";
+                } else {
+                    comments.forEach(function (comment) {
+                        html += `
+                            <div class="comment-box">
+                                <p><strong>${comment.co_me_num}</strong> <small>${comment.co_date}</small></p>
+                                <p>${comment.co_content}</p>
+                                <hr>
+                            </div>
+                        `;
+                    });
+                }
+
+                $("#comment-section").html(html);
+            },
+            error: function () {
+                $("#comment-section").html("<p>댓글을 불러오지 못했습니다.</p>");
+            }
+        });
+    }
+
+    // 페이지 로드 시 댓글 불러오기
+    loadComments();
+});
+//댓글 등록 Ajax
+$("#commentForm").on("submit", function (e) {
+    e.preventDefault(); // 기본 폼 제출 막기
+
+    const formData = $(this).serialize();
+	console.log(formDate);
+    $.ajax({
+        url: "/class/" + cl_num,
+        type: "POST",
+        data: formData,
+        success: function () {
+            // 등록 성공 후 입력창 초기화 & 댓글 목록 새로 불러오기
+            $("#commentForm")[0].reset();
+            loadComments();
+        },
+        error: function () {
+            alert("댓글 등록에 실패했습니다.");
+        }
+    });
+});
+
+</script>
 <script>
 	$(function() {
 		$("#classTab .nav-link").click(function(e) {
@@ -218,10 +360,10 @@
 	        const type = $(this).data("type");
 	        const classNum = "${classDetail.cl_num}";
 	        const checkSubscribed = ${checkSubscribed};
-	        const $this = $(this);
+	        
 	        $(".nav-link").removeClass("active");
 	        $(this).addClass("active");
-			
+	
 	        $.ajax({
 	            url: "/team3/class/" + classNum + "/tab",
 	            type: "GET",
@@ -276,54 +418,8 @@
 	                    const teacherNum = "${classDetail.cl_tc_me_num}";
 	                    window.location.href = "/team3/teacher/" + teacherNum;
 	                    return;
-	                }else if (type === "comment") {
-	                    if (res.comments && res.comments.length > 0) {
-	                        html = `
-	                            <div class="card p-4 mb-3" style="background:#F9F9F9; border-radius:16px;">
-	                                <h5 class="mb-3" style="font-weight:bold;">이 강의, 이렇게 들었어요!</h5>
-	                        `;
-	                        for (let cmt of res.comments) {
-	                            html += `
-	                                <div class="border-bottom py-2">
-	                                    <strong>${cmt.user}</strong> <small class="text-muted">${cmt.date}</small>
-	                                    <p class="mb-0">${cmt.content}</p>
-	                                </div>
-	                            `;
-	                        }
-	                        html += `</div>`;
-	                    } else {
-	                        html = `<p>아직 리뷰가 없습니다. 첫 리뷰를 남겨보세요!</p>`;
-	                    }
-
-	                    html += `
-	                        <form id="commentForm" class="mt-3">
-	                    		<input type="hidden" name="co_cl_num" value="\${$this.data("num")}">
-	                            <textarea name="comment" class="form-control mb-2" rows="3" placeholder="후기를 입력해보세요 :)"></textarea>
-	                            <button type="submit" class="btn btn-warning">리뷰 등록</button>
-	                        </form>
-	                    `;
 	                }
 	                $("#tabContent").html(html);
-	                if (type === "comment") {
-	                    $("#commentForm").submit(function(e) {
-	                        e.preventDefault();
-	                        const content = $(this).find("textarea").val();
-	                        const classNum = "${classDetail.cl_num}";
-
-	                        $.ajax({
-	                            url: "/team3/class/" + classNum + "/comment",
-	                            type: "POST",
-	                            data: { content: content },
-	                            success: function() {
-	                                alert("리뷰가 등록되었습니다!");
-	                                $(".nav-link[data-type='comment']").click(); // 댓글 탭 새로고침
-	                            },
-	                            error: function() {
-	                                alert("리뷰 등록 실패!");
-	                            }
-	                        });
-	                    });
-	                }
 	            },
 	            error: function() {
 	                $("#tabContent").html("<p> 불러오기 실패했습니다 </p>");

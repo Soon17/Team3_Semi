@@ -12,5 +12,4 @@ public class CommentVO {
 	private Date co_date;
 	private int co_me_num;
 	private int co_cl_num;
-	private String me_nick;
 }

@@ -17,24 +17,17 @@ public class SubscribeController {
     @Autowired
     private SubscribeService subscribeService;
 
-    @PostMapping("/subscribe")
-    public String subscribe(@RequestParam("cl_num") int cl_num, HttpSession session, Model model) {
-        MemberVO user = (MemberVO) session.getAttribute("member");
-        if (user == null) {
-            model.addAttribute("msg", "로그인이 필요합니다");
-            model.addAttribute("url", "/signup");
-            return "message";
-        }
-
-        boolean result = subscribeService.subscribe(user.getMe_num(), cl_num);
-        if (result) {
-            return "redirect:/class/" + cl_num;
-        } else {
-            model.addAttribute("msg", "구독 실패");
-            model.addAttribute("url", "/class/" + cl_num);
-            return "message";
-        }
-    }
+	/*
+	 * @PostMapping("/subscribe") public String subscribe(@RequestParam("cl_num")
+	 * int cl_num, HttpSession session, Model model) { MemberVO user = (MemberVO)
+	 * session.getAttribute("member"); if (user == null) { model.addAttribute("msg",
+	 * "로그인이 필요합니다"); model.addAttribute("url", "/signup"); return "message"; }
+	 * 
+	 * boolean result = subscribeService.subscribe(user.getMe_num(), cl_num); if
+	 * (result) { return "redirect:/class/" + cl_num; } else {
+	 * model.addAttribute("msg", "구독 실패"); model.addAttribute("url", "/class/" +
+	 * cl_num); return "message"; } }
+	 */
     
     @PostMapping("/unsubscribe")
     public String unsubscribe(@RequestParam("cl_num") int cl_num, HttpSession session, Model model) {

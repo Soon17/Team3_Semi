@@ -149,18 +149,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           <form id="f1" action="<c:url value='/signup'/>" method="post" enctype="multipart/form-data">
             <label for="name" class="form-label">Name</label>
             <input type="text" name="me_name" id="name" placeholder="Name" class="form-input" />
-            <label for="id" class="form-label">ID</label>
+            <div><label for="id" class="form-label">ID</label></div>
             <input type="text" name="me_id" id="id" placeholder="아이디를 입력하세요" class="form-input" />
-            <label id="checkId" class="error"></label>
-            <label for="me_pw" class="form-label">Password</label>
+            <label id="checkId" class=""></label>
+            <div><label for="me_pw" class="form-label">Password</label></div>
             <input type="password" name="me_pw" id="me_pw" placeholder="비밀번호를 입력하세요" class="form-input" />
-            <label for="nick" class="form-label">닉네임</label>
+            <div><label for="nick" class="form-label">닉네임</label></div>
             <input type="text" name="me_nick" id="nick" placeholder="닉네임을 입력하세요" class="form-input" />
-            <label for="email" class="form-label">Email</label>
+            <div><label for="email" class="form-label">Email</label></div>
             <input type="text" name="me_email" id="email" placeholder="Email" class="form-input" />
-            <label for="number" class="form-label">전화번호</label>
+            <div><label for="number" class="form-label">전화번호</label></div>
             <input type="text" name="me_number" id="number" placeholder="전화번호 입력" class="form-input" />
-            <label for="profile" class="form-label">프로필 사진</label>
+            <div><label for="profile" class="form-label">프로필 사진</label></div>
             <input type="file" name="profileImage" id="profile" accept="image/*" class="form-input" />
             <div id="form-controls">
               <button type="submit" class="form-btn submit-btn">Sign Up</button>
@@ -212,47 +212,84 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       signInBtn.addEventListener("click", () => changeForm(signUpForm, signInForm));
       signUpBtn.addEventListener("click", () => changeForm(signUpForm, signInForm));
     </script>
-    <script type="text/javascript">
-      $("#id").on("input", function () { checkId(); });
-      function checkId() {
-        $("#checkId").text("");
-        let id = $("#id").val();
-        if (!/^[a-zA-Z0-9]{3,13}$/.test(id)) return false;
-        let res = false;
-        $.ajax({
-          async: false,
-          url: '<c:url value="/check/id"/>',
-          type: 'post',
-          data: { id: id },
-          success: function (data) { if (data) res = true; },
-        });
-        let str = res ? "사용 가능한 아이디입니다." : "이미 사용중인 아이디입니다.";
-        $("#checkId").text(str).toggleClass("green", res).toggleClass("red", !res);
-        return res;
-      }
-      $("#f1").validate({
-        rules: {
-          me_id: { required: true, regex: /^[a-zA-Z0-9]{3,13}$/ },
-          me_name: { required: true, regex: /^(?!\s*$).+/ },
-          me_pw: { required: true, regex: /^[a-zA-Z0-9!@#$]{3,15}$/ },
-          me_nick: { required: true, regex: /^[a-zA-Z0-9가-힣]{2,10}$/ },
-          me_email: { required: true, email: true },
-          me_number: { required: true, regex: /^010-\d{4}-\d{4}$/ },
+<script type="text/javascript">
+  $(document).ready(function () {
+    // 커스텀 정규표현식 메서드 먼저 정의
+    $.validator.addMethod("regex", function (value, element, regex) {
+      var re = new RegExp(regex);
+      return this.optional(element) || re.test(value);
+    }, "정규표현식을 확인하세요.");
+
+    // ID 입력할 때마다 중복 체크 실행
+    $("#id").on("input", function () {
+      checkId();
+    });
+
+    // 회원가입 유효성 검사
+    $("#f1").validate({
+      rules: {
+        me_id: { required: true, regex: /^[a-zA-Z0-9]{3,13}$/ },
+        me_name: { required: true },
+        me_pw: { required: true, regex: /^[a-zA-Z0-9!@#$]{3,15}$/ },
+        me_nick: { required: true, regex: /^[a-zA-Z0-9가-힣]{2,10}$/ },
+        me_email: { required: true, email: true },
+        me_number: { required: true, regex: /^010-\d{4}-\d{4}$/ },
+      },
+      messages: {
+        me_id: {
+          required: "필수 항목입니다.",
+          regex: "아이디는 영문, 숫자만 가능하며, 3~13자입니다."
         },
-        messages: {
-          me_id: { required: "필수 항목입니다.", regex: "아이디는 영문, 숫자만 가능하며, 3~13자입니다." },
-          me_name: { required: "필수 항목입니다.", regex: "이름이 비어있습니다" },
-          me_pw: { required: "필수 항목입니다.", regex: "비번은 영문, 숫자,특수문자(!@#$)만 가능하며, 3~15자입니다." },
-          me_nick: { required: "필수 항목입니다.", regex: "닉네임은 특수문자를 제외한 두글자 이상입니다" },
-          me_email: { required: "필수 항목입니다.", email: "이메일 형식이 아닙니다." },
-          me_number: { required: "필수 항목입니다.", regex: "전화번호를 올바르게 적어주세요" },
+        me_name: { required: "필수 항목입니다." },
+        me_pw: {
+          required: "필수 항목입니다.",
+          regex: "비번은 영문, 숫자,특수문자(!@#$)만 가능하며, 3~15자입니다."
         },
-        submitHandler: function () { return checkId(); },
-      });
-      $.validator.addMethod("regex", function (value, element, regex) {
-        var re = new RegExp(regex);
-        return this.optional(element) || re.test(value);
-      }, "정규표현식을 확인하세요.");
-    </script>
+        me_nick: {
+          required: "필수 항목입니다.",
+          regex: "닉네임은 특수문자를 제외한 2~10자 입니다"
+        },
+        me_email: {
+          required: "필수 항목입니다.",
+          email: "이메일 형식이 아닙니다."
+        },
+        me_number: {
+          required: "필수 항목입니다.",
+          regex: "전화번호를 올바르게 적어주세요"
+        },
+      },
+      submitHandler: function () {
+        return checkId(); // ID 중복 체크 결과가 true여야 전송
+      },
+    });
+  });
+
+  // ID 중복 확인 함수
+  function checkId() {
+    $("#checkId").text(""); // 메시지 초기화
+    let id = $("#id").val();
+
+    if (!/^[a-zA-Z0-9]{3,13}$/.test(id)) return false;
+
+    let res = false;
+    $.ajax({
+      async: false,
+      url: '<c:url value="/check/id"/>',
+      type: 'post',
+      data: { id: id },
+      success: function (data) {
+        if (data) res = true;
+      },
+    });
+
+    let str = res ? "사용 가능한 아이디입니다." : "이미 사용중인 아이디입니다.";
+    $("#checkId")
+      .text(str)
+      .toggleClass("green", res)
+      .toggleClass("red", !res);
+
+    return res;
+  }
+</script>
   </body>
 </html>

@@ -44,7 +44,10 @@
             font-weight: bold;
         }
 
-        input[type="text"], input[type="number"], textarea, select {
+         .section input[type="text"],
+      .section input[type="number"],
+      .section textarea,
+      .section select {
             width: 100%;
             padding: 10px;
             margin-top: 10px;
@@ -75,6 +78,11 @@
         .btn-submit:hover {
             background-color: #45a049;
         }
+        .file-error{
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+      }
     </style>
 </head>
 
@@ -89,7 +97,7 @@
 </ul>
 
 <!-- 클래스 등록 폼 -->
-<form action="<c:url value='/class/insert/${me_num}'/>" method="post" enctype="multipart/form-data">
+<form  id="class-insert" action="<c:url value='/class/insert/${me_num}'/>" method="post" enctype="multipart/form-data">
 
     <div id="title" class="section">
         <label for="cl_title">클래스 타이틀</label>
@@ -150,7 +158,27 @@
 </form>
 
 <script>
-    // 탭 클릭 시 active 처리 + 스크롤 이동
+	function checkFiles(){
+	   let count = 0;
+	   $(".file-error").remove();
+	   $("input[type=file]").each(function(){
+	      if(!$(this).val()){
+	         count++;
+	         $(this).after(`<div class="error file-error">파일을 선택하세요.</div>`)
+	      }
+	   })
+	   if(count >= 1){
+	      return false;
+	   }
+	   return true;
+	}
+
+   $("#class-insert").on("submit", function (e) { 
+	   if(!checkFiles()){
+		   e.preventDefault();
+	   }
+	});
+  
     $(document).ready(function () {
         $('#classTab .nav-link').on('click', function (e) {
             e.preventDefault();
@@ -222,7 +250,30 @@
             const videoCount = videoList.children().length;
             videoList.append(createVideoTemplate(index, videoCount));
         });
+       
     });
+    $("#class-insert").validate({
+        rules: {
+     	 cl_title: { required: true, regex: /^[a-zA-Z0-9]{3,50}$/ },
+     	 cl_intro: { required: true},
+     	 cl_item: { required: true},
+     	 cl_money: { required: true,min: 1000,max: 100000},
+     	 cl_level: { required: true},
+        },
+        messages: {
+     	 cl_title: { required: "필수 항목입니다.", regex: "아이디는 영문, 숫자만 가능하며, 3~50자입니다." },
+     	 cl_intro: { required: "필수 항목입니다."},
+     	 cl_item: { required: "필수 항목입니다."},
+     	 cl_money: { required: "필수 항목입니다.", min:"최소 금액은 1000원입니다",max:"최대 금액은 100000원입니다" },
+     	 cl_level: { required: "필수 항목입니다."},
+        },
+        submitHandler: function () { return checkFiles(); },
+      });
+      $.validator.addMethod("regex", function (value, element, regex) {
+        var re = new RegExp(regex);
+        return this.optional(element) || re.test(value);
+      }, "정규표현식을 확인하세요.");
+     // 탭 클릭 시 active 처리 + 스크롤 이동
 </script>
 
 </body>

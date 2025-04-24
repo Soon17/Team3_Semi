@@ -210,9 +210,7 @@
 
 <script>
 	$(function() {
-
 		$("#classTab .nav-link").click(function(e) {
-
 	        e.preventDefault();
 	        const type = $(this).data("type");
 	        const classNum = "${classDetail.cl_num}";

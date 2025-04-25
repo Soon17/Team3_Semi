@@ -1,11 +1,13 @@
 package kr.kh.team3.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.TeacherVO;
+import kr.kh.team3.model.vo.ThumbnailVO;
 
 public interface TeacherDAO {
 
@@ -16,6 +18,8 @@ public interface TeacherDAO {
 	MemberVO selectTcNum(@Param("tc_me_num")int tc_me_num);
 
 	void updateContent(@Param("map")Map<String, Object> map);
+
+	List<ThumbnailVO> getClassThumbnail(int tc_me_num);
 
 
 }

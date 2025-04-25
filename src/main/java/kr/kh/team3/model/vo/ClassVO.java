@@ -24,4 +24,5 @@ public class ClassVO {
 	private String sc_name;
 	private String cl_th_picture;
 	private List<CurriculumVO> list;
+	private ThumbnailVO thumbnail;
 }

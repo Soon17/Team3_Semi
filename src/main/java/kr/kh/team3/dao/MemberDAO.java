@@ -3,7 +3,6 @@ package kr.kh.team3.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.pagination.MemberCriteria;

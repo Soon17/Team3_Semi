@@ -84,7 +84,6 @@ public class ClassServiceImp implements ClassService{
 		try {
 			//클래스를 등록
 			classDao.insertClass(cl);
-			System.out.println(cl.getCl_num()+"=================================");
 			//클래스에 서부카테고리를 등록
 			subCategoryDao.insertClass(cl,sc);
 			//썸네일 업로드

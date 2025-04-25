@@ -217,16 +217,20 @@
         <!-- 댓글이 여기에 들어옵니다 -->
     </div>
 
-    <!-- 댓글 작성 폼 -->
-    <!-- 로그인 확인 및 구독 확인 후 댓글 작성 띄어지게 -->
-    <form id="commentForm" class="d-flex justify-content-between mt-3">
-	    <input type="hidden" name="co_cl_num" value="${classDetail.cl_num}" />
-	    <textarea name="co_content" class="form-control me-2" placeholder="댓글을 입력해 주세요." required></textarea>
-	    <div>
-	        <button type="submit" class="btn btn-outline-success btn-reply">등록</button>
-	    </div>
-	</form>
-
+	<c:if test="${checkSubscribed}">
+	    <!-- 댓글 작성 폼 -->
+	    <!-- 로그인 확인 및 구독 확인 후 댓글 작성 띄어지게 -->
+	    <form id="commentForm" class="d-flex justify-content-between mt-3">
+		    <input type="hidden" name="co_cl_num" value="${classDetail.cl_num}" />
+		    <textarea name="co_content" class="form-control me-2" placeholder="리뷰를 입력해 주세요." required></textarea>
+		    <div>
+		        <button type="submit" class="btn btn-outline-success btn-reply">등록</button>
+		    </div>
+		</form>
+	</c:if>
+	<c:if test="${!checkSubscribed}">
+		<span>구독 후 리뷰를 입력하실 수 있습니다.</span>
+	</c:if>
 </div>
 
 <script type="text/javascript">
@@ -242,7 +246,7 @@ function loadComments(cl_num) {
         success: function (comments) {
             let html = "";
             if (comments.length === 0) {
-                html = "<p>댓글이 없습니다.</p>";
+                html = "<p>리뷰가 없습니다.</p>";
             } else {
                 comments.forEach(function (comment) {
 		            console.log(comment)
@@ -303,27 +307,6 @@ function loadComments(cl_num) {
 	        }
 	    });
 	});
-       $(".btn-reply").click(function(e){
-		
-    	   if ('${member != null ? member.me_id : ""}' === ''){
-			if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하겠습니까?")){
-				location.href = "<c:url value="/signup"/>";
-			}
-			return;
-		}
-		
-		if($(this).parent().next().length != 0){
-			return;
-		}
-		let num = $(this).data("num");
-		let str = `
-			<form class="comment-insert-form input-group" data-num="\${num}">
-				<textarea name="content" class="form-control"></textarea>
-				<button type="submit" class="btn btn-outline-success">댓글 등록</button>
-			</form>
-		`;
-		$(this).parent().after(str);
-	})
  // 삭제 버튼 동작 (이벤트 위임 사용)
     $(document).on("click", ".btn-delete", function(e){
         e.preventDefault();

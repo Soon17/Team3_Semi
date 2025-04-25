@@ -319,8 +319,12 @@
 			
 			if (userAuthority === "ADMIN") {
 				let count = $(".notification-badge").text();
-				alert(count + "개의 업무처리가 있습니다.");
-			    // 또는 여기에 모달을 띄우거나, AJAX로 알림 리스트를 불러와도 됨
+				if(count === "") {
+					alert("대기중인 처리업무가 없습니다.");
+				}
+				else {
+					alert(count + "개의 업무처리가 있습니다.");
+				}
 			} else {
 			    alert("접근 권한이 없습니다.");
 			}

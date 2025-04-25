@@ -51,7 +51,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			response.addCookie(cookie);
 			//db에 자동로그인 정보를 저장
 			user.setMe_cookie(session.getId());
-			//System.currentTimeMillis() : 현재 시간을 밀리초로 반환
 			Date date = new Date(System.currentTimeMillis() + time * 1000);
 			user.setMe_limit(date);
 			memberService.updateCookie(user);

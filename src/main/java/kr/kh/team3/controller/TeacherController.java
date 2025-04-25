@@ -1,7 +1,6 @@
 package kr.kh.team3.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.TeacherVO;
-import kr.kh.team3.model.vo.ThumbnailVO;
 import kr.kh.team3.service.TeacherService;
 
 @Controller

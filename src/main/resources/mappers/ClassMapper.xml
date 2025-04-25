@@ -89,4 +89,9 @@
 	<insert id="insertVideo">
 		insert into video(vd_name,vd_vidoe,vd_cr_num) values(#{vd_name},#{vd_vidoe},#{vd_cr_num})
 	</insert>
+	<select id="selectWaitingCount" resultType="int">
+		select count(*)
+		from class
+		where cl_able = "요청"
+	</select>
 </mapper>

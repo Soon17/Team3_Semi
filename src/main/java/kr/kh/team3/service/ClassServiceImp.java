@@ -131,4 +131,9 @@ public class ClassServiceImp implements ClassService{
 		return classDao.checkRequest(me_num);
 	}
 
+	@Override
+	public int getWaitingCount() {
+		return classDao.selectWaitingCount();
+	}
+
 }

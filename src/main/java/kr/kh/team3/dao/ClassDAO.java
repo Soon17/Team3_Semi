@@ -39,4 +39,6 @@ public interface ClassDAO {
 
 	void insertVideo(VideoVO vi);
 
+	int selectWaitingCount();
+
 }

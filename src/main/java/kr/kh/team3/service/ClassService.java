@@ -31,4 +31,6 @@ public interface ClassService {
 
 	ClassVO checkRequest(int me_num);
 
+	int getWaitingCount();
+
 }

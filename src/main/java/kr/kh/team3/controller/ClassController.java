@@ -83,7 +83,7 @@ public class ClassController {
 	    // 구독 수
 	    int subscribeCount = subscribeService.countSubscribe(cl_num);
 	    model.addAttribute("subscribeCount", subscribeCount);
-
+	    
 	    return "/class/classDetail";
 	}
 	

@@ -112,7 +112,7 @@
 		    background: linear-gradient(to right, #1C2B3A, #365C9A);
 		    color: white; 
 		}
-	
+
     </style>
 </head>
 <body>
@@ -208,6 +208,210 @@
     </div>
 </div>
 
+<hr>
+<!-- 댓글 영역 시작 -->
+<div class="comment-box mt-5">
+
+    <!-- Ajax로 댓글 출력될 곳 -->
+    <div id="comment-section">
+        <!-- 댓글이 여기에 들어옵니다 -->
+    </div>
+
+    <!-- 댓글 작성 폼 -->
+    <!-- 로그인 확인 및 구독 확인 후 댓글 작성 띄어지게 -->
+    <form id="commentForm" class="d-flex justify-content-between mt-3">
+	    <input type="hidden" name="co_cl_num" value="${classDetail.cl_num}" />
+	    <textarea name="co_content" class="form-control me-2" placeholder="댓글을 입력해 주세요." required></textarea>
+	    <div>
+	        <button type="submit" class="btn btn-outline-success btn-reply">등록</button>
+	    </div>
+	</form>
+
+</div>
+
+<script type="text/javascript">
+
+const cl_num = ${classDetail.cl_num}; // 클래스 번호
+
+// 댓글 목록 불러오기
+function loadComments(cl_num) {
+    $.ajax({
+        url: "<c:url value="/comment/list/"/>" + cl_num,
+        type: "GET",
+        dataType: "json",
+        success: function (comments) {
+            let html = "";
+            if (comments.length === 0) {
+                html = "<p>댓글이 없습니다.</p>";
+            } else {
+                comments.forEach(function (comment) {
+		            console.log(comment)
+					let btns = "";
+					if('${member.me_num}' == comment.co_me_num){
+						btns = `
+							<div>
+	                            <button class="btn btn-sm btn-outline-success me-1 btn-update" data-id="\${comment.co_num}">수정</button>
+	                            <button class="btn btn-sm btn-outline-danger btn-delete" data-id="\${comment.co_num}">삭제</button>
+	                        </div>
+						`
+					}
+	                   html += `
+	                	   <div class="comment-box comment-item">
+	                           <p><strong>\${comment.me_nick}</strong> <small>\${new Date(comment.co_date).toLocaleString()}</small></p>
+	                           <p class="comment-content">\${comment.co_content}</p>
+	                           
+	                           \${btns}
+	                           <hr>
+	                       </div>
+	                   `;
+               		});
+           		}
+           $("#comment-section").html(html);
+        },
+        error: function () {
+            $("#comment-section").html("<p>댓글을 불러오지 못했습니다.</p>");
+        }
+    });
+}
+	$(document).ready(function () {
+	
+	    // 페이지 로드 시 댓글 불러오기
+	    loadComments(cl_num);
+	});
+	//댓글 등록 Ajax
+	$("#commentForm").on("submit", function (e) {
+	    e.preventDefault(); // 기본 폼 제출 막기
+	
+	    const formData = $(this).serialize();
+		console.log(formData);
+	    $.ajax({
+	        url: "<c:url value="/comment/insert"/>",
+	        type: "POST",
+	        data: formData,
+	        success: function (data) {
+	            // 등록 성공 후 입력창 초기화 & 댓글 목록 새로 불러오기
+	            $("#commentForm")[0].reset();
+	            if(data){
+                    alert("댓글을 등록했습니다.");
+                    loadComments(cl_num); // 새로고침
+                } else {
+                    alert("댓글 등록에 실패했습니다.");
+                }
+	        },
+	        error: function () {
+	            //alert("댓글 등록에 실패했습니다.");
+	        }
+	    });
+	});
+       $(".btn-reply").click(function(e){
+		
+    	   if ('${member != null ? member.me_id : ""}' === ''){
+			if(confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하겠습니까?")){
+				location.href = "<c:url value="/signup"/>";
+			}
+			return;
+		}
+		
+		if($(this).parent().next().length != 0){
+			return;
+		}
+		let num = $(this).data("num");
+		let str = `
+			<form class="comment-insert-form input-group" data-num="\${num}">
+				<textarea name="content" class="form-control"></textarea>
+				<button type="submit" class="btn btn-outline-success">댓글 등록</button>
+			</form>
+		`;
+		$(this).parent().after(str);
+	})
+ // 삭제 버튼 동작 (이벤트 위임 사용)
+    $(document).on("click", ".btn-delete", function(e){
+        e.preventDefault();
+        if(!confirm("정말 삭제하시겠습니까?")) return;
+
+        const num = $(this).data("id");
+
+        $.ajax({
+            url : '<c:url value="/comment/delete"/>', 
+            type : 'post', 
+            data : { co_num : num },
+            success : function (data){
+                if(data){
+                    alert("댓글을 삭제했습니다.");
+                    loadComments(cl_num); // 새로고침
+                } else {
+                    alert("댓글 삭제에 실패했습니다.");
+                }
+            },
+            error : function(){
+                alert("에러가 발생했습니다.");
+            }
+        });
+    });
+  // 댓글 수정 버튼 클릭 시
+     $(document).on("click", ".btn-update", function(e){
+         e.preventDefault();
+         
+         var $commentItem = $(this).closest(".comment-item");
+         var $content = $commentItem.find(".comment-content");
+         var content = $content.text().trim();
+         $content.hide();
+
+         // 이미 수정 폼이 있으면 return
+         if ($content.next(".comment-update-form").length > 0) return;
+
+         let num = $(this).data("id");
+         var str = `
+             <form class="comment-update-form input-group mt-2" data-num="\${num}">
+                 <textarea name="co_content" class="form-control me-2">\${content}</textarea>
+                 <button type="submit" class="btn btn-outline-success">댓글 수정</button>
+             </form>
+         `;
+         $content.after(str);
+
+         // 수정/삭제 버튼 숨기기
+         $(this).closest("div").hide();
+     });
+     $(document).on("submit", ".comment-update-form", function(e){
+    	    e.preventDefault();
+
+    	    const $form = $(this);
+    	    const num = $form.data("num");  // 댓글 번호
+    	    const content = $form.find("textarea[name='co_content']").val().trim();  // 수정된 댓글 내용
+
+    	    if(content === ""){
+    	        alert("내용을 입력해주세요.");
+    	        return;
+    	    }
+
+ 	    // Ajax로 댓글 수정 요청 보내기
+ 	    $.ajax({
+ 	        url: '<c:url value="/comment/update"/>',  // 서버 URL
+ 	        type: "POST",
+ 	        contentType: "application/json",
+ 	        data: JSON.stringify({
+ 	            co_num: num,  // 댓글 번호
+ 	            co_content: content  // 수정된 댓글 내용
+ 	        }),
+ 	        success: function(res){
+ 	            if(res){
+ 	                alert("댓글이 수정되었습니다.");
+
+ 	                // 수정된 댓글 내용을 화면에 반영
+ 	                const $commentBox = $form.closest(".comment-item");  // 해당 댓글 박스를 찾음
+ 	                $commentBox.find(".comment-content").text(content).show();  // 댓글 내용 갱신
+ 	                $form.remove();  // 수정 폼 제거
+ 	                $commentBox.find(".btn-update").closest("div").show();  // 수정/삭제 버튼 다시 표시
+ 	            } else {
+ 	                alert("댓글 수정에 실패했습니다.");
+ 	            }
+ 	        },
+ 	        error: function(){
+ 	            alert("서버 오류로 댓글 수정에 실패했습니다.");
+ 	        }
+ 	    });
+ 	});
+</script>
 <script>
 	$(function() {
 		$("#classTab .nav-link").click(function(e) {

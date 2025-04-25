@@ -1,6 +1,7 @@
 package kr.kh.team3.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.TeacherVO;
+import kr.kh.team3.model.vo.ThumbnailVO;
 import kr.kh.team3.service.TeacherService;
 
 @Controller
@@ -54,7 +56,7 @@ public class TeacherController {
         // 강사 정보 조회
         TeacherVO teacher = teacherService.selectIntro(tc_me_num);
         MemberVO owner = teacherService.getMemberNum(tc_me_num);
-        
+
         // 로그인한 유저가 본인인지 판단
         boolean isOwner = (user != null && user.getMe_num() == tc_me_num);
 
@@ -62,9 +64,10 @@ public class TeacherController {
         model.addAttribute("member", user);          // 로그인 유저
         model.addAttribute("owner", owner);
         model.addAttribute("isOwner", isOwner);      // 본인 여부
-        
+
         return "/teacher/page";
     }
+
     
     @GetMapping("/{tc_me_num}/post")
     public String updateIntro(Model model, HttpSession session, @PathVariable int tc_me_num) {

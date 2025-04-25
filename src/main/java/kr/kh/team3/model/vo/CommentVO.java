@@ -12,4 +12,13 @@ public class CommentVO {
 	private Date co_date;
 	private int co_me_num;
 	private int co_cl_num;
+	private String me_nick;
+
+	public String getMe_nick() {
+	    return me_nick;
+	}
+	public void setMe_nick(String me_nick) {
+	    this.me_nick = me_nick;
+	}
+
 }

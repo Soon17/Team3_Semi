@@ -21,7 +21,6 @@ public class CommentServiceImp implements CommentService{
 			return false;
 		}
 		comment.setCo_me_num(user.getMe_num());
-		System.out.println("123123123123"+comment);
 		return commentDao.insertComment(comment);
 	}
 
@@ -29,6 +28,30 @@ public class CommentServiceImp implements CommentService{
 	public List<CommentVO> getCommentList(int cl_num) {
 		
 		return commentDao.getCommentList(cl_num);
+	}
+
+	@Override
+	public boolean deleteComment(int co_num, MemberVO user) {
+		if(user == null) {
+			return false;
+		}
+		CommentVO comment = commentDao.selectComment(co_num);
+		if(comment == null || comment.getCo_me_num() != user.getMe_num()) {
+			return false;
+		}
+		return commentDao.deleteComment(co_num);
+	}
+
+	@Override
+	public boolean updateComment(CommentVO comment, MemberVO user) {
+		if(comment == null || user == null) {
+			return false;
+		}
+		CommentVO upComment = commentDao.selectComment(comment.getCo_num());
+		if(upComment == null || upComment.getCo_me_num() != user.getMe_num()) {
+			return false;
+		}
+		return commentDao.updateComment(comment);
 	}
 
 

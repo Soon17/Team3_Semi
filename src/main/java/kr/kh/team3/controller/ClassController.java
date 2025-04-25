@@ -89,9 +89,6 @@ public class ClassController {
 	    int subscribeCount = subscribeService.countSubscribe(cl_num);
 	    model.addAttribute("subscribeCount", subscribeCount);
 	    
-	    List<CommentVO> CommentList = commentService.getCommentList(cl_num);
-	    model.addAttribute("CommentList", CommentList);
-
 	    return "/class/classDetail";
 	}
 	

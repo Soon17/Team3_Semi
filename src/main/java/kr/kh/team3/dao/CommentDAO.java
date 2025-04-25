@@ -10,5 +10,11 @@ public interface CommentDAO {
 
 	List<CommentVO> getCommentList(int cl_num);
 
+	boolean deleteComment(int co_num);
+
+	CommentVO selectComment(int co_num);
+
+	boolean updateComment(CommentVO comment);
+
 
 }

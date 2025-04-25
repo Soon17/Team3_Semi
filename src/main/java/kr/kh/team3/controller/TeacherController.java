@@ -1,6 +1,7 @@
 package kr.kh.team3.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.TeacherVO;
+import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.TeacherService;
 
 @Controller
@@ -24,6 +27,9 @@ public class TeacherController {
 
 	@Autowired
 	TeacherService teacherService;
+	
+	@Autowired
+	ClassService classService;
 	
     @GetMapping("/post")
     public String post() {
@@ -50,11 +56,11 @@ public class TeacherController {
     @GetMapping("/{tc_me_num}")
     public String myPage(Model model, HttpSession session, @PathVariable int tc_me_num) {
         MemberVO user = (MemberVO) session.getAttribute("member");
-
+        
         // 강사 정보 조회
         TeacherVO teacher = teacherService.selectIntro(tc_me_num);
         MemberVO owner = teacherService.getMemberNum(tc_me_num);
-        
+        List<ClassVO> classList = classService.teacherClass(teacher);
         // 로그인한 유저가 본인인지 판단
         boolean isOwner = (user != null && user.getMe_num() == tc_me_num);
 
@@ -62,7 +68,7 @@ public class TeacherController {
         model.addAttribute("member", user);          // 로그인 유저
         model.addAttribute("owner", owner);
         model.addAttribute("isOwner", isOwner);      // 본인 여부
-        
+        model.addAttribute("classList", classList);
         return "/teacher/page";
     }
     

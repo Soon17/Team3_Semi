@@ -19,7 +19,4 @@ public interface TeacherDAO {
 
 	void updateContent(@Param("map")Map<String, Object> map);
 
-	List<ThumbnailVO> getClassThumbnail(int tc_me_num);
-
-
 }

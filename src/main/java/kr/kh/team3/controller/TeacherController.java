@@ -50,14 +50,12 @@ public class TeacherController {
     }
 
     @GetMapping("/{tc_me_num}")
-    public String myPage(Model model, HttpSession session, @PathVariable int tc_me_num/*, int th_cl_num*/) {
+    public String myPage(Model model, HttpSession session, @PathVariable int tc_me_num) {
         MemberVO user = (MemberVO) session.getAttribute("member");
 
         // 강사 정보 조회
         TeacherVO teacher = teacherService.selectIntro(tc_me_num);
         MemberVO owner = teacherService.getMemberNum(tc_me_num);
-
-        //List<ThumbnailVO> thumbnail = teacherService.getClassThumbnail(th_cl_num);
 
         // 로그인한 유저가 본인인지 판단
         boolean isOwner = (user != null && user.getMe_num() == tc_me_num);

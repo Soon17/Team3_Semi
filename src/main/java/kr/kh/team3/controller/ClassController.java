@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.ClassVO;
-import kr.kh.team3.model.vo.CommentVO;
 import kr.kh.team3.model.vo.CurriculumVO;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.SubCategoryVO;
@@ -30,7 +29,6 @@ import kr.kh.team3.model.vo.TeacherVO;
 import kr.kh.team3.model.vo.VideoVO;
 import kr.kh.team3.service.CategoryService;
 import kr.kh.team3.service.ClassService;
-import kr.kh.team3.service.CommentService;
 import kr.kh.team3.service.CurriculumService;
 import kr.kh.team3.service.SubCategoryService;
 import kr.kh.team3.service.SubscribeService;
@@ -56,9 +54,6 @@ public class ClassController {
 
 	@Autowired
 	SubCategoryService subcategoryService;
-	
-	@Autowired
-	CommentService commentService;
 
 	@Resource
 	String uploadPath;

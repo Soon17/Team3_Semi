@@ -15,6 +15,4 @@ public interface TeacherService {
 
 	MemberVO getMemberNum(int tc_me_num);
 
-	List<ThumbnailVO> getClassThumbnail(int th_cl_num);
-
 }

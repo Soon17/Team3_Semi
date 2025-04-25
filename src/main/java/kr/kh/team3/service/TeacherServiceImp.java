@@ -44,11 +44,4 @@ public class TeacherServiceImp implements TeacherService{
 		return teacherDao.selectTcNum(tc_me_num);
 	}
 
-	@Override
-	public List<ThumbnailVO> getClassThumbnail(int th_cl_num) {
-
-		return teacherDao.getClassThumbnail(th_cl_num);
-	}
-
-
 }

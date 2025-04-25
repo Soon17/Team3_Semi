@@ -134,11 +134,16 @@
 		</c:choose>
     </div>
 
-    <div class="create-class">
-        <h3>클래스</h3>
-        <div class="class-img">
-			<p>${cl_title}123</p>
-        </div>
-    </div>
+    <div class="card-grid">
+                <c:forEach var="item" items="${resultList}">
+                    <a href="<c:url value='/class/${item.cl_num}'/>" class="card">
+                        <img src="<c:url value='/uploads/${item.cl_th_picture }'/>"style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
+                        <div class="card-info">
+                            <div class="card-sub">${item.teacherNick}</div>
+                            <div class="card-title">${item.name}</div>
+                        </div>
+                    </a>
+                </c:forEach>
+     </div>
 </body>
 </html>

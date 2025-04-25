@@ -4,7 +4,6 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
     <style>
@@ -79,7 +78,7 @@
         .btn-submit:hover {
             background-color: #45a049;
         }
-        .error,.file-error{
+        .check-error,.error,.file-error{
         color: red;
         font-size: 20px;
         margin-top: 5px;
@@ -102,7 +101,7 @@
 
     <div id="title" class="section">
         <label for="cl_title">클래스 타이틀</label>
-        <input type="text" id="cl_title" name="cl_title" required />
+        <input type="text" id="cl_title" name="cl_title" />
     </div>
 
     <div id="intro" class="section">
@@ -173,13 +172,75 @@
 	   }
 	   return true;
 	}
-
+	function checkCurris(obj){
+		var $next = obj.next();
+		if($next && $next.hasClass("check-error"))  {
+			$next.remove();
+			
+		} 
+		//$(".curri-error").remove();
+		   
+      	if(obj.val() == ""){
+	        obj.after(`<div class="check-error">필수 항목 입니다.</div>`)
+			return false;
+		}
+		return true;
+		   
+		   
+	}
+	$(document).on("input",".curriculums, .videos",function(){
+		   checkCurris($(this))
+			
+	   });
+   $("input[type=file]").on("input",function(e){
+	   if(!checkFiles()){
+		   e.preventDefault();
+	   }
+   });
+	   
+	
    $("#class-insert").on("submit", function (e) { 
 	   if(!checkFiles()){
 		   e.preventDefault();
 	   }
 	});
-  
+   $("#class-insert").validate({
+       rules: {
+    	 cl_title: { required: true, regex: /^[^\s]{3,50}$/  },
+    	 cl_intro: { required: true},
+    	 cl_item: { required: true},
+    	 cl_money: { required: true,min: 1000,max: 100000},
+    	 cl_level: { required: true},
+    	 sc_ca_num: { required: true},
+    	 sc_name: { required: true},
+       },
+       messages: {
+    	 cl_title: { required: "필수 항목입니다.", regex: "클래스 타이틀은 3~50자입니다." },
+    	 cl_intro: { required: "필수 항목입니다."},
+    	 cl_item: { required: "필수 항목입니다."},
+    	 cl_money: { required: "필수 항목입니다.", min:"최소 금액은 1000원입니다",max:"최대 금액은 100000원입니다" },
+    	 cl_level: { required: "필수 항목입니다."},
+    	 sc_ca_num: { required: "필수 항목입니다."},
+    	 sc_name: { required: "필수 항목입니다."},
+       },
+       submitHandler: function () { 
+    	   console.log(1)
+    	   let res = true;
+    	   $(".curriculums, .videos").each(function(){
+    		   if (!checkCurris($(this))) {
+    			   res = false;
+    	        }
+    		})
+    		if (!checkFiles()) {
+		        res = false;
+		    }
+    	   	return res;
+    	   },
+     });
+     $.validator.addMethod("regex", function (value, element, regex) {
+       var re = new RegExp(regex);
+       return this.optional(element) || re.test(value);
+     }, "정규표현식을 확인하세요.");
     $(document).ready(function () {
         $('#classTab .nav-link').on('click', function (e) {
             e.preventDefault();
@@ -215,7 +276,7 @@
         return '' +
             '<div class="curriculum-item" style="border:1px solid #ddd; padding:20px; margin-top:20px; border-radius:10px;">' +
                 '<label>커리큘럼명</label>' +
-                '<input type="text" name="list[' + index + '].cr_title" placeholder="예: 챕터 1 - 기본 개념"/>' +
+                '<input type="text" class="curriculums" name="list[' + index + '].cr_title" placeholder="예: 챕터 1 - 기본 개념"/>' +
 
                 '<div class="video-list" data-index="' + index + '">' +
                     '<!-- 영상 항목이 추가될 공간 -->' +
@@ -228,7 +289,7 @@
         return '' +
             '<div class="video-item" style="margin-top:15px;">' +
                 '<label>강의영상명</label>' +
-                '<input type="text" name="list[' + curriculumIndex + '].list[' + videoIndex + '].vd_name" placeholder="예: 개요 설명"/>' +
+                '<input type="text" class="videos"  name="list[' + curriculumIndex + '].list[' + videoIndex + '].vd_name" placeholder="예: 개요 설명"/>' +
                 '<label>강의영상 업로드</label>' +
                 '<input type="file" name="list[' + curriculumIndex + '].list[' + videoIndex + '].vd_file"/>' +
             '</div>';
@@ -253,31 +314,7 @@
         });
        
     });
-    $("#class-insert").validate({
-        rules: {
-     	 cl_title: { required: true, regex: /^[^\s]{3,50}$/  },
-     	 cl_intro: { required: true},
-     	 cl_item: { required: true},
-     	 cl_money: { required: true,min: 1000,max: 100000},
-     	 cl_level: { required: true},
-     	 sc_ca_num: { required: true},
-     	 sc_name: { required: true},
-        },
-        messages: {
-     	 cl_title: { required: "필수 항목입니다.", regex: "클래스 타이틀은 3~50자입니다." },
-     	 cl_intro: { required: "필수 항목입니다."},
-     	 cl_item: { required: "필수 항목입니다."},
-     	 cl_money: { required: "필수 항목입니다.", min:"최소 금액은 1000원입니다",max:"최대 금액은 100000원입니다" },
-     	 cl_level: { required: "필수 항목입니다."},
-     	 sc_ca_num: { required: "필수 항목입니다."},
-     	 sc_name: { required: "필수 항목입니다."},
-        },
-        submitHandler: function () { return checkFiles(); },
-      });
-      $.validator.addMethod("regex", function (value, element, regex) {
-        var re = new RegExp(regex);
-        return this.optional(element) || re.test(value);
-      }, "정규표현식을 확인하세요.");
+   
      // 탭 클릭 시 active 처리 + 스크롤 이동
 </script>
 

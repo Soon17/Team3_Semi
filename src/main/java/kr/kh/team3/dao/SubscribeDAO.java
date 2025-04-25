@@ -10,6 +10,12 @@ public interface SubscribeDAO {
 
 	boolean insertSubscribe(@Param("me_num")int me_num,@Param("cl_num") int cl_num);
 
-	int deleteSubscribe(@Param("me_num")int me_num, @Param("cl_num")int cl_num);
+	String getStatus(@Param("me_num")int me_num, @Param("cl_num")int cl_num);
+
+	void deleteSubscribe();
+
+	int getPaymentCount(@Param("me_num")int me_num, @Param("cl_num")int cl_num);
+
+
 
 }

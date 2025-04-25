@@ -8,6 +8,7 @@
         FROM subscribe 
         WHERE su_me_num = #{me_num} 
         AND su_cl_num = #{cl_num}
+        AND su_status = 'regular'
     </select>
     <select id="countSubscribe" resultType="int">
 	    SELECT COUNT(*) 
@@ -16,10 +17,17 @@
 	</select>
 	<insert id="insertSubscribe">
 	    INSERT INTO subscribe (su_date, su_me_num, su_cl_num)
-	    VALUES (NOW(), #{me_num}, #{cl_num});
+	    VALUES (NOW(), #{me_num}, #{cl_num})
 	</insert>
+	<select id="getStatus" resultType="String">
+	  SELECT SU_STATUS
+	  FROM subscribe
+	  WHERE SU_ME_NUM = #{me_num}
+	    AND SU_CL_NUM = #{cl_num}
+	</select>
 	<delete id="deleteSubscribe">
-	  DELETE FROM subscribe 
-	  WHERE su_me_num = #{me_num} AND su_cl_num = #{cl_num}
+	  DELETE FROM subscribe
+	  WHERE su_status = 'regular'
+	  AND su_date &lt;= NOW() - INTERVAL 2 MINUTE
 	</delete>
 </mapper>

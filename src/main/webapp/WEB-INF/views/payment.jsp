@@ -108,6 +108,7 @@
       pg: "kakaopay",
       pay_method: "card",
       merchant_uid: "order_" + new Date().getTime(),
+      customer_uid: "customer_" + new Date().getTime(),
       name: classTitle,
       amount: classPrice,
       buyer_email: userEmail,
@@ -115,7 +116,11 @@
       buyer_tel: userTel
     }, function (rsp) {
       if (rsp.success) {
-        location.href = contextPath + "/order/payComplete?imp_uid=" + rsp.imp_uid + "&merchant_uid=" + rsp.merchant_uid + "&cl_num=" + clNum;
+    	  location.href = contextPath + "/order/payComplete"
+    	    + "?imp_uid=" + rsp.imp_uid
+    	    + "&merchant_uid=" + rsp.merchant_uid
+    	    + "&cl_num=" + clNum
+    	    + "&customer_uid=" + rsp.customer_uid; 
       } else {
         alert("결제 실패: " + rsp.error_msg);
       }

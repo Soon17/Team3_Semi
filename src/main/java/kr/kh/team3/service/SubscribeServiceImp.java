@@ -29,8 +29,17 @@ public class SubscribeServiceImp implements SubscribeService{
 	}
 
 	@Override
-	public boolean deleteSubscribe(int me_num, int cl_num) {
-		return subscribeDao.deleteSubscribe(me_num, cl_num) > 0;
+	public String getStatus(int me_num, int cl_num) {
+		return subscribeDao.getStatus(me_num, cl_num);
+	}
+
+	public void deleteSubscribe() {
+	    subscribeDao.deleteSubscribe();
+	}
+
+	@Override
+	public int getPaymentCount(int me_num, int cl_num) {
+		return subscribeDao.getPaymentCount(me_num, cl_num);
 	}
 
 	

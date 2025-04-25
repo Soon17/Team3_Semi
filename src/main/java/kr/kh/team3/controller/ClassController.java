@@ -69,11 +69,27 @@ public class ClassController {
 	
 	@GetMapping("/{num}")
 	public String classDetail(@PathVariable("num") int cl_num, HttpSession session, Model model) {
-		ClassVO classDetail = classService.ClassDetail(cl_num);
+	    ClassVO classDetail = classService.ClassDetail(cl_num);
 	    model.addAttribute("classDetail", classDetail);
 	    
 	    // 구독 여부 확인
 	    MemberVO user = (MemberVO) session.getAttribute("member");
+	    String subStatus = "미구독"; // 기본값
+	    
+	    if (user != null) {
+	        // 구독 상태 확인 (정기 구독 여부)
+	        subStatus = subscribeService.getStatus(user.getMe_num(), cl_num);
+	        if ("regular".equals(subStatus)) {
+	            subStatus = "구독중";
+	        } else {
+	            subStatus = "미구독";
+	        }
+	    }
+
+	    // 구독 상태 추가
+	    model.addAttribute("subStatus", subStatus);
+
+	    // 구독 여부 (checkSubscribed)
 	    boolean checkSubscribed = false;
 	    if (user != null) {
 	        checkSubscribed = subscribeService.checkSubscribed(user.getMe_num(), cl_num);

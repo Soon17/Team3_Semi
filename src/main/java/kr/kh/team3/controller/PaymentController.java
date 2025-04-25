@@ -2,6 +2,7 @@ package kr.kh.team3.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,10 +72,11 @@ public class PaymentController {
     public String payComplete(@RequestParam("imp_uid") String impUid,
                               @RequestParam("merchant_uid") String merchantUid,
                               @RequestParam("cl_num") int cl_num,
+                              @RequestParam("customer_uid") String customerUid,
                               HttpSession session,
                               Model model) throws Exception {
 
-        // 아임포트 인증 토큰 요청
+        // 1. 아임포트 토큰 발급
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -96,7 +98,7 @@ public class PaymentController {
             .get("access_token")
             .asText();
 
-        // 결제 정보 조회
+        // 2. 결제 정보 조회
         HttpHeaders authHeaders = new HttpHeaders();
         authHeaders.set("Authorization", accessToken);
 
@@ -111,7 +113,6 @@ public class PaymentController {
         JsonNode paymentInfo = new ObjectMapper().readTree(paymentResponse.getBody());
         String status = paymentInfo.get("response").get("status").asText();
 
-        // 결제 성공이면 구독 insert
         if ("paid".equals(status)) {
             MemberVO user = (MemberVO) session.getAttribute("member");
             if (user == null) {
@@ -121,8 +122,47 @@ public class PaymentController {
             }
 
             boolean result = subscribeService.subscribe(user.getMe_num(), cl_num);
+
             if (result) {
+                // 정기결제 상태 확인
+                String subStatus = subscribeService.getStatus(user.getMe_num(), cl_num);
+                if ("regular".equals(subStatus)) {
+
+                    // 1분 / 2분 뒤 예약 등록 (총 2회 → 3개월치 완성)
+                    JSONArray scheduleArray = new JSONArray();
+                    for (int i = 1; i <= 2; i++) {
+                        long scheduleAt = java.time.LocalDateTime.now()
+                          //.plusMonths(i) //개월마다	
+                            .plusMinutes(i) //분마다
+                            .toEpochSecond(java.time.ZoneOffset.ofHours(9));
+
+                        JSONObject monthSchedule = new JSONObject();
+                        monthSchedule.put("merchant_uid", "scheduler_" + System.currentTimeMillis() + "_" + i);
+                        monthSchedule.put("schedule_at", scheduleAt);
+                        monthSchedule.put("amount", paymentInfo.get("response").get("amount").asInt());
+                        monthSchedule.put("name", paymentInfo.get("response").get("name").asText());
+
+                        scheduleArray.put(monthSchedule);
+                    }
+
+                    JSONObject scheduleBody = new JSONObject();
+                    scheduleBody.put("customer_uid", customerUid);
+                    scheduleBody.put("schedules", scheduleArray);
+
+                    HttpHeaders scheduleHeaders = new HttpHeaders();
+                    scheduleHeaders.setContentType(MediaType.APPLICATION_JSON);
+                    scheduleHeaders.set("Authorization", accessToken);
+
+                    HttpEntity<String> scheduleRequest = new HttpEntity<>(scheduleBody.toString(), scheduleHeaders);
+                    restTemplate.postForEntity(
+                        "https://api.iamport.kr/subscribe/payments/schedule",
+                        scheduleRequest,
+                        String.class
+                    );
+                }
+           
                 return "redirect:/class/" + cl_num;
+                
             } else {
                 model.addAttribute("msg", "구독 실패");
                 model.addAttribute("url", "/class/" + cl_num);

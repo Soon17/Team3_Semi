@@ -294,57 +294,60 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function () {
-    const cl_num = ${classDetail.cl_num}; // 클래스 번호
-	
-    // 댓글 목록 불러오기
-    function loadComments() {
-        $.ajax({
-            url: "/class/list/" + cl_num,
-            type: "GET",
-            dataType: "json",
-            success: function (comments) {
-                let html = "";
 
-                if (comments.length === 0) {
-                    html = "<p>댓글이 없습니다.</p>";
-                } else {
-                    comments.forEach(function (comment) {
-                        html += `
-                            <div class="comment-box">
-                                <p><strong>${comment.co_me_num}</strong> <small>${comment.co_date}</small></p>
-                                <p>${comment.co_content}</p>
-                                <hr>
-                            </div>
-                        `;
-                    });
-                }
+const cl_num = ${classDetail.cl_num}; // 클래스 번호
+// 댓글 목록 불러오기
+function loadComments(cl_num) {
+    $.ajax({
+        url: "<c:url value="/comment/list/"/>" + cl_num,
+        type: "GET",
+        dataType: "json",
+        success: function (comments) {
+            let html = "";
 
-                $("#comment-section").html(html);
-            },
-            error: function () {
-                $("#comment-section").html("<p>댓글을 불러오지 못했습니다.</p>");
+            if (comments.length === 0) {
+                html = "<p>댓글이 없습니다.</p>";
+            } else {
+                comments.forEach(function (comment) {
+                    html += `
+                        <div class="comment-box">
+                            <p><strong>\${comment.co_me_num}</strong> <small>\${new Date(comment.co_date).toLocaleDateString()}</small></p>
+                            <p>\${comment.co_content}</p>
+                            <hr>
+                        </div>
+                    `;
+                });
             }
-        });
-    }
+
+            $("#comment-section").html(html);
+        },
+        error: function () {
+            $("#comment-section").html("<p>댓글을 불러오지 못했습니다.</p>");
+        }
+    });
+}
+$(document).ready(function () {
+   
+	
+   
 
     // 페이지 로드 시 댓글 불러오기
-    loadComments();
+    loadComments(cl_num);
 });
 //댓글 등록 Ajax
 $("#commentForm").on("submit", function (e) {
     e.preventDefault(); // 기본 폼 제출 막기
 
     const formData = $(this).serialize();
-	console.log(formDate);
+	console.log(formData);
     $.ajax({
-        url: "/class/" + cl_num,
+        url: "<c:url value="/comment/insert"/>",
         type: "POST",
         data: formData,
         success: function () {
             // 등록 성공 후 입력창 초기화 & 댓글 목록 새로 불러오기
             $("#commentForm")[0].reset();
-            loadComments();
+            loadComments(cl_num);
         },
         error: function () {
             alert("댓글 등록에 실패했습니다.");

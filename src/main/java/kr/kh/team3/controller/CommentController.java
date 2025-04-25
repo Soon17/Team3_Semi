@@ -18,13 +18,13 @@ import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.CommentService;
 
 @Controller
-@RequestMapping("/class")
+@RequestMapping("/comment")
 public class CommentController {
 
 	@Autowired
 	CommentService commentService;
 	
-	@PostMapping("/{cl_num}")
+	@PostMapping("/insert")
 	public String insert(Model model,CommentVO comment, HttpSession session) {
 		
 		MemberVO user = (MemberVO)session.getAttribute("member");

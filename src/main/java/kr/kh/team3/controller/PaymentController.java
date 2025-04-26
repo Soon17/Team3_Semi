@@ -72,11 +72,17 @@ public class PaymentController {
     public String payComplete(@RequestParam("imp_uid") String impUid,
                               @RequestParam("merchant_uid") String merchantUid,
                               @RequestParam("cl_num") int cl_num,
-                              @RequestParam("customer_uid") String customerUid,
                               HttpSession session,
                               Model model) throws Exception {
 
-        // 1. 아임포트 토큰 발급
+        MemberVO user = (MemberVO) session.getAttribute("member");
+        if (user == null) {
+            model.addAttribute("msg", "로그인이 필요합니다");
+            model.addAttribute("url", "/signup");
+            return "message";
+        }
+
+        // 아임포트 토큰 발급
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -87,9 +93,7 @@ public class PaymentController {
 
         HttpEntity<String> tokenRequest = new HttpEntity<>(body.toString(), headers);
         ResponseEntity<String> tokenResponse = restTemplate.postForEntity(
-            "https://api.iamport.kr/users/getToken",
-            tokenRequest,
-            String.class
+            "https://api.iamport.kr/users/getToken", tokenRequest, String.class
         );
 
         String accessToken = new ObjectMapper()
@@ -98,7 +102,7 @@ public class PaymentController {
             .get("access_token")
             .asText();
 
-        // 2. 결제 정보 조회
+        // 결제 정보 조회
         HttpHeaders authHeaders = new HttpHeaders();
         authHeaders.set("Authorization", accessToken);
 
@@ -114,55 +118,11 @@ public class PaymentController {
         String status = paymentInfo.get("response").get("status").asText();
 
         if ("paid".equals(status)) {
-            MemberVO user = (MemberVO) session.getAttribute("member");
-            if (user == null) {
-                model.addAttribute("msg", "로그인이 필요합니다");
-                model.addAttribute("url", "/signup");
-                return "message";
-            }
-
             boolean result = subscribeService.subscribe(user.getMe_num(), cl_num);
 
             if (result) {
-                // 정기결제 상태 확인
-                String subStatus = subscribeService.getStatus(user.getMe_num(), cl_num);
-                if ("regular".equals(subStatus)) {
-
-                    // 1분 / 2분 뒤 예약 등록 (총 2회 → 3개월치 완성)
-                    JSONArray scheduleArray = new JSONArray();
-                    for (int i = 1; i <= 2; i++) {
-                        long scheduleAt = java.time.LocalDateTime.now()
-                          //.plusMonths(i) //개월마다	
-                            .plusMinutes(i) //분마다
-                            .toEpochSecond(java.time.ZoneOffset.ofHours(9));
-
-                        JSONObject monthSchedule = new JSONObject();
-                        monthSchedule.put("merchant_uid", "scheduler_" + System.currentTimeMillis() + "_" + i);
-                        monthSchedule.put("schedule_at", scheduleAt);
-                        monthSchedule.put("amount", paymentInfo.get("response").get("amount").asInt());
-                        monthSchedule.put("name", paymentInfo.get("response").get("name").asText());
-
-                        scheduleArray.put(monthSchedule);
-                    }
-
-                    JSONObject scheduleBody = new JSONObject();
-                    scheduleBody.put("customer_uid", customerUid);
-                    scheduleBody.put("schedules", scheduleArray);
-
-                    HttpHeaders scheduleHeaders = new HttpHeaders();
-                    scheduleHeaders.setContentType(MediaType.APPLICATION_JSON);
-                    scheduleHeaders.set("Authorization", accessToken);
-
-                    HttpEntity<String> scheduleRequest = new HttpEntity<>(scheduleBody.toString(), scheduleHeaders);
-                    restTemplate.postForEntity(
-                        "https://api.iamport.kr/subscribe/payments/schedule",
-                        scheduleRequest,
-                        String.class
-                    );
-                }
-           
+                subscribeService.createDeleteEvent(user.getMe_num(), cl_num);
                 return "redirect:/class/" + cl_num;
-                
             } else {
                 model.addAttribute("msg", "구독 실패");
                 model.addAttribute("url", "/class/" + cl_num);

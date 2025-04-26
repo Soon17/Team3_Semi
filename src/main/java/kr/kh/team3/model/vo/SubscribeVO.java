@@ -8,6 +8,6 @@ public class SubscribeVO {
     private int su_me_num;   
     private int su_cl_num;    
     private String su_date;   
-    private String SU_STATUS;   
+    private String su_status;   
     
 }

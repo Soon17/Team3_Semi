@@ -18,7 +18,7 @@
                         <th>강의명</th>
                         <th>강사명</th>
                         <th>구독일</th>
-                        <th>구독 상태</th>
+                        <th>현재 구독 상태</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,11 +27,18 @@
                         <td>${sub.cl_title}</td>
                         <td>${sub.teacher_name}</td>
                         <td><fmt:formatDate value="${sub.su_date}" pattern="yyyy-MM-dd"/></td>
-                        <td>
-                           <div class="subscription-status">
-                              <p>구독 상태: ${sub.subStatus}</p> <!-- 구독 상태 출력 -->
-                           </div>
-                        </td>
+				            <td>
+							   <div class="subscription-status">
+							      <c:choose>
+							         <c:when test="${sub.su_status == 'regular'}">
+							             <p>구독중</p>
+							         </c:when>
+							         <c:otherwise>
+							             <p>미구독</p>
+							         </c:otherwise>
+							      </c:choose>
+							   </div>
+							</td>
                       </tr>
                     </c:forEach>
                 </tbody>

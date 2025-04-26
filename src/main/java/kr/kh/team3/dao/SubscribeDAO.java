@@ -1,5 +1,7 @@
 package kr.kh.team3.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface SubscribeDAO {
@@ -12,10 +14,9 @@ public interface SubscribeDAO {
 
 	String getStatus(@Param("me_num")int me_num, @Param("cl_num")int cl_num);
 
-	void deleteSubscribe();
+	boolean createDeleteEvent(Map<String, Object> map);
 
-	int getPaymentCount(@Param("me_num")int me_num, @Param("cl_num")int cl_num);
-
+	int updateSubscribe(@Param("me_num")int me_num, @Param("cl_num") int cl_num);
 
 
 }

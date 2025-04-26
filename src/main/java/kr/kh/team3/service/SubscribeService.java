@@ -10,8 +10,6 @@ public interface SubscribeService {
 
 	String getStatus(int me_num, int cl_num);
 
-	int getPaymentCount(int me_num, int cl_num);
-
-	void deleteSubscribe();
+	boolean createDeleteEvent(int me_num, int cl_num);
 
 }

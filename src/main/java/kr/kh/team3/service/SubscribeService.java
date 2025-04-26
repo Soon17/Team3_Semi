@@ -12,4 +12,6 @@ public interface SubscribeService {
 
 	boolean createDeleteEvent(int me_num, int cl_num);
 
+	boolean deleteSubscribe(int me_num, int cl_num);
+
 }

@@ -48,4 +48,9 @@ public class SubscribeServiceImp implements SubscribeService{
 	    return subscribeDao.createDeleteEvent(map);
 	}
 
+	@Override
+	public boolean deleteSubscribe(int me_num, int cl_num) {
+		return subscribeDao.deleteSubscribe(me_num, cl_num);
+	}
+
 }

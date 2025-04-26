@@ -48,4 +48,9 @@
 	    WHERE SU_ME_NUM = #{me_num}
 	      AND SU_CL_NUM = #{cl_num}
 	</update>
+	<delete id="deleteSubscribe">
+	    DELETE FROM subscribe 
+	    WHERE SU_ME_NUM = #{me_num} 
+	      AND SU_CL_NUM = #{cl_num}
+	</delete>
 </mapper>

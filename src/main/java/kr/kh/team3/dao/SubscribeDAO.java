@@ -18,5 +18,7 @@ public interface SubscribeDAO {
 
 	int updateSubscribe(@Param("me_num")int me_num, @Param("cl_num") int cl_num);
 
+	boolean deleteSubscribe(@Param("me_num")int me_num, @Param("cl_num") int cl_num);
+
 
 }

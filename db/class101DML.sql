@@ -11,3 +11,8 @@ values("해병문학","가장 신속한 동작, 가장 큰 목소리,
 ,"하",4);
 
 insert into subcategory (sc_name,sc_ca_num,sc_cl_num) values("수영",1,7);
+
+/* GROUP BY 시 속성 에러 발생 해결 쿼리 */
+SET GLOBAL SQL_MODE = "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION";
+/* 복구 쿼리 */
+SET GLOBAL SQL_MODE = "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY";

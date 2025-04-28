@@ -8,6 +8,7 @@ pageEncoding="UTF-8" %>
   <meta charset="UTF-8" />
   <title>강의 상세</title>
   <style>
+  
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f8fafc;
@@ -53,6 +54,7 @@ pageEncoding="UTF-8" %>
 	}
 
     .form-control {
+      height:0px !important;
       padding: 12px;
       background-color: #f1f5f9;
       border-radius: 6px;
@@ -81,6 +83,16 @@ pageEncoding="UTF-8" %>
       background-color: #198754;
       color: #fff;
     }
+    
+    .autoResizeDiv {
+	  display: block; /* block-level 요소로 기본 설정 */
+	  width: 100%;    /* div의 너비는 부모 요소에 맞게 확장 */
+	  min-height: 500px; /* 최소 높이는 설정 */
+	  max-height: 500px; /* 최대 높이는 설정 (원하는 크기에 맞게 조정 가능) */
+	  resize: none;    /* 사용자가 크기 조절할 수 없도록 설정 */
+	  overflow-y: auto; /* 내용이 넘칠 경우 스크롤을 표시 */
+	  box-sizing: border-box; /* 패딩이나 보더를 포함한 크기 계산 */
+	}
 
     @media (max-width: 768px) {
       .form-group, .form-group-full {
@@ -107,7 +119,7 @@ pageEncoding="UTF-8" %>
 
       <div class="form-group-full">
         <label><b>강의 소개</b></label>
-        <div class="form-control">${cl.cl_intro}</div>
+        <div class="form-control autoResizeDiv">${cl.cl_intro}</div>
       </div>
 
       <div class="form-group">

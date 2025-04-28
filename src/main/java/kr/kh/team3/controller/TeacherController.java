@@ -55,6 +55,7 @@ public class TeacherController {
 
     @GetMapping("/{tc_me_num}")
     public String myPage(Model model, HttpSession session, @PathVariable int tc_me_num) {
+		
         MemberVO user = (MemberVO) session.getAttribute("member");
         
         // 강사 정보 조회
@@ -75,6 +76,10 @@ public class TeacherController {
     
     @GetMapping("/{tc_me_num}/post")
     public String updateIntro(Model model, HttpSession session, @PathVariable int tc_me_num) {
+    	
+    	model.addAttribute("skipHeader", "true");
+		model.addAttribute("skipFooter", "true");
+		
     	MemberVO user = (MemberVO)session.getAttribute("member");
     	TeacherVO teacher = teacherService.selectIntro(tc_me_num);
     	

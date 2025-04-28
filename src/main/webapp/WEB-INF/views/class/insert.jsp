@@ -206,7 +206,7 @@
 	});
    $("#class-insert").validate({
        rules: {
-    	 cl_title: { required: true, regex: /^[^\s]{3,50}$/  },
+    	 cl_title: { required: true, regex: /^(?=.*\S).{3,50}$/ },
     	 cl_intro: { required: true},
     	 cl_item: { required: true},
     	 cl_money: { required: true,min: 1000,max: 100000},

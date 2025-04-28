@@ -67,24 +67,22 @@
 	
 	  <div class="carousel-inner">
 	    <div class="carousel-item active" style="height: 500px;">
-	<img src="<c:url value='/resources/img/감도울.jsp'/>" alt="an1">
+	<img src="<c:url value='/resources/img/anyoujin.jpg'/>" alt="an1">
 	  <div class="carousel-caption">
-	    <h3>감도울 그의 끝은 어디인가</h3>
-	    <p>GAMST</p>
+	  <h3 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">최현우의 마술교실</h3>
+	    <p style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">늙지 않는 그의 진짜 마술</p>
 	  </div>   
 	</div>
 	<div class="carousel-item" style="height: 500px;">
 	<img src="<c:url value='/resources/img/anyoujin2.jpg'/>" alt="an2">
 	  <div class="carousel-caption">
-	    <h3>안유진 여신</h3>
-	    <p>QueenYouJin</p>
 	  </div>   
 	</div>
 	<div class="carousel-item" style="height: 500px;">
 	<img src="<c:url value='/resources/img/anyoujin3.jpg'/>" alt="an3">
 	      <div class="carousel-caption">
-	        <h3>안유진 인정</h3>
-	        <p>MS.An, submit</p>
+	      <h3 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">이연복의 요리교실</h3>
+	    <p style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">백종원은 무너졌다!</p>
 	      </div>   
 	    </div>
 	  </div>
@@ -232,8 +230,5 @@
 	    });
 	    $(".category-link").first().trigger("click");
   </script>
-
-  <!-- 강사 목록 버튼 -->
-  <a href="<c:url value='/teachers'/>" class="btn btn-outline-info btn-teacher-list">강사 목록 보기</a>
 </body>
 </html>

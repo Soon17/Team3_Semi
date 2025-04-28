@@ -11,13 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>강사 페이지</title>
     <style>
-        body {
+        .bo {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
         }
-        .header {
+        .head {
 		    background-color: white;
 		    color: black;
 		    padding: 80px;
@@ -30,7 +30,7 @@
 		    padding-left: 140px; /* 이미지 공간 확보 */
 		}
 		
-		.header h1 {
+		.head h1 {
 		    margin: 0;
 		    margin-left: 240px;
 		    text-align: center;
@@ -145,8 +145,8 @@
         }
     </style>
 </head>
-<body>
-    <div class="header">
+<body class="bo">
+    <div class="head">
        <div class="profile-pic">
            <c:choose>
              <c:when test="${fn:startsWith(owner.me_profile, 'http')}">

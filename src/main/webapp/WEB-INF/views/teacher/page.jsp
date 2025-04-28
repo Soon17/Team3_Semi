@@ -67,6 +67,11 @@
         .creator-info p {
             font-size: 1.1em;
         }
+        .container {
+            max-width: 1200px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+        }
         .upload-btn {
             margin-top: 10px;
             background-color: transparent;
@@ -94,6 +99,49 @@
             height: 150px;
             background-color: #ddd;
             margin-bottom: 15px;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+            justify-items: center;
+        }
+
+        .card {
+            width: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 140px;
+            background-color: #eee;
+        }
+
+        .card-info {
+            padding: 10px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            color: #111;
+            margin: 4px 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-sub {
+            font-size: 13px;
+            color: #555;
         }
     </style>
 </head>
@@ -136,12 +184,18 @@
 		    </c:otherwise>
 		</c:choose>
     </div>
-
-    <div class="create-class">
-        <h3>클래스</h3>
-        <div class="class-img">
-			<p>${cl_title}123</p>
-        </div>
-    </div>
+	<div class="container">
+	    <div class="card-grid">
+			<c:forEach var="cl" items="${classList}">
+				<a href="<c:url value='/class/${cl.cl_num}'/>" class="card">
+				<img src="<c:url value='/uploads/${cl.cl_th_picture }'/>"style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
+				<div class="card-info">
+				    <div class="card-sub">${cl.me_nick}</div>
+					<div class="card-title">${cl.cl_title}</div>
+				</div>
+				</a>
+			</c:forEach>
+	     </div>
+     </div>
 </body>
 </html>

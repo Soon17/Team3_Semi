@@ -14,6 +14,7 @@ import kr.kh.team3.dao.SubCategoryDAO;
 import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.CurriculumVO;
 import kr.kh.team3.model.vo.SubCategoryVO;
+import kr.kh.team3.model.vo.TeacherVO;
 import kr.kh.team3.model.vo.ThumbnailVO;
 import kr.kh.team3.model.vo.VideoVO;
 import kr.kh.team3.utils.UploadFileUtils;
@@ -133,6 +134,11 @@ public class ClassServiceImp implements ClassService{
 	@Override
 	public int getWaitingCount() {
 		return classDao.selectWaitingCount();
+	}
+
+	@Override
+	public List<ClassVO> teacherClass(TeacherVO teacher) {
+		return classDao.teacherClass(teacher);
 	}
 
 }

@@ -87,7 +87,7 @@
             <div class="card-grid">
                 <c:forEach var="item" items="${resultList}">
                     <a href="<c:url value='/class/${item.cl_num}'/>" class="card">
-                        <div class="card-image"></div>
+                        <img src="<c:url value='/uploads/${item.cl_th_picture }'/>"style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
                         <div class="card-info">
                             <div class="card-sub">${item.teacherNick}</div>
                             <div class="card-title">${item.name}</div>

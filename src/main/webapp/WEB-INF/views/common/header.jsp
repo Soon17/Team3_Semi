@@ -36,7 +36,6 @@
 		max-width: 100px;
 		overflow: hidden;
 		white-space: nowrap;
-		text-overflow: ellipsis;
 	}
 	
 	.css-login:hover {

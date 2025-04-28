@@ -38,7 +38,7 @@
 	        WHERE SU_ME_NUM = #{me_num}
 	          AND SU_CL_NUM = #{cl_num}
 	          AND SU_STATUS = 'regular'
-	          AND SU_DATE &lt; NOW() - INTERVAL 31 DAY;
+	          AND SU_DATE &lt; NOW() - INTERVAL 30 DAY;
 	    END;
 	</update>
 	<update id="updateSubscribe">

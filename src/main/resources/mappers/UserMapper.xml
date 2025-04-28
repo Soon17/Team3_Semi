@@ -12,6 +12,7 @@
 		       FROM member m2
 		      WHERE m2.me_num = c.cl_tc_me_num) AS teacher_name,
 		    s.su_date,
+		    s.su_status,
 		    m.me_name
 		  FROM subscribe s
 		  JOIN class   c ON c.cl_num = s.su_cl_num

@@ -65,18 +65,18 @@ public class ClassController {
 		return "/categoryClass";
 	}
 	
-	@GetMapping("/{num}")
-	public String classDetail(@PathVariable("num") int cl_num, HttpSession session, Model model) {
-		ClassVO classDetail = classService.ClassDetail(cl_num);
-	    model.addAttribute("classDetail", classDetail);
-	    
-	    // 구독 여부 확인
-	    MemberVO user = (MemberVO) session.getAttribute("member");
-	    boolean checkSubscribed = false;
-	    if (user != null) {
-	        checkSubscribed = subscribeService.checkSubscribed(user.getMe_num(), cl_num);
-	    }
-	    model.addAttribute("checkSubscribed", checkSubscribed);
+    @GetMapping("/{num}")
+    public String classDetail(@PathVariable("num") int cl_num, HttpSession session, Model model) {
+        ClassVO classDetail = classService.ClassDetail(cl_num);
+        model.addAttribute("classDetail", classDetail);
+        
+        // 구독 여부 확인 (단기결제용)
+        boolean checkSubscribed = false;
+        MemberVO user = (MemberVO) session.getAttribute("member");
+        if (user != null) {
+            checkSubscribed = subscribeService.checkSubscribed(user.getMe_num(), cl_num);
+        }
+        model.addAttribute("checkSubscribed", checkSubscribed);
 
 	    // 구독 수
 	    int subscribeCount = subscribeService.countSubscribe(cl_num);

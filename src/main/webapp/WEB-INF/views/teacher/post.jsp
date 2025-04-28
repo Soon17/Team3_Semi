@@ -38,7 +38,7 @@
 		  top: 0;
 		  left: 0;
 		  width: 100vw;
-		  padding: 5px 30px;
+		  padding: 0px 30px;
 		  background-color: #fafafa;
 		  display: flex;
 		  justify-content: space-between;
@@ -178,9 +178,15 @@
   <!-- 전체 가로 헤더 -->
 <div class="simple-header">
 <div class="logo">
-<a href="<c:url value='/' />" style="text-decoration: none; color: inherit;">
-	로고이미지~
-</a>
+	<a class="navbar-brand px-3 mr-4" href="<c:url value='/'/>"> <svg
+		width="160" height="40" viewBox="0 0 200 60"
+		xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+	    <text x="0" y="45" font-family="Arial, Helvetica, sans-serif"
+				font-size="40" font-weight="bold" fill="#111">
+	      Class<tspan fill="#007BFF">KH</tspan>
+	    </text>
+	  </svg>
+	</a>
 </div>
 	<button class="save-btn">저장</button>
 </div>

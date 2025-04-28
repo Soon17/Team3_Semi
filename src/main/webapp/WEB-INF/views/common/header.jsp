@@ -1,10 +1,19 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<style type="text/css">
+<head>
+	<style type="text/css">
+	.dropdown-menu.category-list.show {
+		position: absolute;
+		top: 80px; /* 헤더 높이만큼 조정하세요! */
+		padding: 100px;
+		z-index: 9999;
+		background-color: white;
+		border: none;
+	}
 	
 			.dropdown-menu.category-list.show{
 				position: absolute;
@@ -113,13 +122,11 @@
 		<div class="container-fluid d-flex justify-content-center align-items-center container" style="padding: 10px 0; ">
 	
 			<!-- 로고 -->
-			<a class="navbar-brand px-3 mr-4" href="<c:url value='/'/>">
-			  <svg width="160" height="40" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
-			    <text x="0" y="45"
-			          font-family="Arial, Helvetica, sans-serif"
-			          font-size="40"
-			          font-weight="bold"
-			          fill="#111">
+			<a class="navbar-brand px-3 mr-4" href="<c:url value='/'/>"> <svg
+					width="160" height="40" viewBox="0 0 200 60"
+					xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle;">
+			    <text x="0" y="45" font-family="Arial, Helvetica, sans-serif"
+						font-size="40" font-weight="bold" fill="#111">
 			      Class<tspan fill="#007BFF">KH</tspan>
 			    </text>
 			  </svg>
@@ -270,6 +277,9 @@
 			</div>
 		</div>
 	</nav>
+	<div id="mobileMenu" class="mobile-menu">
+		<div class="mobile-category-list"></div>
+	</div>
 	<script type="text/javascript">
 		// 카테고리 리스트 비동기 로딩
 		$.ajax({
@@ -330,6 +340,5 @@
 			}
 		})
 	</script>
-
-	</body>
+</body>
 </html>

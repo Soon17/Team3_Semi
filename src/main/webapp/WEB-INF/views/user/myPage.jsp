@@ -88,5 +88,27 @@
 	        }
 	    });
 	</script>
+	<script>
+    function deleteSubscribe(clNum) {
+        const contextPath = "<%= request.getContextPath() %>"; // 여기서 contextPath 따로 선언
+        if (confirm("정말 삭제하시겠습니까?")) {
+            fetch(contextPath + "/subscribe/delete?cl_num=" + clNum, {
+                method: 'POST'
+            })
+            .then(response => response.text())
+            .then(result => {
+                if(result === 'success') {
+                    document.getElementById('row-' + clNum).remove();
+                } else {
+                    alert('삭제 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+                alert('에러가 발생했습니다.');
+            });
+        }
+    }
+</script>
 </body>
 </html>

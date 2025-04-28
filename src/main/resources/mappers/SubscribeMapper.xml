@@ -8,18 +8,49 @@
         FROM subscribe 
         WHERE su_me_num = #{me_num} 
         AND su_cl_num = #{cl_num}
+        AND su_status = 'regular'
     </select>
     <select id="countSubscribe" resultType="int">
 	    SELECT COUNT(*) 
 	    FROM subscribe 
-	    WHERE su_cl_num = #{cl_num}
+	    WHERE su_cl_num = #{cl_num}  
+	    AND su_status = 'regular'
 	</select>
 	<insert id="insertSubscribe">
 	    INSERT INTO subscribe (su_date, su_me_num, su_cl_num)
-	    VALUES (NOW(), #{me_num}, #{cl_num});
+	    VALUES (NOW(), #{me_num}, #{cl_num})
 	</insert>
+	<select id="getStatus" resultType="String">
+	  SELECT SU_STATUS
+	  FROM subscribe
+	  WHERE SU_ME_NUM = #{me_num}
+	    AND SU_CL_NUM = #{cl_num}
+	    AND SU_STATUS = 'regular'
+	</select>
+	<update id="createDeleteEvent" parameterType="map">
+	    CREATE EVENT delete_subscribe_event_${me_num}_${cl_num}
+	    ON SCHEDULE AT ADDDATE(NOW(), INTERVAL 1 MONTH)
+	    ON COMPLETION NOT PRESERVE
+	    DO
+	    BEGIN
+	        UPDATE subscribe
+	        SET SU_STATUS = 'normal'
+	        WHERE SU_ME_NUM = #{me_num}
+	          AND SU_CL_NUM = #{cl_num}
+	          AND SU_STATUS = 'regular'
+	          AND SU_DATE &lt; NOW() - INTERVAL 30 DAY;
+	    END;
+	</update>
+	<update id="updateSubscribe">
+	    UPDATE subscribe
+	    SET SU_STATUS = 'regular',
+	        SU_DATE = NOW()
+	    WHERE SU_ME_NUM = #{me_num}
+	      AND SU_CL_NUM = #{cl_num}
+	</update>
 	<delete id="deleteSubscribe">
-	  DELETE FROM subscribe 
-	  WHERE su_me_num = #{me_num} AND su_cl_num = #{cl_num}
+	    DELETE FROM subscribe 
+	    WHERE SU_ME_NUM = #{me_num} 
+	      AND SU_CL_NUM = #{cl_num}
 	</delete>
 </mapper>

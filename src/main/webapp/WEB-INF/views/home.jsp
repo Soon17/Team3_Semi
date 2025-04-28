@@ -67,10 +67,10 @@
 	
 	  <div class="carousel-inner">
 	    <div class="carousel-item active" style="height: 500px;">
-	<img src="<c:url value='/resources/img/anyoujin.jpg'/>" alt="an1">
+	<img src="<c:url value='/resources/img/감도울.jsp'/>" alt="an1">
 	  <div class="carousel-caption">
-	    <h3>안유진 존예</h3>
-	    <p>Jonn.yeah</p>
+	    <h3>감도울 그의 끝은 어디인가</h3>
+	    <p>GAMST</p>
 	  </div>   
 	</div>
 	<div class="carousel-item" style="height: 500px;">
@@ -233,7 +233,5 @@
 	    $(".category-link").first().trigger("click");
   </script>
 
-  <!-- 강사 목록 버튼 -->
-  <a href="<c:url value='/teachers'/>" class="btn btn-outline-info btn-teacher-list">강사 목록 보기</a>
 </body>
 </html>

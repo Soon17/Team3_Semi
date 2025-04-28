@@ -1,13 +1,16 @@
 package kr.kh.team3.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team3.dao.TeacherDAO;
+import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.TeacherVO;
+import kr.kh.team3.model.vo.ThumbnailVO;
 
 @Service
 public class TeacherServiceImp implements TeacherService{
@@ -40,6 +43,5 @@ public class TeacherServiceImp implements TeacherService{
 	public MemberVO getMemberNum(int tc_me_num) {	
 		return teacherDao.selectTcNum(tc_me_num);
 	}
-
 
 }

@@ -127,8 +127,7 @@
 	  classList.forEach(function (cls) {
 	    classHtml += `
 	      <div class="class-card class-link" data-clnum="\${cls.cl_num}" style="cursor:pointer;">
-	      <div class="image">
-	    </div>
+	      <img src="<c:url value='/uploads/\${cls.cl_th_picture }'/>"style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
 	        <p>\${cls.me_name || "이름 없음"}</p>
 	        <h5>\${cls.cl_title || "제목 없음"}</h5>
 	      </div>
@@ -143,7 +142,7 @@
 	  filtered.forEach(function (cls) {
 	    classHtml += `
 	      <div class="class-card class-link" data-clnum="\${cls.cl_num}" style="cursor:pointer;">
-	        <div class="image"></div>
+	      	<img src="<c:url value='/uploads/\${cls.cl_th_picture }'/>"style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
 	        <p>\${cls.me_name || "이름 없음"}</p>
 	        <h5>\${cls.cl_title || "제목 없음"}</h5>
 	      </div>

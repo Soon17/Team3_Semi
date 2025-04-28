@@ -89,4 +89,15 @@
 	<insert id="insertVideo">
 		insert into video(vd_name,vd_vidoe,vd_cr_num) values(#{vd_name},#{vd_vidoe},#{vd_cr_num})
 	</insert>
+	<select id="selectWaitingCount" resultType="int">
+		select count(*)
+		from class
+		where cl_able = "요청"
+	</select>
+	<select id="teacherClass" resultType="ClassVO">
+		select class.*,me_name,me_nick,th_picture as cl_th_picture from class 
+		join member on me_num = cl_tc_me_num
+		join thumbnail on th_cl_num = cl_num
+		where cl_tc_me_num=#{tc_me_num} and cl_able="Y";
+	</select>
 </mapper>

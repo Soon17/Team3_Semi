@@ -14,6 +14,7 @@ import kr.kh.team3.dao.SubCategoryDAO;
 import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.CurriculumVO;
 import kr.kh.team3.model.vo.SubCategoryVO;
+import kr.kh.team3.model.vo.TeacherVO;
 import kr.kh.team3.model.vo.ThumbnailVO;
 import kr.kh.team3.model.vo.VideoVO;
 import kr.kh.team3.utils.UploadFileUtils;
@@ -84,7 +85,6 @@ public class ClassServiceImp implements ClassService{
 		try {
 			//클래스를 등록
 			classDao.insertClass(cl);
-			System.out.println(cl.getCl_num()+"=================================");
 			//클래스에 서부카테고리를 등록
 			subCategoryDao.insertClass(cl,sc);
 			//썸네일 업로드
@@ -129,6 +129,16 @@ public class ClassServiceImp implements ClassService{
 	@Override
 	public ClassVO checkRequest(int me_num) {
 		return classDao.checkRequest(me_num);
+	}
+
+	@Override
+	public int getWaitingCount() {
+		return classDao.selectWaitingCount();
+	}
+
+	@Override
+	public List<ClassVO> teacherClass(TeacherVO teacher) {
+		return classDao.teacherClass(teacher);
 	}
 
 }

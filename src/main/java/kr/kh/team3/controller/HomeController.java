@@ -1,11 +1,9 @@
 package kr.kh.team3.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -129,10 +127,8 @@ public class HomeController {
 	@PostMapping("/check/id")
 	public boolean checkId(@RequestParam("id") String id){
 		if(memberService.checkId(id)) {
-			System.out.println("가능한 아이디");
 			return memberService.checkId(id);
 		}
-		System.out.println("아이디 중복");
 		return memberService.checkId(id);
 	}
 	
@@ -173,6 +169,8 @@ public class HomeController {
 	public String noticeBell(Model model) {
 		int waitingRequestCount = requestService.getWaitingCount();
 		model.addAttribute("waitingRequestCount", waitingRequestCount);
+		int waitingClassCount = classService.getWaitingCount();
+		model.addAttribute("waitingClassCount", waitingClassCount);
 		return "/noticeBell";
 	}
 }

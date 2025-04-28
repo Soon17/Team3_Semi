@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.SubCategoryVO;
+import kr.kh.team3.model.vo.TeacherVO;
 
 public interface ClassService {
 
@@ -30,5 +31,9 @@ public interface ClassService {
 	boolean insertClass(ClassVO cl, int me_num, SubCategoryVO sc, MultipartFile file);
 
 	ClassVO checkRequest(int me_num);
+
+	int getWaitingCount();
+	
+	List<ClassVO> teacherClass(TeacherVO teacher);
 
 }

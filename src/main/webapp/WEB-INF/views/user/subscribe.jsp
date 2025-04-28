@@ -5,6 +5,66 @@
 <html>
 <head>
 	<style>
+
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2rem;
+        }
+
+        .table {
+            margin-top: 30px;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table thead {
+            background-color: gray;
+            color: white;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-success, .btn-danger {
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .btn-success:hover {
+            background-color: #28a745;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc3545;
+        }
+
+        .text-muted {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .btn-sm {
+            font-size: 0.875rem;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .table th, .table td {
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
 	    .delete-btn {
 	        background-color: transparent;
 	        border: 1px solid #ff4d4d;
@@ -35,6 +95,7 @@
                         <th>강의명</th>
                         <th>강사명</th>
                         <th>구독일</th>
+                        <th>링크</th>
                         <th>현재 구독 상태</th>
                         <th>관리</th>
                     </tr>
@@ -45,6 +106,9 @@
                             <td>${sub.cl_title}</td>
                             <td>${sub.teacher_name}</td>
                             <td><fmt:formatDate value="${sub.su_date}" pattern="yyyy-MM-dd"/></td>
+                            <td>
+                                <a href="<c:url value='/class/${sub.su_cl_num}'/>" class="btn btn-success btn-sm">바로가기</a>
+                            </td>
                             <td>
                                 <div class="subscription-status">
                                     <c:choose>
@@ -67,6 +131,6 @@
                 </tbody>
             </table>
         </c:otherwise>
-    </c:choose> 
-</body>  
+    </c:choose>
+</body>
 </html>

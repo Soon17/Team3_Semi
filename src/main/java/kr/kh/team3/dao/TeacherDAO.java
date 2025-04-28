@@ -17,5 +17,4 @@ public interface TeacherDAO {
 
 	void updateContent(@Param("map")Map<String, Object> map);
 
-
 }

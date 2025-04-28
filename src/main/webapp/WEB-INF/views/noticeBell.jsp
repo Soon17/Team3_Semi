@@ -5,8 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
+
 	</head>
 	
 	<body>
@@ -17,9 +16,9 @@
 	    </svg>
 	    <c:choose>
 	    	<c:when test="${sessionScope.member.me_authority eq 'ADMIN'}">
-	    		<c:if test="${waitingRequestCount > 0}">
+	    		<c:if test="${waitingRequestCount + waitingClassCount> 0}">
 				    <!-- 레드닷 -->
-					<span class="notification-badge">${waitingRequestCount}</span>
+					<span class="notification-badge">${waitingRequestCount + waitingClassCount}</span>
 	    		</c:if>
 	    	</c:when>
 	    	<c:when test="${sessionScope.member.me_authority eq 'USER'}">

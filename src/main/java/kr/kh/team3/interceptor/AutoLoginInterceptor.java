@@ -35,7 +35,6 @@ public class AutoLoginInterceptor extends HandlerInterceptorAdapter{
 		//세션에 있는 회원 정보를 가져옴
 		HttpSession session = request.getSession();
 		MemberVO user = (MemberVO)session.getAttribute("member");
-		System.out.println("123123"+user);
 		//자동로그인 전에 이미 로그인이 되어 있으면
 		if(user != null) {
 			return true;

@@ -129,7 +129,7 @@ public class AdminController {
 	
 	@PostMapping("/clear")
 	public String clearMemberList(@RequestParam int me_num, HttpServletResponse response, HttpServletRequest request) {
-		System.out.println(me_num);
+		
 		if(memberService.clearMemberList(me_num)) {
 			messageService.sendMessage(response, request, "해당 유저를 차단했습니다.", "/admin/list");
 		}else {

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.team3.model.vo.ClassVO;
 import kr.kh.team3.model.vo.CurriculumVO;
+import kr.kh.team3.model.vo.TeacherVO;
 import kr.kh.team3.model.vo.ThumbnailVO;
 import kr.kh.team3.model.vo.VideoVO;
 
@@ -38,5 +39,9 @@ public interface ClassDAO {
 	void insertCurriculum(CurriculumVO cr);
 
 	void insertVideo(VideoVO vi);
+
+	int selectWaitingCount();
+	
+	List<ClassVO> teacherClass(TeacherVO teacher);
 
 }

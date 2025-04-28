@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team3.dao.CommentDAO">
+	<insert id="insertComment">
+		insert into comment(co_content, co_me_num, co_cl_num)
+		value(#{co_content}, #{co_me_num}, #{co_cl_num})
+	</insert>
+	
+	<select id="getCommentList" parameterType="int" resultType="kr.kh.team3.model.vo.CommentVO">
+	    SELECT 
+	        c.*, 
+	        m.me_nick 
+	    FROM 
+	        comment c
+	    JOIN 
+	        member m ON c.co_me_num = m.me_num
+	    WHERE 
+	        c.co_cl_num = #{cl_num}
+	</select>
+	
+	<select id="selectComment" resultType="CommentVO">
+		select * from comment where co_num = #{co_num}
+	</select>
+	
+	<delete id="deleteComment">
+		delete from comment where co_num = #{co_num}
+	</delete>
+	
+	<update id="updateComment">
+		update comment set co_content = #{co_content} where co_num = #{co_num}
+	</update>
+</mapper>

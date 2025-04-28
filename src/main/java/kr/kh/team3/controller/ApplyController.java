@@ -1,7 +1,5 @@
 package kr.kh.team3.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.service.CategoryService;
 import kr.kh.team3.service.RequestService;
@@ -80,7 +77,6 @@ public class ApplyController {
 		MemberVO user = (MemberVO)session.getAttribute("member");
 	    // 받은 content를 활용하여 저장
 	    boolean result = requestService.isNewRequest(user);
-	    System.out.println(result);
 
 	    return result;
 	}

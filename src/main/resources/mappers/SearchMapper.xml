@@ -7,11 +7,12 @@
 	    SELECT DISTINCT
 	      cl.cl_title AS name,
 	      cl.cl_num AS cl_num,   
-	      me.me_nick AS teacherNick      
+	      me.me_nick AS teacherNick,t.th_picture AS cl_th_picture     
 	    FROM class cl
 	    LEFT JOIN subcategory sc ON sc.sc_cl_num = cl.cl_num
 	    LEFT JOIN category ca ON sc.sc_ca_num = ca.ca_num
 	    LEFT JOIN member me ON cl.cl_tc_me_num = me.me_num
+	    LEFT JOIN thumbnail t ON cl.cl_num = t.th_cl_num
 	    WHERE cl.cl_able = 'Y'
       		AND (
           sc.sc_name LIKE CONCAT('%', #{keyword}, '%')

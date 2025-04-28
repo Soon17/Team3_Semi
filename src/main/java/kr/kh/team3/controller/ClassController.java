@@ -22,11 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team3.model.vo.CategoryVO;
 import kr.kh.team3.model.vo.ClassVO;
-import kr.kh.team3.model.vo.CurriculumVO;
 import kr.kh.team3.model.vo.MemberVO;
 import kr.kh.team3.model.vo.SubCategoryVO;
 import kr.kh.team3.model.vo.TeacherVO;
-import kr.kh.team3.model.vo.VideoVO;
 import kr.kh.team3.service.CategoryService;
 import kr.kh.team3.service.ClassService;
 import kr.kh.team3.service.CurriculumService;
@@ -60,7 +58,7 @@ public class ClassController {
 	
 	@GetMapping("/categoryClass")
 	public String categoryClass(Model model,@RequestParam("ca_num") int ca_num) {
-		System.out.println(ca_num);
+		
 		List<ClassVO> list = classService.getCaClassList(ca_num);
 		
 		model.addAttribute("list",list);
@@ -80,12 +78,13 @@ public class ClassController {
         }
         model.addAttribute("checkSubscribed", checkSubscribed);
 
-        // 구독 수
-        int subscribeCount = subscribeService.countSubscribe(cl_num);
-        model.addAttribute("subscribeCount", subscribeCount);
-
-        return "/class/classDetail";
-    }
+	    // 구독 수
+	    int subscribeCount = subscribeService.countSubscribe(cl_num);
+	    model.addAttribute("subscribeCount", subscribeCount);
+	    
+	    return "/class/classDetail";
+	}
+	
 	@ResponseBody
 	@GetMapping("/{num}/tab")
 	public Map<String, Object> getTabData(@PathVariable("num") int cl_num, @RequestParam String type) {
@@ -139,13 +138,6 @@ public class ClassController {
 							@ModelAttribute ClassVO cl,SubCategoryVO sc, 
 							MultipartFile file) throws IOException {
 		cl.setCl_tc_me_num(me_num);
-		for (CurriculumVO cur : cl.getList()) {
-		    System.out.println("커리큘럼: " + cur.getCr_title());
-		    for (VideoVO v : cur.getList()) {
-		        System.out.println("- 영상 제목: " + v.getVd_name());
-		        System.out.println("- 파일 이름: " + v.getVd_file().getOriginalFilename());
-		    }
-		}
 		if(classService.insertClass(cl,me_num,sc,file)) {
 			model.addAttribute("url", "/");
 			model.addAttribute("msg", "제출 완료");

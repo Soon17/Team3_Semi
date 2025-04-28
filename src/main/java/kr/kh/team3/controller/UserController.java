@@ -69,7 +69,7 @@ public class UserController {
 	        if ("ADMIN".equals(user.getMe_authority())) {
 	            url = "/admin/update";
 	        } else if ("TEACHER".equals(user.getMe_authority())) {
-	            url = "/teacher/update";
+	            url = "/user/myPage";
 	        }
 	    }
 

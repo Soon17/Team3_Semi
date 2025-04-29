@@ -80,7 +80,6 @@ public class ApplyController {
 		MemberVO user = (MemberVO)session.getAttribute("member");
 	    // 받은 content를 활용하여 저장
 	    boolean result = requestService.isNewRequest(user);
-	    System.out.println(result);
 
 	    return result;
 	}

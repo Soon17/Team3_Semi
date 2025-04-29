@@ -137,11 +137,5 @@
 		</c:choose>
     </div>
 
-    <div class="create-class">
-        <h3>클래스</h3>
-        <div class="class-img">
-			<p>${cl_title}123</p>
-        </div>
-    </div>
 </body>
 </html>

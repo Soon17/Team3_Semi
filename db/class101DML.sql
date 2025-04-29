@@ -16,3 +16,6 @@ insert into subcategory (sc_name,sc_ca_num,sc_cl_num) values("수영",1,7);
 SET GLOBAL SQL_MODE = "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION";
 /* 복구 쿼리 */
 SET GLOBAL SQL_MODE = "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY";
+
+ALTER TABLE subscribe
+ADD SU_STATUS ENUM('normal', 'regular') DEFAULT 'regular' AFTER SU_CL_NUM;
